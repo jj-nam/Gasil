@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.ReplycMapper">
+	<select id="getList" resultType="org.joonzis.domain.ReplycVO" parameterType="long">
+		select * from tbl_reply_c where rno=#{rno} order by dno asc
+	</select>
+	
+	<insert id="insert" parameterType="org.joonzis.domain.ReplycVO">
+		insert into tbl_reply_c(dno, rno, reply_c, user_id)
+		values(
+			reply_c_seq.nextval,
+			#{rno},
+			#{reply_c},
+			#{user_id}
+		)
+	</insert>
+	
+	<select id="read" parameterType="long" resultType="org.joonzis.domain.ReplycVO" >
+		select * from tbl_reply_c where dno = #{dno}
+	</select>
+	
+	<!-- 
+	<delete id="delete" parameterType="long">
+		delete from tbl_reply where rno = #{rno}
+	</delete>
+	
+	<update id="update" parameterType="org.joonzis.domain.ReplyVO">
+		update tbl_reply 
+		set 
+			reply = #{reply}
+		WHERE 
+			rno = #{rno}
+	</update>
+	
+	<delete id="removeAll" parameterType="long">
+		delete from tbl_reply where bno = #{bno}
+	</delete>
+	
+	<update id="updateReplyCnt">
+		update tbl_board
+		set
+			replycnt = replycnt + #{amount}
+		where bno=#{bno}
+	</update> -->
+</mapper>

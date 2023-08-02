@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.UserMapper">
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(*) from tbl_user where user_id = #{user_id}
+	</select>
+	
+	<insert id="insert" parameterType="org.joonzis.domain.UserVO">
+		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, grade, user_nick, user_phone, joindate) 
+		values(
+				#{user_id},
+				#{user_pw},
+				#{user_email},
+				#{user_name},
+				#{user_birth},
+				#{gender},
+				'이코노미',
+				#{user_nick},
+				#{user_phone},
+				sysdate
+			)
+	</insert>
+	
+	<select id="login" parameterType="org.joonzis.domain.UserVO" resultType="org.joonzis.domain.UserVO">
+		select * from tbl_user 
+		where 
+			user_id=#{user_id} and 
+			user_pw=#{user_pw}
+	</select>
+</mapper>
