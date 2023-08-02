@@ -41,14 +41,14 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 	@Transactional
 	@Override
-	public int remove(long rno) {
-		log.info("getRemove..." + rno);
+	public int remove(long no) {
+		log.info("getRemove..." + no);
 		
-		ReplyVO rvo = get(rno);
+		ReplyVO rvo = get(no);
 		mapper.updateReplyCnt(rvo.getBno(), -1);
-		log.info(rno);
+		log.info(no);
 		
-		return rmapper.delete(rno);
+		return rmapper.delete(no);
 		
 	}
 	

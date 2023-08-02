@@ -63,11 +63,11 @@ public class ReplyController {
 	}
 	
 	// 4. 삭제
-	@DeleteMapping(value = "/{rno}", produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> remove(@PathVariable("rno") long rno){
-		log.info("remove..." + rno);
+	@DeleteMapping(value = "/{no}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> remove(@PathVariable("no") long no){
+		log.info("remove..." + no);
 		
-		return service.remove(rno) == 1 ?
+		return service.remove(no) == 1 ?
 				new ResponseEntity<>("success", HttpStatus.OK) : 
 					new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -82,13 +82,13 @@ public class ReplyController {
 	}
 	
 	
-	@PostMapping("/replyupdate/{rno}/{reply}")
-	public Map<String, Object> replyupdate(@PathVariable long rno, @PathVariable String reply){
+	@PostMapping("/replyupdate/{no}/{content}")
+	public Map<String, Object> replyupdate(@PathVariable long no, @PathVariable String content){
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			ReplyVO rvo = new ReplyVO();
-			rvo.setRno(rno);
-			rvo.setReply(reply);
+			rvo.setNo(no);
+			rvo.setContent(content);
 			service.modify(rvo);
 			
 			map.put("result", "success");

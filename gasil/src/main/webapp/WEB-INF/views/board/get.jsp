@@ -106,8 +106,8 @@ a{
 			<div>
 				<hr>
 				<div class="reply_input" style="border: 1px solid lightgrey; border-radius: 10px; padding: 20px">
-					<input type="text" name="user_nick" value="${user.user_nick }" style="margin-bottom:10px; font-weight: bold; border:none;" readonly="readonly"/>
-					<textarea class="form-control" rows="3" name="bcontent" style="resize:none; border:none; padding: 0px;" placeholder="댓글을 남겨보세요"></textarea>
+					<input type="hidden" name="writer" value="${user.user_id }"/>
+					<textarea class="form-control" rows="3" name="content" style="resize:none; border:none; padding: 0px;" placeholder="댓글을 남겨보세요"></textarea>
 					<p style="text-align: right; margin:0px;"><button id="reply_registerBtn" style="border:none; background-color: transparent; color: lightgrey;">등록</button></p>
 				</div>
 			</div>
@@ -158,7 +158,6 @@ a{
 	})
 </script>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
-<script type="text/javascript" src="/resources/js/reReply.js"></script>
 <script type="text/javascript">	<!-- 댓글 & 모달 스크립트 -->
 	console.log("============");
 	console.log("JS TEST");
@@ -169,22 +168,24 @@ a{
 	$(function(){
 		
 		// 댓글 창 관련 스크립트
-		var re_input = $(".reply_input");
+		var re_input = $(".reply_input");	// 댓글 입력 창 (id, writer)
 		
-		var inputNick = re_input.find("input[name='user_nick']");		// 댓글 작성자 input
-		var inputReply = re_input.find("textarea[name='bcontent']");	// 댓글 input
+		var inputWriter = re_input.find("input[name='writer']");		// 댓글 작성자 input
+		var inputContent = re_input.find("textarea[name='content']");	// 댓글 input
 		
-		var RegisterBtn = $("#reply_registerBtn");			// 댓글 등록 버튼
+		var RegisterBtn = $("#reply_registerBtn");						// 댓글 등록 버튼
 		
+		/* .replace(/\n/g,'<br>') */
 		// 댓글 입력 버튼 클릭 이벤트
 		RegisterBtn.on('click', function(){
+			var inputContent = inputContent.val().replace(/\n/g,'<br>');
 			replyService.add(
-					{reply:inputReply.val().replace(/\n/g,'<br>'), 
-						user_id:inputNick.val(), 
+					{content:inputContent, 
+						writer:inputWriter.val(), 
 						bno:bnoValue},
 					function(result){
 						showList();
-						re_input.find("textarea[name='bcontent']").val('');
+						re_input.find("textarea[name='content']").val('');
 					}
 				);
 			});	// end 댓글 입력 클릭 이벤트
@@ -192,28 +193,29 @@ a{
 	})
 	
 			
-	//대댓글 등록 버튼 클릭 이벤트	
+	/* //대댓글 등록 버튼 클릭 이벤트	
 	function rereply_regiBtn(){
 		var re_input = $(".reply_input");
-		var rnoValue = re_input.find("input[name='rno']").val();
+		var noValue = re_input.find("input[name='no']").val();
 		var reInputReply = re_input.find("textarea[name='re_bcontent']");	// 댓글 input
 		var reInputNick = re_input.find("input[name='rere_user_nick']");	// 댓글 input
 		alert(1)
 		reReplyService.add(
 				{reply_c:reInputReply.val(), 
 					user_id:reInputNick.val(), 
-					rno:rnoValue},
+					no:noValue},
 				function(result){
 					showList();
 					
 				}
 		);
-	};
+	}; */
+	
 	// 댓글 삭제 클릭 이벤트
-	function removeBtn(rno){
+	function removeBtn(no){
 		if(confirm("삭제하시겠습니까")){
 			replyService.remove(
-					rno,
+					no,
 				function(result){
 					showList();
 				}
@@ -224,55 +226,33 @@ a{
 	}	// end 댓글 삭제 클릭 이벤트
 	
 	// 댓글 수정 클릭 이벤트
-	function updateBtn(rno, reply, user_id){
-		var reply = reply.replaceAll("<br>", "\r\n");
-		
+	function updateBtn(no, content, writer){
+		var content = content.replaceAll("<br>", "\r\n");
 		var modiReply = "";
 		modiReply += '<div style="border: 1px solid lightgrey; border-radius: 10px; padding: 20px">'
-		modiReply += '<div id="reply_rno' + rno + '">';		
-		modiReply += '<strong>' + user_id + '</strong>';		
+		modiReply += '<div id="reply_no' + no + '">';		
+		modiReply += '<strong>' + writer + '</strong>';		
 		modiReply += '<br>';
-		modiReply += '<textarea id="reply_edit_content" name="bcontent" class="form-control" rows="3" style="resize:none; border:none; padding:0px;" placeholder="댓글을 남겨보세요">' + reply + '</textarea>';		
+		modiReply += '<textarea id="reply_edit_content" name="content" class="form-control" rows="3" style="resize:none; border:none; padding:0px;" placeholder="댓글을 남겨보세요">' + content + '</textarea>';		
 		modiReply += '<br>';	
 		modiReply += '<p style="text-align: right; margin:0px;">';	
-		modiReply += '<button style="border:none; background-color: transparent; color: lightgrey;" onclick="re_updateBtn(' + rno + ',\'' + user_id + '\');">수정</button>';
+		modiReply += '<button style="border:none; background-color: transparent; color: lightgrey;" onclick="re_updateBtn(' + no + ',\'' + writer + '\');">수정</button>';
 		modiReply += '<button style="border:none; background-color: transparent; color: lightgrey;" class=btn btn-outline-success" onclick="showList()">취소</button>';		
 		modiReply += '</p>';		
 		modiReply += '</div>';		
 		modiReply += '</div>';		
 		
-		$('#reply_rno' + rno).html(modiReply);
+		$('#reply_no' + no).html(modiReply);
 		
 	}	// end 댓글 수정 클릭 이벤트  
 	
-	// 대댓글 버튼 클릭 이벤트
-	function re_reBtn(rno){
-		var user_nick = "${user.user_nick}";
-		var regiReply = "";
-		regiReply += '<hr>';
-		regiReply += '<div style="border: 1px solid lightgrey; border-radius: 10px; padding: 20px; width: 90%; margin-left: 10%;">'
-		regiReply += '<div id="reReply' + rno + '">';		
-		regiReply += '<input type="text" name="rere_user_nick" value="' + user_nick + '"style="margin-bottom:10px; font-weight: bold; border:none;" readonly="readonly"/>';		
-		regiReply += '<br>';
-		regiReply += '<textarea id="rereply_edit_content" name="re_bcontent" class="form-control" rows="3" style="resize:none; border:none; padding:0px;" placeholder="댓글을 남겨보세요"></textarea>';		
-		regiReply += '<br>';	
-		regiReply += '<p style="text-align: right; margin:0px;">';
-		regiReply += "<a href='javascript:rereply_regiBtn();'>등록</a>";
-		regiReply += '<input type="hidden" name="rno" value="' + rno + '">';
-		regiReply += '</p>';		
-		regiReply += '</div>';		
-		regiReply += '</div>';		
-		
-		$('#reReply' + rno).append(regiReply);
-	
-	} 
 	
 	// 댓글 내용 수정 js
-	function re_updateBtn(rno, user_id){
+	function re_updateBtn(no, writer){
 		
 		var reply_content = $("#reply_edit_content").val().replace(/\n/g,'<br>');
 		$.ajax({
-			url: '/replies/replyupdate/' + rno + '/' + reply_content,
+			url: '/replies/replyupdate/' + no + '/' + reply_content,
 			type:'POST',
 			dataType:'json',
 			success: function(result){
@@ -286,13 +266,13 @@ a{
 	
 		
 		var replyUL = $(".chat");	// 댓글 리스트 UL
-		var reReplyUL = $();
 		showList();					// 댓글 리스트 바인딩 함수 호출
 		
 		
 		// 댓글 리스트 바인딩 함수
 		function showList(){
-			var loginUser = '${user.user_nick}';
+			var loginUser = '$';
+			var loginUser = '${user.user_id}';
 			var writer = '${vo.writer}';
 			replyService.getList(
 				{bno:bnoValue, page:1}, 
@@ -306,7 +286,7 @@ a{
 						// 댓글 리스트가 있으면
 						for(var i=0; i<result.length; i++){
 							str += '<hr>';
-							str += '<div id="reply_rno' + result[i].rno + '">';
+							str += '<div id="reply_no' + result[i].no + '">';
 							str += '<table style="width:100%">';
 							str += '<tr>';
 							str += '<td>';
@@ -314,39 +294,32 @@ a{
 							str += '<tr>';
 							str += '<td rowspan="3" style="border:1px solid black">이미지</td>';
 							str += '<td>&nbsp;</td>';
-							str += '<td style="font-weight:bold;">' + result[i].user_id;
-							if(result[i].user_id == writer){
+							str += '<td style="font-weight:bold;">' + result[i].writer;
+							if(result[i].writer == writer){
 								str += '&nbsp;<span style="display: inline-block; width: 43px; text-align: center; vertical-align:middle; color:red; border: 2px solid red; font-size : x-small; border-radius:15px; font-weight:bold;">작성자</span>';
 							}
 							str += '</td>';
 							str += '</tr>';
 							str += '<tr>';
 							str += '<td>&nbsp;</td>';
-							str += '<td style="white-space: pre-line;">' + result[i].reply + '</td>';
+							str += '<td style="white-space: pre-line;">' + result[i].content + '</td>';
 							str += '</tr>';
 							str += '<tr>';
 							str += '<td>&nbsp;</td>';
-							str += '<td><small class = "pull-right text-muted">' +  displayTime(result[i].reply_date) + '</small>&nbsp;<button style="border:none; background-color: transparent; color: lightgrey; font-size:small;" onclick="re_reBtn(' + result[i].rno + ');">답글쓰기</button></td>';
+							str += '<td><small class = "pull-right text-muted">' +  displayTime(result[i].reply_date) + '</small>&nbsp;<button style="border:none; background-color: transparent; color: lightgrey; font-size:small;" onclick="re_reBtn(' + result[i].no + ');">답글쓰기</button></td>';
 							str += '</tr>';
 							str += '</table>';
 							str += '</td>';
-							if(result[i].user_id == loginUser ){
+							if(result[i].writer == loginUser ){
 								str += '<td style="text-align : right; vertical-align: top;">';
-								str += "<a href='javascript:updateBtn(" + result[i].rno + ",\"" + result[i].reply + "\",\""+ result[i].user_id + "\");'>수정</a>";
+								str += "<a href='javascript:updateBtn(" + result[i].no + ",\"" + result[i].content + "\",\""+ result[i].writer + "\");'>수정</a>";
 								str += '<span style="color:lightgrey"> | </span>';
-								str += '<a href="javascript:removeBtn(' + result[i].rno +  ');">삭제</a>';
+								str += '<a href="javascript:removeBtn(' + result[i].no +  ');">삭제</a>';
 								str += '</td>';
 							}
 							str += '</table>';
 							str += '</div>';
 							
-							
-							
-							
-							str += '<div class="reReply' + result[i].rno + '">';
-							str += '<div id="reReply' + result[i].rno + '">';
-							str += '</div>';
-							str += '</div>';
 						}
 						replyUL.html(str);
 					}
@@ -354,62 +327,5 @@ a{
 			);
 		}	// end showList()
 		
-		function showRereList(){
-			var loginUser = '${user.user_nick}';
-			var writer = '${vo.writer}';
-			reReplyService.getList(
-				{rno:rnoValue, page:1}, 
-				function(result){
-					var str = '';
-					
-					if(result == null || result.length == 0){
-						// 댓글 리스트가 없으면
-						replyUL.html('');
-					}else{
-						// 댓글 리스트가 있으면
-						for(var i=0; i<result.length; i++){
-							str += '<hr>';
-							str += '<div id="reply_rno' + result[i].rno + '">';
-							str += '<table style="width:100%">';
-							str += '<tr>';
-							str += '<td>';
-							str += '<table>';
-							str += '<tr>';
-							str += '<td rowspan="3" style="border:1px solid black">이미지</td>';
-							str += '<td>&nbsp;</td>';
-							str += '<td style="font-weight:bold;">' + result[i].user_id;
-							if(result[i].user_id == writer){
-								str += '&nbsp;<span style="display: inline-block; width: 43px; text-align: center; vertical-align:middle; color:red; border: 2px solid red; font-size : x-small; border-radius:15px; font-weight:bold;">작성자</span>';
-							}
-							str += '</td>';
-							str += '</tr>';
-							str += '<tr>';
-							str += '<td>&nbsp;</td>';
-							str += '<td style="white-space: pre-line;">' + result[i].reply + '</td>';
-							str += '</tr>';
-							str += '<tr>';
-							str += '<td>&nbsp;</td>';
-							str += '<td><small class = "pull-right text-muted">' +  displayTime(result[i].reply_date) + '</small>&nbsp;<button style="border:none; background-color: transparent; color: lightgrey; font-size:small;" onclick="re_reBtn(' + result[i].rno + ');">답글쓰기</button></td>';
-							str += '</tr>';
-							str += '</table>';
-							str += '</td>';
-							if(result[i].user_id == loginUser ){
-								str += '<td style="text-align : right; vertical-align: top;">';
-								str += "<a href='javascript:updateBtn(" + result[i].rno + ",\"" + result[i].reply + "\",\""+ result[i].user_id + "\");'>수정</a>";
-								str += '<span style="color:lightgrey"> | </span>';
-								str += '<a href="javascript:removeBtn(' + result[i].rno +  ');">삭제</a>';
-								str += '</td>';
-							}
-							str += '</table>';
-							str += '</div>';
-							str += '<div id = "reReply' + result[i].rno + '">';
-							str += '</div>';
-						}
-						replyUL.html(str);
-					}
-				}	// function(result)
-			);
-		}	// end showList()
-
 </script>
 <%@include file="../include/footer.jsp" %>

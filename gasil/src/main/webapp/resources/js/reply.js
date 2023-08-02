@@ -21,14 +21,14 @@ function displayTime(timeValue){
 
 var replyService = (function(){
 
-	function add(reply, callback, error){
+	function add(content, callback, error){
 	
-		console.log('add reply...');
+		console.log('add content...');
 		
 		$.ajax({
 			type : 'post',
 			url : '/replies/new',
-			data : JSON.stringify(reply),
+			data : JSON.stringify(content),
 			contentType : 'application/json; charset=utf-8',
 			success : function(result,status,xhr){
 				if(callback){

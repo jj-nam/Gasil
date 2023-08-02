@@ -5,33 +5,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="org.joonzis.mapper.ReplyMapper">
 	<select id="getList" resultType="org.joonzis.domain.ReplyVO" parameterType="long">
-		select * from tbl_reply where bno=#{bno} order by rno asc
+		select * from tbl_reply where bno=#{bno} order by rgp desc, no asc
 	</select>
 	
+	<!-- 댓글 insert -->
 	<insert id="insert" parameterType="org.joonzis.domain.ReplyVO">
-		insert into tbl_reply(rno, bno, reply, user_id)
+		insert into tbl_reply(no, bno, rgp, deep, writer, content)
 		values(
 			reply_seq.nextval,
 			#{bno},
-			#{reply},
-			#{user_id}
+			0,
+			0,
+			#{writer},
+			#{content}
+		)
+	</insert>
+	
+	<!-- 대댓글 insert -->
+	<insert id="rere_insert" parameterType="org.joonzis.domain.ReplyVO">
+		insert into tbl_reply(no, bno, rgp, deep, writer, content)
+		values(
+			reply_seq.nextval,
+			#{bno},
+			#{no},
+			1,
+			#{writer},
+			#{content}
 		)
 	</insert>
 	
 	<select id="read" parameterType="long" resultType="org.joonzis.domain.ReplyVO" >
-		select * from tbl_reply where rno = #{rno}
+		select * from tbl_reply where no = #{no}
 	</select>
 	
 	<delete id="delete" parameterType="long">
-		delete from tbl_reply where rno = #{rno}
+		delete from tbl_reply where no = #{no}
 	</delete>
 	
 	<update id="update" parameterType="org.joonzis.domain.ReplyVO">
 		update tbl_reply 
 		set 
-			reply = #{reply}
+			content = #{content}
 		WHERE 
-			rno = #{rno}
+			no = #{no}
 	</update>
 	
 	<delete id="removeAll" parameterType="long">
