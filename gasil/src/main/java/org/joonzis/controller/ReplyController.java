@@ -41,6 +41,20 @@ public class ReplyController {
 				new ResponseEntity<>("success", HttpStatus.OK) : 
 					new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	// 대댓글 추가
+	@PostMapping(value = "/renew", consumes = "application/json; charset=utf-8", 
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> insert(@RequestBody ReplyVO rvo){
+		log.info("ReplyVO...." + rvo);
+		
+		int insertCount = service.reply_register(rvo);
+		
+		log.info("Reply Insert Count : " + insertCount);
+		
+		return insertCount == 1 ?
+				new ResponseEntity<>("success", HttpStatus.OK) : 
+					new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	// 2. 목록
 	@GetMapping(value = "/pages/{bno}/{page}",

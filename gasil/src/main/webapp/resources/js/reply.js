@@ -42,6 +42,27 @@ var replyService = (function(){
 			}
 		});
 	}
+	function addre(content, callback, error){
+	
+		console.log('add reply content...');
+		
+		$.ajax({
+			type : 'post',
+			url : '/replies/renew',
+			data : JSON.stringify(content),
+			contentType : 'application/json; charset=utf-8',
+			success : function(result,status,xhr){
+				if(callback){
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+		});
+	}
 	
 	function getList(param, callback, error){
 	
@@ -131,7 +152,8 @@ var replyService = (function(){
 		getList : getList,
 		get : get,
 		remove : remove,
-		removeAll : removeAll
+		removeAll : removeAll,
+		addre : addre
 	};
 	
 })();

@@ -8,6 +8,7 @@ public interface ReplyMapper {
 	public List<ReplyVO> getList(long bno);
 	public ReplyVO read(long rno);
 	public int insert(ReplyVO rvo);
+	public int insert_reply(ReplyVO rvo);
 	public int delete(long no);
 	public int update(ReplyVO rvo);
 	public int removeAll(long bno);

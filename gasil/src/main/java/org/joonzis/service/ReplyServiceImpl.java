@@ -39,6 +39,17 @@ public class ReplyServiceImpl implements ReplyService{
 		mapper.updateReplyCnt(rvo.getBno(), 1);
 		return rmapper.insert(rvo);
 	}
+	
+	@Transactional
+	@Override
+	public int reply_register(ReplyVO rvo) {
+		log.info("getRegister..." + rvo);
+		
+		mapper.updateReplyCnt(rvo.getBno(), 1);
+		return rmapper.insert_reply(rvo);
+	}
+	
+	
 	@Transactional
 	@Override
 	public int remove(long no) {

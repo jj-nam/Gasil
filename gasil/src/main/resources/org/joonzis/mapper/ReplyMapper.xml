@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 대댓글 insert -->
-	<insert id="rere_insert" parameterType="org.joonzis.domain.ReplyVO">
+	<insert id="insert_reply" parameterType="org.joonzis.domain.ReplyVO">
 		insert into tbl_reply(no, bno, rgp, deep, writer, content)
 		values(
 			reply_seq.nextval,
