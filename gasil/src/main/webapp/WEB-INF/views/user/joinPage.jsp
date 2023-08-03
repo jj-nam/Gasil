@@ -320,7 +320,7 @@
 			<a href="/home"><img alt="logo" src="/resources/images/logo.png" style="width:188px; height:85px;"></a>
 		</div>	<!-- end 로고 -->
 		<!-- 아이디, 비밀번호, 이메일 -->
-		<form action="/user/joinUser" method="get" role="form">
+		<form action="/user/joinUser" method="POST" role="form">
 		<div class="container_join">
 			<table class="user_ipe">
 				<tr>

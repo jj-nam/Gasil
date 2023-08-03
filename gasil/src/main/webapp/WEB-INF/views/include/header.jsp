@@ -41,7 +41,8 @@
 						<li class="nav-item"><a class="nav-link active"	aria-current="page" href="/board/list">커뮤니티</a></li>
 						<li class="nav-item"><a class="nav-link disabled" aria-current="page" href="#">고객센터</a></li>
 					</ul>
-					<span class="navbar-text"> <c:choose>
+					<span class="navbar-text"> 
+						<c:choose>
 							<c:when test="${empty user}">
 								<a class="nav-link active" aria-current="page" href="/user/joinPage">회원가입</a>
 								<a class="nav-link active" aria-current="page" href="/user/loginPage">로그인</a>

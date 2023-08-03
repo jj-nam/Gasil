@@ -107,7 +107,7 @@ a{
 				<hr>
 				<div class="reply_input" style="border: 1px solid lightgrey; border-radius: 10px; padding: 20px">
 				<c:choose>
-					<c:when test="${not empty user} ">
+					<c:when test="${not empty user}">
 						<input type="hidden" name="writer" value="${user.user_nick }"/>
 						<textarea class="form-control" rows="3" name="content" style="resize:none; border:none; padding: 0px;" placeholder="댓글을 남겨보세요"></textarea>
 						<p style="text-align: right; margin:0px;"><button id="reply_registerBtn" style="border:none; background-color: transparent; color: lightgrey;">등록</button></p>

@@ -50,7 +50,7 @@ public class UserController {
 		log.info("joinUser : " + vo);
 		service.join(vo);
 		rttr.addFlashAttribute("result", "ok");
-		return "redirect:/login";
+		return "user/loginPage";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -62,7 +62,7 @@ public class UserController {
 		if(login != null) {
 			session.setAttribute("user", login);
 		}
-		return "redirect:/home";
+		return "/home";
 	}
 	
 }

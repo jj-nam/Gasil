@@ -32,7 +32,9 @@ li{
 				<div class="panel panel-default">
 					<!-- /.panel-heading -->
 					<div class="panel-body">
-					<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
+					<c:if test="${not empty user}">
+						<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
+					</c:if>
 						<table class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr style="text-align: center">

@@ -14,7 +14,6 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class UserMapperTests {
-	/*
 	@Setter(onMethod_ = @Autowired)
 	UserMapper mapper;
 
@@ -22,18 +21,19 @@ public class UserMapperTests {
 	@Test
 	public void testInsert() {
 		UserVO vo = new UserVO();
-		vo.setUser_id("abcde123");
+		vo.setUser_id("abcde124");
 		vo.setUser_pw("123123123");
-		vo.setUser_email("abcde123@naver.com");
+		vo.setUser_email("abcde124@naver.com");
 		vo.setUser_name("김씨");
 		vo.setUser_birth("19991212");
 		vo.setGender("남");
 		vo.setUser_nick("abcde123");
-		vo.setUser_phone("01012341234");
+		vo.setUser_phone("01012341233");
 
 		mapper.insert(vo);
 		log.info(vo);
 	}
+	/*
 	 
 	@Test
 	public void TestLogin() {
