@@ -97,7 +97,8 @@ public class ReplyController {
 	
 	
 	@PostMapping("/replyupdate/{no}/{content}")
-	public Map<String, Object> replyupdate(@PathVariable long no, @PathVariable String content){
+	public Map<String, Object> replyupdate(@PathVariable long no, 
+										@PathVariable String content){
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			ReplyVO rvo = new ReplyVO();
@@ -113,4 +114,5 @@ public class ReplyController {
 		}
 		return map;
 	}
+	
 }

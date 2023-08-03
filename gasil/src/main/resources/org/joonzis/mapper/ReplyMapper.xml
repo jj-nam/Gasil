@@ -5,15 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="org.joonzis.mapper.ReplyMapper">
 	<select id="getList" resultType="org.joonzis.domain.ReplyVO" parameterType="long">
-		select * from tbl_reply where bno=#{bno} order by rgp desc, no asc
+		select * from tbl_reply where bno=#{bno} order by rno, deep, rgp asc
 	</select>
 	
 	<!-- 댓글 insert -->
 	<insert id="insert" parameterType="org.joonzis.domain.ReplyVO">
-		insert into tbl_reply(no, bno, rgp, deep, writer, content)
+		insert into tbl_reply(no, bno, rno, rgp, deep, writer, content)
 		values(
 			reply_seq.nextval,
 			#{bno},
+			rno_seq.nextval,
 			0,
 			0,
 			#{writer},
@@ -23,11 +24,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 대댓글 insert -->
 	<insert id="insert_reply" parameterType="org.joonzis.domain.ReplyVO">
-		insert into tbl_reply(no, bno, rgp, deep, writer, content)
+		insert into tbl_reply(no, bno, rno, rgp, deep, writer, content)
 		values(
 			reply_seq.nextval,
 			#{bno},
-			#{no},
+			#{rno},
+			(select nvl(max(rgp),0)+1 from tbl_reply),
 			1,
 			#{writer},
 			#{content}

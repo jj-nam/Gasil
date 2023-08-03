@@ -88,7 +88,6 @@ $(function(){
 })
 	
 	
-	
 </script>
 
 <%@include file="../include/footer.jsp" %>

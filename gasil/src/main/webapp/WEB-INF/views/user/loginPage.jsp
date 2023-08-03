@@ -5,14 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login Page</title>
-<!-- Bootstrap Core CSS -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- MetisMenu CSS -->
-<link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-<!-- Custom CSS -->
-<link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 <style type="text/css">
 	.wrap-div{
 	   width: 500px;
@@ -51,21 +44,5 @@
 		}
    </script>
    
-	<!-- jQuery -->
-    <script src="/resources/vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="/resources/dist/js/sb-admin-2.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			$("a").click(function(e) {
-				e.preventDefault(); // 이벤트 막아주기
-				$("form").submit();
-			});
-		});
-	</script>
 </body>
 </html>
