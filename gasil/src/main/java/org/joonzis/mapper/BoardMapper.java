@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.Criteria;
 
-
 public interface BoardMapper {
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.GoWithMapper">
+	<select id="getList" resultType="org.joonzis.domain.GoWithVO">
+	<![CDATA[
+		select * from tbl_goWith where wno > 0
+	]]>
+	</select>
+	
+	<!-- <resultMap type="org.joonzis.domain.GoWithVO" id="goWithMap">
+		VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다
+		<result property="wno" column="wno"/>
+		<result property="user_id" column="user_id"/>
+		<result property="wtitle" column="wtitle"/>
+		<result property="content" column="content"/>
+		<result property="style" column="style"/>
+		<result property="city" column="city"/>
+		<result property="country" column="country"/>
+		<result property="continent" column="continent"/>
+		<result property="departure" column="departure"/>
+		<result property="arrive" column="arrive"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="r_cnt" column="r_cnt"/>
+		<result property="p_cnt" column="p_cnt"/>
+		<collection property="countryList" resultMap="countryMap"></collection> 아래 resultMap의 id값을 resultMap에 넣어 불러온다
+	</resultMap>
+	
+	<resultMap type="org.joonzis.domain.CountryVO" id="countryMap">
+		<result property="city" column="city"/>
+		<result property="flag" column="flag"/>
+	</resultMap> -->
+
+	<select id="getListWithPaging" resultType="org.joonzis.domain.GoWithFlagVO">
+		<![CDATA[
+			select wno, user_id, wtitle, content, style, departure, arrive, reg_date, r_cnt, p_cnt, city, country, continent, flag
+			from
+				(select
+				rownum as rn, wno, user_id, wtitle, content, style, departure, arrive, reg_date, r_cnt, p_cnt, city,country, continent, flag from tbl_goWith  natural join tbl_country
+			where 
+				rownum <= #{pageNum} * #{amount} order by wno desc)
+			where 
+				rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalcount" resultType="int">
+		<![CDATA[
+		select count(*) from tbl_goWith where wno > 0 
+		]]>
+	</select>
+</mapper>

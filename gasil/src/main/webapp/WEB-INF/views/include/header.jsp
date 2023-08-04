@@ -37,7 +37,7 @@
 				<div class="collapse navbar-collapse" id="navbarText">
 					<ul class="nav justify-content-center">
 						<li class="nav-item"><a class="nav-link active"	aria-current="page" href="../home">Home</a></li>
-						<li class="nav-item"><a class="nav-link active"	aria-current="page" href="#">동행</a></li>
+						<li class="nav-item"><a class="nav-link active"	aria-current="page" href="/goWith/list">동행</a></li>
 						<li class="nav-item"><a class="nav-link active"	aria-current="page" href="/board/list">커뮤니티</a></li>
 						<li class="nav-item"><a class="nav-link disabled" aria-current="page" href="#">고객센터</a></li>
 					</ul>
