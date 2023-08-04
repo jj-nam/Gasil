@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="org.joonzis.domain.UserVO" id="userMap">
 		<!-- VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다-->
+		<id property="user_id" column="user_id"/>
 		<result property="user_id" column="user_id"/>
 		<result property="user_pw" column="user_pw"/>
 		<result property="user_email" column="user_email"/>

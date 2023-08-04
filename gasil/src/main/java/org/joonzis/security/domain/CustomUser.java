@@ -3,6 +3,7 @@ package org.joonzis.security.domain;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.joonzis.domain.AuthVO;
 import org.joonzis.domain.UserVO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,9 +17,9 @@ public class CustomUser extends User{
 	
 	private UserVO vo;
 	
-	public CustomUser(String user_id, String user_pw, 
+	public CustomUser(String username, String password, 
 			Collection<? extends GrantedAuthority> authorities) {
-		super(user_id, user_pw, authorities);
+		super(username, password, authorities);
 	}
 	
 	public CustomUser(UserVO vo) {

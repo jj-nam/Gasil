@@ -1,3 +1,4 @@
+
 package org.joonzis.security;
 
 import org.joonzis.domain.UserVO;
@@ -12,19 +13,19 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class CustomUserDetailService implements UserDetailsService{
+public class CustomUserDetailService implements UserDetailsService {
 
 	@Setter(onMethod_ = @Autowired)
 	private UserMapper mapper;
-	
+
 	@Override
-	public UserDetails loadUserByUsername(String user_id) throws UsernameNotFoundException{
-		log.warn("load user by userName : " + user_id);
-		
-		UserVO vo = mapper.read(user_id);
-		
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		log.warn("load user by username : " + username);
+
+		UserVO vo = mapper.read(username);
+
 		log.warn("member mapper : " + vo);
-		
+
 		return vo == null ? null : new CustomUser(vo);
 	}
 }

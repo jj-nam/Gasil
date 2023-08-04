@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
 	}
 	// 회원가입
 	@Override
-	public void join(UserVO vo) {
+	public void join(UserVO uvo) {
 		log.info("getJoin...");
-		mapper.insert(vo);
+		mapper.insert(uvo);
 	}
 	@Override
 	public void addAuth(String user_id) {

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,20 +20,20 @@
         <form role="form" method="post" action="/login">
              <fieldset>
                  <div class="form-group">
-                     <input class="form-control" placeholder="아이디" name="user_id" type="text" autofocus>
+                     <input class="form-control" placeholder="아이디" name="username" type="text" autofocus>
                  </div>
                  <div class="form-group">
-                     <input class="form-control" placeholder="비밀번호" name="user_pw" type="password">
+                     <input class="form-control" placeholder="비밀번호" name="userpassword" type="password">
                  </div>
                  <div class="checkbox">
                      <label>
                          <input name="remember-me" type="checkbox">자동 로그인
                      </label>
                  </div>
-                 <!-- Change this to a button or input when using this as a form -->
+                 
 		         <button type="submit" class="btn btn-lg btn-success btn-block">로그인</button>
+                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 		         <button onclick="goToHome();" class="btn btn-lg btn-success btn-block">Home</button>
-                 <input type="hidden" name="${_csrf.parameterName}" value="${_csfr.token }">
              </fieldset>
          </form>
          <br>
@@ -45,4 +45,4 @@
    </script>
    
 </body>
-</html>
+</html> --%>

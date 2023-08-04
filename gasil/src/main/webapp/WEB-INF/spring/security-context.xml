@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<bean id="customAccessDenied" class="org.joonzis.security.CustomAccessDeniedHandler"></bean>
-	<bean id="CustomLoginSuccess" class="org.joonzis.security.CustomLoginSuccessHandler"></bean>
+	<bean id="customLoginSuccess" class="org.joonzis.security.CustomLoginSuccessHandler"></bean>
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	<bean id="customUserDetailService" class="org.joonzis.security.CustomUserDetailService"></bean>
 
@@ -29,7 +29,7 @@
 	
 	
 	<!-- 로그인 -->
-	<security:form-login login-page="/customLogin"/> 
+	<security:form-login login-page="/customLogin" /> 
 	<!-- 로그아웃 -->
 	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me"/>
 	
