@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
-<div class="container-fluid" style="background-color: #5CE75C; margin-top:50px;">
+<div class="container-fluid" style="background-color: #5CE75C;">
 	<div style="padding-left:70px;">
 		<div class="row" style="padding:40px; padding-top: 60px">
 			<div class="col-5">

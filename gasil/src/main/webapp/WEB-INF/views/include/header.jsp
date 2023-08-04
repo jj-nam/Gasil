@@ -48,7 +48,7 @@
 								<a class="nav-link active" aria-current="page" href="/user/loginPage">로그인</a>
 							</c:when>
 							<c:otherwise>
-								<a class="nav-link active" aria-current="page" href="/user/my_info">개인정보</a>
+								<a class="nav-link active" aria-current="page" href="/myInfo/personal_info">개인정보</a>
 								<a class="nav-link active" aria-current="page" href="/user/logout">로그아웃</a>
 							</c:otherwise>
 						</c:choose>
