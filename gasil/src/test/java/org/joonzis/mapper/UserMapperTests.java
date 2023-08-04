@@ -17,7 +17,7 @@ public class UserMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	UserMapper mapper;
 
-	
+	/*
 	@Test
 	public void testInsert() {
 		UserVO vo = new UserVO();
@@ -33,7 +33,7 @@ public class UserMapperTests {
 		mapper.insert(vo);
 		log.info(vo);
 	}
-	/*
+	
 	 
 	@Test
 	public void TestLogin() {

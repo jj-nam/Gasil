@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
 		log.info("getJoin...");
 		mapper.insert(vo);
 	}
+	@Override
+	public void addAuth(String user_id) {
+		log.info("getAuth...");
+		mapper.addAuth(user_id);
+	}
 	
 	// 로그인
 	public UserVO login(UserVO vo) {

@@ -148,8 +148,6 @@
 						var str = '';
 						str += "<font id='id_feedback' size='2' style='color:#2fb380'>사용 가능한 아이디 입니다.</font>";
 						str += "<input type='hidden' name='user_nick' id='user_nick' value='" + user_id + "'>";
-						/* $('#id_feedback').html('사용 가능한 아이디입니다.');
-						$('#id_feedback').attr('color','#2fb380'); */
 						
 						$('#id_feedback').html(str);
 						chk1 = true;

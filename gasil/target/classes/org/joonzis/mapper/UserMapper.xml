@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="org.joonzis.domain.UserVO">
-		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, user_nick, user_phone, joindate, role) 
+		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, user_nick, user_phone, joindate) 
 		values(
 				#{user_id},
 				#{user_pw},
@@ -19,8 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{gender},
 				#{user_id},
 				#{user_phone},
-				sysdate,
-				'user',
+				sysdate
 			)
 	</insert>
 	
@@ -30,4 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			user_id=#{user_id} and 
 			user_pw=#{user_pw}
 	</select>
+	
+	<insert id="addAuth" parameterType="String">
+		insert into tbl_auth (grade, user_id, auth)
+		values(
+			'이코노미',
+			#{user_id},
+			'user'
+		)
+	</insert>
 </mapper>

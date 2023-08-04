@@ -44,11 +44,14 @@ public class UserController {
 		
 		return randomNumber;
 		}
+	
 	// 회원가입
 	@PostMapping("user/joinUser")
 	public String join(UserVO vo, RedirectAttributes rttr) {
 		log.info("joinUser : " + vo);
 		service.join(vo);
+		service.addAuth(vo.getUser_id());
+		log.info("create auth");
 		rttr.addFlashAttribute("result", "ok");
 		return "user/loginPage";
 	}

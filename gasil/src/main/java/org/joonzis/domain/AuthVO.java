@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthVO {
-	private String user_id, auth;
+	private String grade, user_id, auth;
 }
