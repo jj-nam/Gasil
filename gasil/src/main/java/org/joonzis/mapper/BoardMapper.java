@@ -25,4 +25,7 @@ public interface BoardMapper {
 	public long selectMax();
 	
 	public BoardVO movePage(long bno);
+	
+	public int upView(long bno);
+	
 }

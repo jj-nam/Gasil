@@ -7,10 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getListWithPaging" resultType="org.joonzis.domain.BoardVO">
 		<![CDATA[
 			select 
-				bno, title, bcontent, writer, reg_date, r_cnt, cate_id 
+				bno, title, bcontent, writer, reg_date, r_cnt, cate_id, bview 
 			from
 				(select
-				rownum as rn, bno, title, bcontent, writer, reg_date, r_cnt, cate_id from tbl_board
+				rownum as rn, bno, title, bcontent, writer, reg_date, r_cnt, cate_id, bview from tbl_board
 			where 
 				rownum <= #{pageNum} * #{amount} order by bno desc)
 			where 
@@ -81,4 +81,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        WHERE BNO = #{bno}
 	</select>
 	
+	<update id="upView" parameterType="long">
+		UPDATE tbl_board 
+		SET
+			bview = bview + 1
+		WHERE 
+			bno = #{bno}
+	</update> 
 </mapper>

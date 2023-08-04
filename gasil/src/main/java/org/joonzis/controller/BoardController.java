@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.PageDTO;
+import org.joonzis.domain.UserVO;
+import org.joonzis.mapper.BoardMapper;
 import org.joonzis.service.BoardService;
 import org.joonzis.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,6 +45,9 @@ public class BoardController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private BoardMapper mapper;
 	
 	@Setter(onMethod_ = @Autowired)
 	private ReplyService replyService;
@@ -70,12 +77,45 @@ public class BoardController {
 	}
 	
 	@GetMapping("/get")
-	public String get(@RequestParam("bno") long bno, Model model, Criteria cri) {
+	public String get(@RequestParam("bno") long bno, Model model, Criteria cri, 
+			HttpServletRequest req,
+			HttpServletResponse res) {
 		log.info("/get..." + bno);
-		model.addAttribute("vo", service.get(bno));
-		model.addAttribute("cri", cri);
-		model.addAttribute("move", service.movePage(bno));
+		viewCountUp(bno, req, res);
+	    model.addAttribute("vo", service.get(bno));
+	    model.addAttribute("cri", cri);
 		return "board/get";
+	}
+	
+	private void viewCountUp(long bno, HttpServletRequest req, HttpServletResponse res) {
+		// 클라이언트로 요청이 등어온다.
+		// 요청에 Cookie가 없고 글을 조회한다면 [게시글 no]의 값을 추가하여 Cookie 생성 (기간은 하루로 설정)
+		// 요청에 Cookie가 있고 글을 조회한 기록이 있다면 pass 없다면 Cookie에 [게시글 no] 붙이기
+		Cookie oldCookie = null;
+			Cookie[] cookies = req.getCookies();
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		            if (cookie.getName().equals("boardView")) {
+		                oldCookie = cookie;
+		            }
+		        }
+		    }
+	
+		    if (oldCookie != null) {
+		        if (!oldCookie.getValue().contains("[" + String.valueOf(bno) + "]")) {
+		        	mapper.upView(bno);
+		        	oldCookie.setValue(oldCookie.getValue() + "_[" + bno + "]");
+		            oldCookie.setPath("/");
+		            oldCookie.setMaxAge(60 * 60 * 24);
+		            res.addCookie(oldCookie);
+		        }
+		    } else {
+		    	mapper.upView(bno);
+		        Cookie newCookie = new Cookie("boardView","[" + bno + "]");
+		        newCookie.setPath("/");
+		        newCookie.setMaxAge(60 * 60 * 24);
+		        res.addCookie(newCookie);
+		    }
 	}
 	
 	@GetMapping("/modify")

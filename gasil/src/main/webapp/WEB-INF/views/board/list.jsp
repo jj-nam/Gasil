@@ -46,7 +46,7 @@ li{
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="board" items="${list }">
+								<c:forEach var="board" items="${list}">
 									<tr>
 									<!-- 카테고리 id가 아닌 이름으로 출력 -->
 										<td style="text-align: center">

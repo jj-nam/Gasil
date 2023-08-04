@@ -7,6 +7,7 @@ import org.joonzis.domain.Criteria;
 import org.joonzis.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
@@ -30,6 +31,7 @@ public class BoardServiceImpl implements BoardService{
 		mapper.insert(vo);
 	}
 	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public BoardVO get(long bno) {
 		log.info("getGet...");
@@ -63,5 +65,6 @@ public class BoardServiceImpl implements BoardService{
 	public BoardVO movePage(long bno){
 		return mapper.movePage(bno);
 	}
+	
 
 }
