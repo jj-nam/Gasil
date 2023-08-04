@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="customAccessDenied" class="org.joonzis.security.CustomAccessDeniedHandler"></bean>
+	<bean id="CustomLoginSuccess" class="org.joonzis.security.CustomLoginSuccessHandler"></bean>
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<bean id="customUserDetailService" class="org.joonzis.security.CustomUserDetailService"></bean>
+
+	<security:http auto-config="true" use-expressions="true">
+		<!-- 아래 pattern에 갔을 때 access 권한이 있어야 한다. -->
+		<!-- 권한 확인이 안될 경우 아래 form-login으로 넘어간다 -->
+		<security:intercept-url pattern="/idCheck.do" access="permitAll"/>
+		<security:intercept-url pattern="/user/joinPage" access="permitAll"/>
+		<security:intercept-url pattern="/user/loginPage" access="hasRole('user')"/>
+		<!-- <security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/> -->
+	
+	
+	<!-- 권한 없는 페이지 접근 시 에러페이지를 /accessError url로 처리 -->
+	<!-- customAccessDenied로 대체 -->
+	<!-- <security:access-denied-handler error-page="/accessError"/> -->
+	<security:access-denied-handler ref="customAccessDenied"/>
+	<!-- <security:form-login/> -->
+	
+	
+	<!-- 로그인 -->
+	<security:form-login login-page="/customLogin"/> 
+	<!-- 로그아웃 -->
+	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me"/>
+	
+	<!-- 접근 제한 처리 -->
+	<security:access-denied-handler ref="customAccessDenied"/>
+	
+	<security:csrf disabled="true"/>
+	
+	<!-- DB를 이용한 자동 로그인(일주일) -->
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+	</security:http>		
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailService">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>		
+		</security:authentication-provider>
+	</security:authentication-manager>
+		
+</beans>

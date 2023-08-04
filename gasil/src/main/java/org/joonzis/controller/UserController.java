@@ -56,6 +56,7 @@ public class UserController {
 		return "user/loginPage";
 	}
 	
+	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		log.info("login : " + vo);

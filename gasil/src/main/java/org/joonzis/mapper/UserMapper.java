@@ -9,4 +9,5 @@ public interface UserMapper {
 	public void insert(UserVO vo);
 	public UserVO login(UserVO vo); 
 	public void addAuth(String user_id);
+	public UserVO read(String user_id);
 }

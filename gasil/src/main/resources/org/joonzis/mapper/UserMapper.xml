@@ -38,4 +38,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'user'
 		)
 	</insert>
+	
+	<resultMap type="org.joonzis.domain.UserVO" id="userMap">
+		<!-- VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다-->
+		<result property="user_id" column="user_id"/>
+		<result property="user_pw" column="user_pw"/>
+		<result property="user_email" column="user_email"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_birth" column="user_birth"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="gender" column="gender"/>
+		<result property="user_nick" column="user_nick"/>
+		<result property="user_pic" column="user_pic"/>
+		<result property="joindate" column="joindate"/>
+		<collection property="authList" resultMap="authMap"></collection> <!-- 아래 resultMap의 id값을 resultMap에 넣어 불러온다 -->
+	</resultMap>
+	
+	<resultMap type="org.joonzis.domain.AuthVO" id="authMap">
+		<result property="user_id" column="user_id"/>
+		<result property="grade" column="grade"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+
+	<select id="read" resultMap="userMap">
+		SELECT 
+			user_id, user_pw, user_email, user_name, user_birth,user_phone, gender, user_nick, user_pic, grade, auth
+		FROM 
+			tbl_user NATURAL JOIN tbl_auth 
+		WHERE 
+			user_id=#{user_id}
+	</select>
 </mapper>
