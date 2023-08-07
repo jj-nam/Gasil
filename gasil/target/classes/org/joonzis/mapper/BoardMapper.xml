@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="read" parameterType="long" resultType="org.joonzis.domain.BoardVO" >
-		select * from tbl_board where bno = #{bno}
+		select bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, reg_date from tbl_board where bno = #{bno}
 	</select>
 	
 	<delete id="delete" parameterType="long">
@@ -88,4 +88,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			bno = #{bno}
 	</update> 
+	
+	
+	<update id="updateHeart" parameterType="long">
+		UPDATE tbl_board 
+		SET
+			blike = (select count(*) from tbl_heart where bno=#{bno})
+		where 
+			bno=#{bno}
+	</update>
 </mapper>

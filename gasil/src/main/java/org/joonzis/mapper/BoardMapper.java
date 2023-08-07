@@ -27,4 +27,5 @@ public interface BoardMapper {
 	
 	public int upView(long bno);
 	
+	public void updateHeart(long bno);
 }

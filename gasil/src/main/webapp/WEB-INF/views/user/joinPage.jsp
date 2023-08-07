@@ -126,7 +126,7 @@
 			}
 		});
 	    
-		// id 체크
+		// id 중복 체크
 		$('#user_id').keyup(function(){
 			var user_id = $('#user_id').val();
 			var regId = /^[0-9a-z]{8,16}$/;

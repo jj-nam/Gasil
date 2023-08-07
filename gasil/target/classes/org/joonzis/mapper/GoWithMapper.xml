@@ -4,12 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.joonzis.mapper.GoWithMapper">
-	<select id="getList" resultType="org.joonzis.domain.GoWithVO">
-	<![CDATA[
-		select * from tbl_goWith where wno > 0
-	]]>
-	</select>
-	
+	<!-- Map보다 새로운 VO에 담아야 불러오기 쉬워서 Map 방식 보다 VO 방식을 선택-->
 	<!-- <resultMap type="org.joonzis.domain.GoWithVO" id="goWithMap">
 		VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다
 		<result property="wno" column="wno"/>

@@ -3,6 +3,7 @@ package org.joonzis.service;
 
 import java.util.HashMap;
 
+import org.joonzis.domain.UserAuthVO;
 import org.joonzis.domain.UserVO;
 import org.joonzis.mapper.UserMapper;
 import org.json.simple.JSONObject;
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// 로그인
-	public UserVO login(UserVO vo) {
+	public UserAuthVO login(UserAuthVO vo) {
 		log.info("login...");
 		return mapper.login(vo);
 		

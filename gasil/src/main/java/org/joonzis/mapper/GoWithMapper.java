@@ -7,6 +7,5 @@ import org.joonzis.domain.GoWithVO;
 
 public interface GoWithMapper {
 	public List<GoWithVO> getListWithPaging(Criteria cri);
-	public List<GoWithVO> getList();
 	public int getTotalcount();	
 }

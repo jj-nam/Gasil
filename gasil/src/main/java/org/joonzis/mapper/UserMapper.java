@@ -1,13 +1,13 @@
 package org.joonzis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.joonzis.domain.UserAuthVO;
 import org.joonzis.domain.UserVO;
 
 @Mapper
 public interface UserMapper {
 	public int idCheck(String user_id);
 	public void insert(UserVO uvo);
-	public UserVO login(UserVO vo); 
+	public UserAuthVO login(UserAuthVO vo); 
 	public void addAuth(String user_id);
-	public UserVO read(String user_id);
 }

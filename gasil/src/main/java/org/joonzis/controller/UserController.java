@@ -3,6 +3,7 @@ package org.joonzis.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.UserAuthVO;
 import org.joonzis.domain.UserVO;
 import org.joonzis.mapper.UserMapper;
 import org.joonzis.service.UserService;
@@ -71,11 +72,13 @@ public class UserController {
 	
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
+	public String login(UserAuthVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		log.info("login : " + vo);
 		HttpSession session = req.getSession();
-		UserVO login = service.login(vo);
+		UserAuthVO login = service.login(vo);
 		log.info(login);
+		
+		
 		if(login != null) {
 			session.setAttribute("user", login);
 		}

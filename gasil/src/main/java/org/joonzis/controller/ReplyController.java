@@ -62,7 +62,7 @@ public class ReplyController {
 					MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") long bno,
 												@PathVariable("page") int page){
-		log.info("getList...");
+		log.info("getReList...");
 		
 		return new ResponseEntity<>(service.getList(bno),HttpStatus.OK);
 	}

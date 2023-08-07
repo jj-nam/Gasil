@@ -23,12 +23,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 	</insert>
 	
-	<select id="login" parameterType="org.joonzis.domain.UserVO" resultType="org.joonzis.domain.UserVO">
-		select * from tbl_user 
+	<select id="login" parameterType="org.joonzis.domain.UserVO" resultType="org.joonzis.domain.UserAuthVO">
+		select * from tbl_user natural join tbl_auth
 		where 
 			user_id=#{user_id} and 
 			user_pw=#{user_pw}
 	</select>
+<!-- 	<select id="login" parameterType="org.joonzis.domain.UserVO" resultType="org.joonzis.domain.UserVO">
+		select * from tbl_user 
+		where 
+			user_id=#{user_id} and 
+			user_pw=#{user_pw}
+	</select> -->
 	
 	<insert id="addAuth" parameterType="String">
 		insert into tbl_auth (grade, user_id, auth)
@@ -39,8 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<resultMap type="org.joonzis.domain.UserVO" id="userMap">
-		<!-- VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다-->
+<!-- 	<resultMap type="org.joonzis.domain.UserVO" id="userMap">
+		VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다
 		<id property="user_id" column="user_id"/>
 		<result property="user_id" column="user_id"/>
 		<result property="user_pw" column="user_pw"/>
@@ -52,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="user_nick" column="user_nick"/>
 		<result property="user_pic" column="user_pic"/>
 		<result property="joindate" column="joindate"/>
-		<collection property="authList" resultMap="authMap"></collection> <!-- 아래 resultMap의 id값을 resultMap에 넣어 불러온다 -->
+		<collection property="authList" resultMap="authMap"></collection> 아래 resultMap의 id값을 resultMap에 넣어 불러온다
 	</resultMap>
 	
 	<resultMap type="org.joonzis.domain.AuthVO" id="authMap">
@@ -68,5 +74,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			tbl_user NATURAL JOIN tbl_auth 
 		WHERE 
 			user_id=#{user_id}
-	</select>
+	</select> -->
 </mapper>

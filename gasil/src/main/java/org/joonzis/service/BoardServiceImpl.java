@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.Criteria;
+import org.joonzis.domain.HeartVO;
 import org.joonzis.mapper.BoardMapper;
+import org.joonzis.mapper.HeartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -18,6 +20,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	private BoardMapper mapper;
+	
+	@Autowired
+	private HeartMapper hmapper;
 	
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
@@ -65,6 +70,17 @@ public class BoardServiceImpl implements BoardService{
 	public BoardVO movePage(long bno){
 		return mapper.movePage(bno);
 	}
+	
+	@Override
+	public void updateHeart(long bno) {
+		log.info("updateHeart...");
+		mapper.updateHeart(bno);
+	}
+	
+	/*
+	 * @Override public int findlike(HeartVO vo) { log.info("like : " + vo); return
+	 * hmapper.get(vo); }
+	 */
 	
 
 }
