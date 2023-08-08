@@ -28,6 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		union all 
 		select 0 as hno from dual where not exists (select hno from tbl_heart where user_id = #{user_id} and bno = #{bno})
 	</select>
+	
+	<select id="checkLike" resultType="int" parameterType="org.joonzis.domain.HeartVO">
+		select count(*) from tbl_heart where bno=#{bno} and user_id=#{user_id}
+	</select>
 <!-- 
 	<insert id="likeUp" parameterType="org.joonzis.domain.HeartVO">
 		insert into tbl_heart(hno, bno, user_id, likeOrNo)

@@ -49,7 +49,7 @@
 							</c:when>
 							<c:otherwise>
 								<a class="nav-link active" aria-current="page" href="/myInfo/personal_info">개인정보</a>
-								<a class="nav-link active" aria-current="page" href="/user/logout">로그아웃</a>
+								<a class="nav-link active" aria-current="page" href="/logoutPage">로그아웃</a>
 							</c:otherwise>
 						</c:choose>
 					</span>

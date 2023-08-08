@@ -31,11 +31,9 @@ public class HeartServiceImpl implements HeartService{
 	public int totalLike(long bno) {
 		return mapper.totalLike(bno);
 	}
-/*
- * @Override public int likeUp(HeartVO vo) { log.info("likeUP!!"); return
- * mapper.likeUp(vo); }
- * 
- * @Override public int likeDown(HeartVO vo) { log.info("likeDOWN!!"); return
- * mapper.likeDown(vo); } 
- */
+	
+	@Override
+	public int checkLike(HeartVO vo) {
+		return mapper.checkLike(vo);
+	}
 }

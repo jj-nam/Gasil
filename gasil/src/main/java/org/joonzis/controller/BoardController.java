@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +20,7 @@ import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.HeartVO;
 import org.joonzis.domain.PageDTO;
+import org.joonzis.domain.ReplyVO;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.mapper.BoardMapper;
 import org.joonzis.mapper.HeartMapper;
@@ -92,18 +95,19 @@ public class BoardController {
 
 		HttpSession session = req.getSession();
 		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
-			if (user == null) {
-				user = new UserAuthVO();
-				user.setUser_id("notAMember");
-			}
-			log.info(user.getUser_id());
-			HeartVO vo = new HeartVO();
-			vo.setBno(bno);
-			vo.setUser_id(user.getUser_id());
-			model.addAttribute("like", hmapper.findhno(vo));
-			log.info("hno : " + hmapper.findhno(vo));
+		if (user == null) {
+			user = new UserAuthVO();
+			user.setUser_id("noName");
+		}
+		log.info(user.getUser_id());
+		HeartVO vo = new HeartVO();
+		vo.setBno(bno);
+		vo.setUser_id(user.getUser_id());
+		model.addAttribute("like", hmapper.findhno(vo));
+		log.info("hno : " + hmapper.findhno(vo));
 			
-		 
+		// 이전 다음 페이지 이동
+		model.addAttribute("move", service.movePage(bno));
 		model.addAttribute("vo", service.get(bno));
 		model.addAttribute("cri", cri);
 		return "board/get";
