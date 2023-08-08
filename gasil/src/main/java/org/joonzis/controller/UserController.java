@@ -9,6 +9,7 @@ import org.joonzis.mapper.UserMapper;
 import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -78,11 +79,21 @@ public class UserController {
 		UserAuthVO login = service.login(vo);
 		log.info(login);
 		
-		
 		if(login != null) {
 			session.setAttribute("user", login);
 		}
 		return "/home";
 	}
 	
+	@RequestMapping(value="/logoutPage", method=RequestMethod.GET)
+    public String logoutMainGET(HttpServletRequest request) throws Exception{
+		
+		log.info("로그아웃");
+		
+		HttpSession session = request.getSession();
+		
+		session.invalidate();
+	        
+	    return "redirect:/home"; 
+    }
 }

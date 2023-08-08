@@ -8,19 +8,19 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 public class PageController {
-	
+	// 홈
 	@RequestMapping("home")
 	public String Home() {
 		log.info("home");
 		return "home";
 	}
-	
+	// 회원가입
 	@RequestMapping("user/joinPage")
 	public String join() {
 		log.info("joinPage");
 		return "user/joinPage";
 	}
-	
+	// 로그인
 	@RequestMapping("user/loginPage")
 	public String login() {
 		log.info("loginPage");
