@@ -89,12 +89,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			bno = #{bno}
 	</update> 
 	
-	
-	<update id="updateHeart" parameterType="long">
-		UPDATE tbl_board 
-		SET
-			blike = (select count(*) from tbl_heart where bno=#{bno})
-		where 
+	<update id="upHeart" parameterType="long">
+		update tbl_board
+		set
+			blike = blike + 1
+		where
 			bno=#{bno}
 	</update>
+	
+	<update id="downHeart" parameterType="long">
+		update tbl_board
+		set
+			blike = blike - 1
+		where
+			bno=#{bno}
+	</update>
+	
 </mapper>

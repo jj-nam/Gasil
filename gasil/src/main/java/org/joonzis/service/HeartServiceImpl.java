@@ -22,21 +22,14 @@ public class HeartServiceImpl implements HeartService{
 	}
 	
 	@Override
-	public int searchLike(HeartVO vo) {
-		log.info("searchLike..."+ vo);
-		return mapper.searchLike(vo);
-	}
-	
-	@Override
 	public int deleteLike(HeartVO vo) {
 		log.info("deleteLike..."+ vo);
 		return mapper.deleteLike(vo);
 	}
 
 	@Override
-	public int get(HeartVO vo) {
-		log.info("getHeart..." + vo);
-		return mapper.get(vo);
+	public int totalLike(long bno) {
+		return mapper.totalLike(bno);
 	}
 /*
  * @Override public int likeUp(HeartVO vo) { log.info("likeUP!!"); return

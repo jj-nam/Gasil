@@ -69,19 +69,29 @@ a{
 					<span style="border: 1px solid black">이미지</span>
 					<span>${vo.writer } 님의 게시글 더보기 &gt;</span>
 				</div>
-					<table>
-						<tr>
-							<td>
-							<button id="likeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-							  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-							</svg></button>
-							</td>
-							<td id="numOfLike">좋아요 ${vo.blike }</td>
-							<td>&nbsp;&nbsp;</td>
-							<td><img alt="comment" src="/resources/images/comment1.png" style="width:25px; height:25px;"></td>
-							<td>&nbsp;댓글 ${vo.r_cnt }</td>
-						</tr>
-					</table>
+				<div>
+					<c:choose>
+						<c:when test="${empty user || like == 0}">
+							<span class="likeReply">
+								<a id="likeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+								<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+								</svg>
+								좋아요 ${vo.blike }&nbsp;</a>
+							</span>
+						</c:when>
+						<c:otherwise>
+							<span class="likeReply">
+								<a id="unlikeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+								</svg> 
+								좋아요 ${vo.blike }&nbsp;</a>
+							</span>
+						</c:otherwise>
+					</c:choose>
+					<span>
+						<img alt="comment" src="/resources/images/comment1.png" style="width:25px; height:25px;">&nbsp;댓글 ${vo.r_cnt }
+					</span>
+				</div>
 				<div class = 'row'>
 				   <div class = "col-lg-12">
 				      <!-- /.panel -->
@@ -176,7 +186,6 @@ a{
 	var writer = '${vo.writer}';
 	
 	$(function(){
-		
 		// 댓글 창 관련 스크립트
 		var re_input = $(".reply_input");	// 댓글 입력 창 (id, writer)
 		
@@ -200,20 +209,23 @@ a{
 			});	// end 댓글 입력 클릭 이벤트
 	})
 			
+	
 	// 좋아요 버튼 클릭 이벤트	
 	$('#likeBtn').on('click', function() {
 			console.log('좋아요 버튼 클릭');
-			var blike= ${vo.blike};
+			var blike= ${vo.blike}+1;
 			var bno= ${vo.bno};
 			
 			var user_id = '${user.user_id}';
 			// 현재 로그인 중인 아이디 
 			// session에서 가져옴 
-			
+			var likeReply = $(".likeReply");	// 좋아요, 댓글 표기 위치
 			if (user_id === ''){
 				alert('로그인한 사용자만 가능합니다.');
 				return;
 			}
+			
+			alert("like");
 			$.ajax({
 				type :'post',
 				url : "/heart/like",
@@ -224,10 +236,46 @@ a{
 				}),
 				success : function(result){
 					str='';
-					if (result === 'like'){
-					}
-					else{
-					}
+					str += '<a id="unlikeBtn">';
+					str += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>';
+					str += '</svg> 좋아요 ' + blike + '&nbsp;</a>';
+					
+					likeReply.html(str);
+				},
+				error : function(){
+					alert('좋아요 기능에서 오류가 발생했습니다.');
+				}
+			}); // end ajax
+		});
+	
+	// 좋아요 버튼 해제
+	$('#unlikeBtn').on('click', function() {
+			console.log('좋아요 버튼 클릭');
+			var blike= ${vo.blike}-1;
+			var bno= ${vo.bno};
+			
+			var user_id = '${user.user_id}';
+			// 현재 로그인 중인 아이디 
+			// session에서 가져옴 
+			var likeReply = $(".likeReply");	// 좋아요, 댓글 표기 위치
+			alert("unlike");
+			
+			$.ajax({
+				type :'post',
+				url : "/heart/unlike",
+				contentType : 'application/json',
+				data : JSON.stringify({
+					'bno' : bno,
+					'user_id' : user_id
+				}),
+				success : function(result){
+					str='';
+					str += '<a id="likeBtn">';
+					str += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">';
+					str += '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>';
+					str += '</svg> 좋아요 ' + blike + '&nbsp;</a>';
+					//str += '</span>';
+					likeReply.html(str);
 				},
 				error : function(){
 					alert('좋아요 기능에서 오류가 발생했습니다.');
@@ -255,11 +303,6 @@ a{
 		rere += '</div>';		
 			
 		$('#reply_no' + no).append(rere);
-		
-		
-		/* var re_input = $(".reply_input");
-		var reInputReply = re_input.find("textarea[name='re_bcontent']");	// 댓글 input
-		var reInputNick = re_input.find("input[name='rere_user_nick']");	// 댓글 input */
 		
 	};
 	// 대댓글 insert
@@ -349,24 +392,6 @@ a{
 		});
 	};	// end 댓글 내용 수정 js
 	
-	/* // 대댓글 수정
-	function rere_updateBtn(no, rno, writer){
-		
-		var reply_content = $("#rereply_edit_content").val().replace(/\n/g,'<br>');
-		$.ajax({
-			url: '/replies/replyupdate/' + no + '/' +  rno + '/' + reply_content,
-			type:'POST',
-			dataType:'json',
-			success: function(result){
-				showList();
-			}
-			, error: function(error){
-				console.log("에러 : " + error);
-			}
-		});
-	};	// end 댓글 내용 수정 js */
-	
-		
 		var replyUL = $(".chat");	// 댓글 리스트 UL
 		showList();					// 댓글 리스트 바인딩 함수 호출
 		

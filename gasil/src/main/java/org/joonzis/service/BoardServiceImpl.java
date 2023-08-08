@@ -57,7 +57,6 @@ public class BoardServiceImpl implements BoardService{
 		boolean modifyResult = mapper.update(vo);
 		
 		return modifyResult;
-		
 	}
 	
 	@Override
@@ -72,15 +71,16 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public void updateHeart(long bno) {
-		log.info("updateHeart...");
-		mapper.updateHeart(bno);
+	public int upHeart(long bno) {
+		log.info("upHeart...");
+		return mapper.upHeart(bno);
 	}
 	
-	/*
-	 * @Override public int findlike(HeartVO vo) { log.info("like : " + vo); return
-	 * hmapper.get(vo); }
-	 */
+	@Override
+	public int downHeart(long bno) {
+		log.info("downHeart");
+		return mapper.downHeart(bno);
+	}
 	
 
 }

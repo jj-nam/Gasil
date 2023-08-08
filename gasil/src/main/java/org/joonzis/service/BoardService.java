@@ -14,6 +14,6 @@ public interface BoardService {
 	public boolean modify(BoardVO vo);
 	public int getTotal();
 	public BoardVO movePage(long bno);
-	public void updateHeart(long bno);
-	/* public int findlike(HeartVO vo); */
+	public int upHeart(long bno);
+	public int downHeart(long bno);
 }
