@@ -11,10 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoWithVO {
-	private long wno;
-	private String user_id, wtitle, content, style, city, country, continent;
-	private Date departure, arrive, reg_date;
-	private int r_cnt, p_cnt;
+	private long wno, period;
+	private String user_id, wtitle, content, style, city, departure, arrive;
+	private Date reg_date;
+	private int r_cnt, p_cnt, people;
 	
-	/* private List<CountryVO> countryList; */
 }

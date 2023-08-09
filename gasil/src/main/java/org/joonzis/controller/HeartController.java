@@ -22,23 +22,6 @@ public class HeartController {
 	private final HeartService service;
 	private final BoardService bservice;
 	
-	/*
-	 * @PostMapping("/like")
-	 * 
-	 * @ResponseBody public int likeConfirm(@RequestBody HeartVO vo) { // JSON으로 값이
-	 * 들어오기 때문에 @RequestBody와 커맨드 객체를 사용해서 JSON 타입을 객첼 변경
-	 * System.out.println("좋아요 기능 값을 가져오는지 확인 : " + vo);
-	 * 
-	 * service.insert(vo); return bservice.upHeart(vo.getBno()); }
-	 * 
-	 * @PostMapping("/unlike")
-	 * 
-	 * @ResponseBody public int unlikeConfirm(@RequestBody HeartVO vo) {
-	 * System.out.println("좋아요 취소 기능 값을 가져오는지 확인 : " + vo);
-	 * 
-	 * service.deleteLike(vo); return bservice.downHeart(vo.getBno()); }
-	 */
-	
 	
 	@PostMapping("/like")
 	@ResponseBody

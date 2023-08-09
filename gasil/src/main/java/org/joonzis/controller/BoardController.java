@@ -87,7 +87,6 @@ public class BoardController {
 	}
 
 	@GetMapping("/get")
-
 	public String get(@RequestParam("bno") long bno, Model model, Criteria cri, HttpServletRequest req,
 			HttpServletResponse res) {
 		log.info("/get..." + bno);

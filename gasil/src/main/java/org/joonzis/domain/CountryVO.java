@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CountryVO {
-	private String city, flag;
+	private String city, continent, country, flag;
 }
