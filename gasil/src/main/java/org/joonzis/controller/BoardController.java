@@ -99,9 +99,11 @@ public class BoardController {
 			user.setUser_id("noName");
 		}
 		log.info(user.getUser_id());
+		
 		HeartVO vo = new HeartVO();
 		vo.setBno(bno);
 		vo.setUser_id(user.getUser_id());
+		
 		model.addAttribute("like", hmapper.findhno(vo));
 		log.info("hno : " + hmapper.findhno(vo));
 			

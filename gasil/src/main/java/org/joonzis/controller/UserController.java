@@ -55,15 +55,6 @@ public class UserController {
 		
 		log.info("joinUser : " + vo);
 		
-		/*
-		 * UserVO uvo = new UserVO(); uvo.setUser_id(vo.getUser_id());
-		 * uvo.setUser_pw(pwencoder.encode(vo.getUser_pw()));
-		 * uvo.setUser_email(vo.getUser_email()); uvo.setUser_name(vo.getUser_name());
-		 * uvo.setUser_birth(vo.getUser_birth()); uvo.setUser_phone(vo.getUser_phone());
-		 * uvo.setGender(vo.getGender()); uvo.setUser_nick(vo.getUser_nick());
-		 * uvo.setUser_pic(vo.getUser_pic()); uvo.setJoindate(vo.getJoindate());
-		 */
-		
 		service.join(vo);
 		service.addAuth(vo.getUser_id());
 		log.info("create auth");

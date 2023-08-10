@@ -23,14 +23,6 @@
 		border: 1px solid lightgrey;
 		border-radius: 10px;
 	}
-	button[name=gender]{
-		width:49%;
-		background-color:white;
-		border: none;
-		margin:0;
-		padding:0;
-		border-radius:10px;
-	}
 	input[name=joincheck], input[name=mainchk]{
 		width: 15px;
 		margin:0;
@@ -75,7 +67,32 @@
     label{
      color:grey;
     }
-  
+ 	.select {
+    padding: 0;
+    text-align: center;
+	}
+	.select input[type=radio]{
+	    display: none;
+	}
+	.select input[type=radio]+label{
+	    display: inline-block;
+	    cursor: pointer;
+	    height: 24px;
+	    width: 195px;
+	    line-height: 24px;
+	    text-align: center;
+	    font-weight:bold;
+	    font-size:13px;
+	    border:1px solid lightgrey;
+	}
+	.select input[type=radio]+label{
+	    background-color: #fff;
+	    color: #333;
+	}
+	.select input[type=radio]:checked+label{
+	    background-color: #333;
+	    color: #fff;
+	}
 </style>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
@@ -394,11 +411,9 @@
 				</tr>
 			</table>
 		</div>	<!-- end 유저 정보 -->
-		<div class="container_join">
-			<div class="container_join" style="text-align: center;">
-				<label><input type="radio" name="gender" value="남" checked>남자</label>
-				<label><input type="radio" name="gender" value="여">여자</label>
-			</div>
+			<div class="select" style="margin-top: 5px;">
+				<input type="radio" id="select" name="gender" value="남"><label for="select" style="border-radius: 10px 0 0 10px">남자</label>
+				<input type="radio" id="select2" name="gender" value="여"><label for="select2" style="border-radius: 0 10px 10px 0 ">여자</label>
 		</div>
 		</form>
 		<!-- 인증 약관 동의 -->

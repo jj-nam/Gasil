@@ -30,7 +30,7 @@ public class GoWithServiceImpl implements GoWithService{
 	}
 	
 	@Override
-	public GoWithVO insert(GoWithVO vo) {
+	public int insert(GoWithVO vo) {
 		log.info("insert...");
 		return mapper.insert(vo);
 	}
@@ -39,5 +39,16 @@ public class GoWithServiceImpl implements GoWithService{
 	public List<CountryVO> getCountry(String continent) {
 		log.info("getContry");
 		return mapper.getCountry(continent);
+	}
+	
+	@Override
+	public List<CountryVO> getCity(String country) {
+		return mapper.getCity(country);
+	}
+	
+	@Override
+	public void getPeriod(GoWithVO gvo) {
+		log.info("period...");
+		mapper.getPeriod(gvo);
 	}
 }

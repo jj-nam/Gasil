@@ -42,7 +42,6 @@ public class GoWithController {
 		
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
-		log.info(service.getList(cri));
 		return "goWith/list";
 	}
 	
@@ -52,55 +51,76 @@ public class GoWithController {
 		return "goWith/insert";
 	}
 
-	/*
-	 * @GetMapping("/getCountry/{continent}") public String
-	 * getCity(@PathVariable("continent") String continent, Model model) {
-	 * System.out.println("대륙 : " + continent); model.addAttribute("countries",
-	 * service.getCountry(continent)); System.out.println("getCountry : " +
-	 * service.getCountry(continent));
-	 * 
-	 * return "goWith/insert"; }
-	 */
-	 
-	
 	@GetMapping(value = "/getCountry/{continent}",  produces = {MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<CountryVO>> getCity(@PathVariable("continent") String continent){
-		log.info("get..." + continent);
+	public ResponseEntity<List<CountryVO>> getCountry(@PathVariable("continent") String continent){
+		log.info("getContinent..." + continent);
 		log.info(service.getCountry(continent));
 		return new ResponseEntity<>(service.getCountry(continent),HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getCity/{country}",  produces = {MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<CountryVO>> getCity(@PathVariable("country") String country){
+		log.info("getCountry..." + country);
+		log.info(service.getCity(country));
+		return new ResponseEntity<>(service.getCity(country),HttpStatus.OK);
 	}
 	
 	@PostMapping("/insert")
 	public String register(GoWithVO vo, RedirectAttributes rttr) {
 		log.info("insert..." + vo);
 		
-		service.insert(vo);
+		
+		
 		
 		String departure = vo.getDeparture(); 
 		String arrive = vo.getArrive(); 
+		
+		System.out.println(vo.getDeparture());
+		System.out.println(vo.getArrive());
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date format1 = null;
 		Date format2 = null;
 		long diffSec = 0;
-		long diffDays = 0;
+		long period = 0;
 		// simpleDateFormat은 try catch문을 사용해야한다.
 		try {
 			format1 = dateFormat.parse(departure);
 			format2 = dateFormat.parse(arrive);
 			
-			diffSec = (format2.getTime() - format1.getTime()) / 1000;
-			diffDays = diffSec / (24*60*60);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(vo.getArrive());
-		System.out.println(vo.getDeparture());
-		System.out.println(diffDays);
 		
+		diffSec = (format2.getTime() - format1.getTime()) / 1000;
+		period = diffSec / (24*60*60);
+		
+		/* service.getPeriod(gvo); */
+		
+		System.out.println(period);
+		
+		GoWithVO gvo = new GoWithVO();
+		gvo.setUser_id(vo.getUser_id());
+		gvo.setWtitle(vo.getWtitle());
+		gvo.setContent(vo.getContent());
+		gvo.setStyle(vo.getStyle());
+		gvo.setCity(vo.getCity());
+		gvo.setDeparture(vo.getDeparture());
+		gvo.setArrive(vo.getArrive());
+		gvo.setR_cnt(vo.getR_cnt());
+		gvo.setP_cnt(vo.getP_cnt());
+		gvo.setPeople(vo.getPeople());
+		gvo.setPeriod(period+1);
+		
+		
+		service.insert(gvo);
 		
 		rttr.addFlashAttribute("result", "ok");
-		return "redirect:/board/list"; // jsp가 아닌 url을 태울려면 redirect 사용
+		return "redirect:/goWith/list";
 	}
+	
+	
+	
 }

@@ -57,7 +57,7 @@
 											</tr>
 											<tr>
 												<td>나이</td>
-												<td>3일 ${with.departure} ~ ${with.arrive}</td>
+												<td>${with.period}일 ${with.departure} ~ ${with.arrive}</td>
 											</tr>
 										</table>		  	
 								  	</div>
@@ -73,7 +73,7 @@
 										    <p class="card-text">${with.style }</p>
 									  	</div>
 									  	<div>
-									  		<button>${with.p_cnt } / ${with.people }</button>
+									  		<button>${with.people } / ${with.p_cnt }</button>
 									  	</div>
 								  	</div>
 								  </div>

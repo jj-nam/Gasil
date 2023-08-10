@@ -24,13 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getCountry" parameterType="String" resultType="org.joonzis.domain.CountryVO">
-		select * from tbl_country where continent=#{continent}
+		select country from tbl_country where continent=#{continent} group by country
 	</select>
 	
-	<insert id="inserWith" parameterType="org.joonzis.domain.GoWithVO">
-		insert into tbl_goWith (wno, user_id, wtitle, content, style, city, departure, arrive, r-cnt, p_cnt, people, period )
+	<select id="getCity" parameterType="String" resultType="org.joonzis.domain.CountryVO">
+		select * from tbl_country where country=#{country}
+	</select>
+	
+	<insert id="insert" parameterType="org.joonzis.domain.GoWithVO">
+		insert into tbl_goWith(wno, user_id, wtitle, content, style, city, departure, arrive, r_cnt, p_cnt, people, reg_date, period)
 		values(
-			goWith_seq.nextval,
+			gowith_seq.nextval,
 			#{user_id},
 			#{wtitle},
 			#{content},
@@ -41,7 +45,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			0,
 			#{p_cnt}, 
 			#{people},
-			0
+			sysdate,
+			#{period}
 		)
 	</insert>
+	
+	<update id="getPeriod" parameterType="org.joonzis.domain.GoWithVO">
+		update tbl_goWith
+		set
+			period = #{period}
+		where
+			wno = #{wno}
+	</update>
 </mapper>
