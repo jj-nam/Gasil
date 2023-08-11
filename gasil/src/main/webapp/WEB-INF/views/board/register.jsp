@@ -37,7 +37,8 @@
 						<textarea class="form-control" id="ckeditor" rows="20" name="bcontent"></textarea>
 					</div>
 					<div class="form-group">
-						<input type="hidden" class="form-control" name="writer" value="${user.user_nick }">
+						<input type="hidden" class="form-control" name="writer" value="${user.user_id }">
+						<input type="hidden" class="form-control" name="user_nick" value="${user.user_nick }">
 					</div>
 				</form>
 			</div>

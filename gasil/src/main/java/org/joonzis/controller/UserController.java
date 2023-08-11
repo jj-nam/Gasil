@@ -87,4 +87,9 @@ public class UserController {
 	        
 	    return "redirect:/home"; 
     }
+	
+	// input으로 받은 닉네임으로
+	// 닉네임 수정할 때 해당 이전 닉네임을 가지고 있는 
+	// 게시물, 댓글, 대댓글 등 모든 것에 대한 닉네임을 먼저 수정
+	// 그 후 닉네임을 수정
 }

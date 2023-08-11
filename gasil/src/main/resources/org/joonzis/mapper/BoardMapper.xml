@@ -7,10 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getListWithPaging" resultType="org.joonzis.domain.BoardVO">
 		<![CDATA[
 			select 
-				bno, title, bcontent, writer, reg_date, r_cnt, cate_id, bview 
+				bno, title, bcontent, reg_date, r_cnt, cate_id, bview, user_nick 
 			from
 				(select
-				rownum as rn, bno, title, bcontent, writer, reg_date, r_cnt, cate_id, bview from tbl_board
+				rownum as rn, bno, title, bcontent, reg_date, r_cnt, cate_id, bview, user_nick from tbl_board
 			where 
 				rownum <= #{pageNum} * #{amount} order by bno desc)
 			where 
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="org.joonzis.domain.BoardVO">
-		insert into tbl_board(bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, reg_date)
+		insert into tbl_board(bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, user_nick, reg_date)
 		values(
 			board_seq.nextval,
 			#{cate_id},
@@ -29,12 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{title},
 			#{bcontent},
 			#{writer},
+			#{user_nick},
 			sysdate
 		)
 	</insert>
 	
 	<select id="read" parameterType="long" resultType="org.joonzis.domain.BoardVO" >
-		select bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, reg_date from tbl_board where bno = #{bno}
+		select bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, user_nick, reg_date from tbl_board where bno = #{bno}
 	</select>
 	
 	<delete id="delete" parameterType="long">

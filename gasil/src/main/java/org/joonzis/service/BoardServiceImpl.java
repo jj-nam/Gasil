@@ -21,9 +21,6 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper mapper;
 	
-	@Autowired
-	private HeartMapper hmapper;
-	
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		log.info("getList...");

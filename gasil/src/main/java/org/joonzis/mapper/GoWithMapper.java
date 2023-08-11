@@ -7,10 +7,9 @@ import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithVO;
 
 public interface GoWithMapper {
-	public List<GoWithVO> getListWithPaging(Criteria cri);
+	public List<GoWithVO> getList();
 	public int getTotalcount();
 	public int insert(GoWithVO vo);
 	public List<CountryVO> getCountry(String continent);
 	public List<CountryVO> getCity(String city);
-	public void getPeriod(GoWithVO gvo);
 }

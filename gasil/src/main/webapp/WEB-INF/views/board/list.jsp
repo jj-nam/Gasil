@@ -48,7 +48,6 @@ li{
 							<tbody>
 								<c:forEach var="board" items="${list}">
 									<tr>
-									<!-- 카테고리 id가 아닌 이름으로 출력 -->
 										<td style="text-align: center">
 											<a class="move" href="${board.bno }">
 											<c:out value="${board.cate_id}"></c:out>
@@ -60,7 +59,7 @@ li{
 											</a>
 										</td>
 										<td>
-											<c:out value="${board.writer}"></c:out>
+											<c:out value="${board.user_nick}"></c:out>
 										</td>
 										<td style="text-align: center">
 											<a class="move" href="${board.bno }">

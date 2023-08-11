@@ -4,16 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.joonzis.mapper.GoWithMapper">
-	<select id="getListWithPaging" resultType="org.joonzis.domain.GoWithFlagVO">
+	<select id="getList" resultType="org.joonzis.domain.GoWithFlagVO">
 		<![CDATA[
-			select wno, user_id, wtitle, content, people, style, departure, arrive, period, reg_date, r_cnt, p_cnt, city, country, continent, flag
-			from
-				(select
-				rownum as rn, wno, user_id, wtitle, content, people, style, departure, arrive, period, reg_date, r_cnt, p_cnt, city,country, continent, flag from tbl_goWith  natural join tbl_country
-			where 
-				rownum <= #{pageNum} * #{amount} order by wno desc)
-			where 
-				rn > (#{pageNum} -1) * #{amount}
+			select * from
+				tbl_goWith  natural join tbl_country 
+			order by 
+				wno desc
 		]]>
 	</select>
 	
@@ -49,12 +45,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{period}
 		)
 	</insert>
-	
-	<update id="getPeriod" parameterType="org.joonzis.domain.GoWithVO">
-		update tbl_goWith
-		set
-			period = #{period}
-		where
-			wno = #{wno}
-	</update>
 </mapper>

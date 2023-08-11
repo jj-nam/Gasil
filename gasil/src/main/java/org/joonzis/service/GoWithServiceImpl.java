@@ -19,9 +19,9 @@ public class GoWithServiceImpl implements GoWithService{
 	private GoWithMapper mapper;
 	
 	@Override
-	public List<GoWithVO> getList(Criteria cri) {
+	public List<GoWithVO> getList() {
 		log.info("getList...");
-		return mapper.getListWithPaging(cri);
+		return mapper.getList();
 	}
 	@Override
 	public int getTotal() {
@@ -46,9 +46,4 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.getCity(country);
 	}
 	
-	@Override
-	public void getPeriod(GoWithVO gvo) {
-		log.info("period...");
-		mapper.getPeriod(gvo);
-	}
 }

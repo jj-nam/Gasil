@@ -32,11 +32,11 @@
 	<br>
 	<h3>동행</h3>
 	<input type="text" name="search" placeholder="검색어를 입력하세요">
-	<%-- <c:if test="${not empty user}"> --%>
 		<button id="country_filter" style="text-align: left" class="btn btn-xs pull-right btn-primary">모든 국가(필터 예정)</button>
 		<button id="date_fileter" style="text-align: left" class="btn btn-xs pull-right btn-primary">조회 기간(필터 예정)</button>
+	<c:if test="${not empty user}">
 		<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
-	<%-- </c:if> --%>
+	</c:if>
 		<div class="content-area" style="margin-top: 10px;">
 		
 			<div class="row">
@@ -44,9 +44,9 @@
 					<div class="panel panel-default">
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-						
-							<c:forEach var="with" items="${list}">
-								<div class="card" style="width: 18rem;">
+								<c:forEach var="with" items="${list}">
+							<div class="col" style="display:inline-block; width:24%; margin:10px 0px;">
+								<div class="card" style="width: 17rem;">
 								  <div class="card-body">
 								  	<div>
 										<table>
@@ -62,6 +62,7 @@
 										</table>		  	
 								  	</div>
 								  	<hr>
+								  	
 								  	<div>
 									  	<div>
 										  	<p> ${with.flag}   ${with.city }</p>
@@ -76,10 +77,12 @@
 									  		<button>${with.people } / ${with.p_cnt }</button>
 									  	</div>
 								  	</div>
+								  	
 								  </div>
 								</div>
+								</div>
 							</c:forEach>
-							<!-- 페이징 -->
+							<%-- <!-- 페이징 -->
 				            <div class="pull-right">
 				               <ul class="pagination">
 				               	<c:choose>
@@ -104,10 +107,10 @@
 				               </ul>
 				            </div>
 							<!-- 페이징 끝 -->
-							<form action="/board/list" method="get" id="actionForm">
+ 							<form action="/goWith/list" method="get" id="actionForm">
 								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-							</form>
+							</form> --%>
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -154,32 +157,5 @@
 		}
 	}
 	
-	
-	var actionForm = $("#actionForm");
-	//-------------- 조회 화면 이동 이벤트 처리 ---------------
-	$(".move").on('click',function(e){
-		// <a> 클릭 시 페이지 이동이 이루어지지 않게 하기 위해
-		e.preventDefault();
-	
-		// $(this)의 요소 중 href의 속성 값(value)
-	
-		actionForm.attr('action', '/board/get'); // 경로 변경
-		var aa = '<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">';
-		aa += '<input type="hidden" name="amount" value="${pageMaker.cri.amount }">';
-		aa += "<input type='hidden' name='bno' value='"+ $(this).attr('href') + "'/>";
-		actionForm.html(aa);
-		actionForm.submit();
-	});
-
-	//-------------- 페이징 버튼 이벤트 처리 ---------------
-	$(".paginate_button a").on('click', function(e) {
-		e.preventDefault();
-		
-		actionForm.attr('action', '/board/list');
-		actionForm.find("input[name='bno']").remove();
-		actionForm.find("input[name='amount']").remove();
-		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-		actionForm.submit();
-	});
 </script>
 <%@ include file="../include/footer.jsp" %>

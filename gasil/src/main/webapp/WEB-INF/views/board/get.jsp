@@ -39,7 +39,7 @@ a{
 					<p style="margin:0px">${vo.cate_id } &nbsp;&gt;
 					<button data-oper="list" class="btn btn-info" style="float: right; margin-right: 10px;">목록</button>
 					<c:choose>
-						<c:when test="${vo.writer == user.user_nick }">
+						<c:when test="${vo.writer == user.user_id }">
 							<button data-oper="remove" class="btn btn-primary" style="float: right; margin-right: 10px;">삭제</button>
 							<button data-oper="modify" class="btn btn-primary" style="float: right; margin-right: 10px;">수정</button>
 						</c:when>
@@ -52,7 +52,7 @@ a{
 					<tr>
 						<td rowspan="2" style="border: 1px solid black">이미지</td>
 						<td>&nbsp;&nbsp;</td>
-						<td>${vo.writer }</td>
+						<td>${vo.user_nick}</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -67,7 +67,7 @@ a{
 				<br><br><br>
 				<div>
 					<span style="border: 1px solid black">이미지</span>
-					<span>${vo.writer } 님의 게시글 더보기 &gt;</span>
+					<span>${vo.user_nick} 님의 게시글 더보기 &gt;</span>
 				</div>
 				<div>
 				<span class="likeReply">
@@ -110,7 +110,8 @@ a{
 				<div class="reply_input" style="border: 1px solid lightgrey; border-radius: 10px; padding: 20px">
 				<c:choose>
 					<c:when test="${not empty user}">
-						<input type="hidden" name="writer" value="${user.user_nick }"/>
+						<input type="hidden" name="writer" value="${user.user_id }"/>
+						<input type="hidden" name="user_nick" value="${user.user_nick }"/>
 						<textarea class="form-control" rows="3" name="content" style="resize:none; border:none; padding: 0px;" placeholder="댓글을 남겨보세요"></textarea>
 						<p style="text-align: right; margin:0px;"><button id="reply_registerBtn" style="border:none; background-color: transparent; color: lightgrey;">등록</button></p>
 					</c:when>
@@ -173,14 +174,14 @@ a{
 	console.log("JS TEST");
 	
 	var bnoValue = '${vo.bno}';
-	var writer = '${vo.writer}';
+	var writer = '${vo.user_nick}';
 	var cnt = '${vo.blike}';
 	
 	$(function(){
 		// 댓글 창 관련 스크립트
 		var re_input = $(".reply_input");	// 댓글 입력 창 (id, writer)
 		
-		var inputWriter = re_input.find("input[name='writer']");		// 댓글 작성자 input
+		var inputWriter = re_input.find("input[name='user_nick']");		// 댓글 작성자 input
 		var inputContent = re_input.find("textarea[name='content']");	// 댓글 input
 		
 		var RegisterBtn = $("#reply_registerBtn");						// 댓글 등록 버튼

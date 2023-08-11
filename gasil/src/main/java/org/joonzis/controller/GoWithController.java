@@ -37,11 +37,10 @@ public class GoWithController {
 	private GoWithService service;
 	
 	@GetMapping("/list")
-	public String list(Model model, Criteria cri) {
+	public String list(Model model) {
 		log.info("list...");
 		
-		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
+		model.addAttribute("list", service.getList());
 		return "goWith/list";
 	}
 	
@@ -71,9 +70,6 @@ public class GoWithController {
 	public String register(GoWithVO vo, RedirectAttributes rttr) {
 		log.info("insert..." + vo);
 		
-		
-		
-		
 		String departure = vo.getDeparture(); 
 		String arrive = vo.getArrive(); 
 		
@@ -97,8 +93,6 @@ public class GoWithController {
 		diffSec = (format2.getTime() - format1.getTime()) / 1000;
 		period = diffSec / (24*60*60);
 		
-		/* service.getPeriod(gvo); */
-		
 		System.out.println(period);
 		
 		GoWithVO gvo = new GoWithVO();
@@ -113,7 +107,6 @@ public class GoWithController {
 		gvo.setP_cnt(vo.getP_cnt());
 		gvo.setPeople(vo.getPeople());
 		gvo.setPeriod(period+1);
-		
 		
 		service.insert(gvo);
 		
