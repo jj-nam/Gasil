@@ -15,5 +15,4 @@ public interface GoWithMapper {
 	public List<CountryVO> getCity(String city);
 	public GoWithFlagVO get(long wno);
 	public boolean remove(long wno);
-	public boolean modify(GoWithFlagVO vo);
 }

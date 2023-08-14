@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="org.joonzis.domain.GoWithVO">
-		insert into tbl_goWith(wno, user_id, wtitle, content, style, city, departure, arrive, r_cnt, p_cnt, people, reg_date, period)
+		insert into tbl_goWith(wno, user_id, wtitle, content, style, city, departure, arrive, r_cnt, p_cnt, people, reg_date, period, age)
 		values(
 			gowith_seq.nextval,
 			#{user_id},
@@ -42,7 +42,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{p_cnt}, 
 			#{people},
 			sysdate,
-			#{period}
+			#{period},
+			#{age}
+			
 		)
 	</insert>
 	
@@ -54,17 +56,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from tbl_goWith where wno = #{wno}
 	</delete>
 	
-	<update id="modify" parameterType="long">
-		update tbl_goWith 
-		set 
-			departure = #{departure},
-			arrive = #{arrive},
-			wtitle = #{wtitle},
-			content = #{content},
-			style = #{style},
-			period = #{period},
-			people = #{people}
-		WHERE 
-			wno = #{wno}
-	</update>
 </mapper>

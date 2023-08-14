@@ -10,4 +10,5 @@ public interface UserMapper {
 	public void insert(UserVO uvo);
 	public UserAuthVO login(UserAuthVO vo); 
 	public void addAuth(String user_id);
+	public String getBirth(String user_id);
 }

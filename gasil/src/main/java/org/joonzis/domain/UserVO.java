@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
-	private String user_id, user_pw, user_email, user_name, user_birth,user_phone, gender, user_nick, user_pic;
+	private String user_id, user_pw, user_email, user_name, user_birth, user_phone, gender, user_nick, user_pic;
 	private Date joindate;
-	
 }

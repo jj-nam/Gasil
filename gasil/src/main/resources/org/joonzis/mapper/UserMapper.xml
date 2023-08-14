@@ -29,12 +29,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			user_id=#{user_id} and 
 			user_pw=#{user_pw}
 	</select>
-<!-- 	<select id="login" parameterType="org.joonzis.domain.UserVO" resultType="org.joonzis.domain.UserVO">
-		select * from tbl_user 
-		where 
-			user_id=#{user_id} and 
-			user_pw=#{user_pw}
-	</select> -->
 	
 	<insert id="addAuth" parameterType="String">
 		insert into tbl_auth (grade, user_id, auth)
@@ -44,7 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'user'
 		)
 	</insert>
-	
+	<select id="getBirth" parameterType="String" resultType="String">
+		select user_birth from tbl_user where user_id =#{user_id}
+	</select>
 <!-- 	<resultMap type="org.joonzis.domain.UserVO" id="userMap">
 		VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다
 		<id property="user_id" column="user_id"/>

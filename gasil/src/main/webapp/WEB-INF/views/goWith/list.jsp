@@ -1,6 +1,7 @@
 <%@ include file="../include/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style type="text/css">
@@ -23,6 +24,10 @@
 	}
 	td{
 		font-size: x-small;
+	}
+	#imageSize{
+		height: 50px;
+		width:50px;
 	}
 </style>
 <div class="row">
@@ -52,11 +57,20 @@
 											<table>
 												<tr>
 													<td rowspan="2">이미지</td>
-													<td>${withs.user_nick}</td>
+													<td colspan="2">${withs.user_nick}</td>
 													<td>여행기간</td>
 												</tr>
 												<tr>
-													<td>나이</td>
+													<c:choose>
+														<c:when test="${withs.gender =='남'}">
+															<td><img id= "gender" alt="m" src="../resources/images/genderM.png"></td>
+															<td style="color:blue;">${withs.age }0대</td>
+														</c:when>
+														<c:otherwise>
+															<td><img id= "gender" alt="w" src="../resources/images/genderW.png"></td>
+															<td style="color:pink">${withs.age }0대</td>
+														</c:otherwise>
+													</c:choose>
 													<td>${withs.period}일 ${withs.departure} ~ ${withs.arrive}</td>
 												</tr>
 											</table>		  	
@@ -70,8 +84,32 @@
 										  	<div>
 											    <h5 class="card-title">${withs.wtitle }</h5>
 										  	</div>
-										  	<div>
-											    <p class="card-text">${withs.style }</p>
+										  	<div>	<!-- style을 ','로 split하여 배열에 담아 출력 -->
+											  	<c:set var="styles" value="${withs.style}"/>
+											  	<c:set var="styleArr" value="${fn:split(styles, ',')}"/>
+											  	
+											  	<c:forEach var="chk" items="${styleArr }">
+											  		<c:choose>
+											  			<c:when test="${chk == 'activity'}">
+											  				<span class="card-text"><img id= "imageSize" alt="activity" src="../resources/images/activity.png"></span>
+											  			</c:when>
+											  			<c:when test="${chk == 'food'}">
+											  				<span class="card-text"><img id= "imageSize" alt="food" src="../resources/images/food.jpg"></span>
+											  			</c:when>
+											  			<c:when test="${chk == 'museum'}">
+											  				<span class="card-text"><img id= "imageSize" alt="museum" src="../resources/images/museum.jpg"></span>
+											  			</c:when>
+											  			<c:when test="${chk == 'nation'}">
+											  				<span class="card-text"><img id= "imageSize" alt="nation" src="../resources/images/nation.jpg"></span>
+											  			</c:when>
+											  			<c:when test="${chk == 'shopping'}">
+											  				<span class="card-text"><img id= "imageSize" alt="shopping" src="../resources/images/shopping.jpg"></span>
+											  			</c:when>
+											  			<c:when test="${chk == 'photo'}">
+											  				<span class="card-text"><img id= "imageSize" alt="photo" src="../resources/images/photo.jpg"></span>
+											  			</c:when>
+											  		</c:choose>
+											  	</c:forEach>
 										  	</div>
 										  	<div>
 										  		<span>${withs.people } / ${withs.p_cnt }</span>
@@ -120,6 +158,7 @@
 <!-- /.row -->
 <script type="text/javascript">
 	history.replaceState({}, null, location.pathname);
+	
 	var actionForm = $("#actionForm");
 	// 게시글 등록 버튼
 	$(function(){
@@ -149,7 +188,7 @@
 									str += '<td style="width:40%">여행기간</td>';
 								str += '</tr>';
 								str += '<tr>';
-									str += '<td>나이</td>';
+									str += '<td>'+ result.user_birth +'</td>';
 									str += '<td>'+ result.period+ '일 ' + result.departure + '~' + result.arrive + '</td>';
 								str += '</tr>';
 							str += '</table>';
@@ -165,12 +204,30 @@
 						str += '</div>'
 						str += '<hr>';
 						str += '<div>여행 스타일</div>';	// 여행스타일 문구
-						str += '<div>' + result.style + '</div>';	// 여행스타일 사진
+						
+						var chkStyle = result.style;
+						var styles = chkStyle.split(',');
+						for(var i=0; i<styles.length; i++){
+							if(styles[i] == 'activity'){
+								str += '<span><span class="card-text"><img id= "imageSize" alt="activity" src="../resources/images/activity.png"></span>&nbsp;';
+							}else if(styles[i] == 'food'){
+								str += '<span><span class="card-text"><img id= "imageSize" alt="food" src="../resources/images/food.jpg"></span>&nbsp;';
+							}else if(styles[i] == 'museum'){
+								str += '<span><span class="card-text"><img id= "imageSize" alt="museum" src="../resources/images/museum.jpg"></span>&nbsp;';
+							}else if(styles[i] == 'nation'){
+								str += '<span><span class="card-text"><img id= "imageSize" alt="nation" src="../resources/images/nation.jpg"></span>&nbsp;';
+							}else if(styles[i] == 'shopping'){
+								str += '<span><span class="card-text"><img id= "imageSize" alt="shopping" src="../resources/images/shopping.jpg"></span>&nbsp;';
+							}else if(styles[i] == 'photo'){
+								str += '<span><span class="card-text"><img id= "imageSize" alt="photo" src="../resources/images/photo.jpg"></span>&nbsp;';
+							}
+						}
 						str += '<div style="float:right">';
+						str += '<br>';
+						str += '<br>';
 						str += '<br>';
 						if(loginUser != ""){
 							if(result.user_id == loginUser){
-						            str += '<button data-oper="modify" class = "btn btn-primary">수정</button>';
 						            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
 						            str += '<button id = "showRegisterBtn" class = "btn btn-primary">신청자 보기</button>';
 								}else{
@@ -201,9 +258,6 @@
 				alert("회원만 신청 할 수 있습니다.")
 			})
 			
-			$("button[data-oper='modify']").on('click',function(){
-				operForm.submit();
-			});
 			$("button[data-oper='remove']").on('click',function(){
 				if(confirm("삭제하시겠습니까?")){
 					operForm.attr('method', 'post');

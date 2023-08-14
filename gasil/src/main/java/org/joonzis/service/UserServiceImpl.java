@@ -57,6 +57,10 @@ public class UserServiceImpl implements UserService {
 	public UserAuthVO login(UserAuthVO vo) {
 		log.info("login...");
 		return mapper.login(vo);
-		
 	}
+	@Override
+	public String getBirth(String user_id) {
+		return mapper.getBirth(user_id);
+	}
+	
 }

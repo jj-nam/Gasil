@@ -54,8 +54,4 @@ public class GoWithServiceImpl implements GoWithService{
 	public boolean remove(long wno) {
 		return mapper.remove(wno);
 	}
-	@Override
-	public boolean modify(GoWithFlagVO vo) {
-		return mapper.modify(vo);
-	}
 }

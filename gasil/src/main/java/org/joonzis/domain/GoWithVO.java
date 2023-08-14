@@ -14,6 +14,6 @@ public class GoWithVO {
 	private long wno, period;
 	private String user_id, wtitle, content, style, city, departure, arrive;
 	private Date reg_date;
-	private int r_cnt, p_cnt, people;
+	private int r_cnt, p_cnt, people, age;
 	
 }

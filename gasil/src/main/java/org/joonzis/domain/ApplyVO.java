@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class ApplyVO {
 	private long ano, wno;
 	private String user_id;
+	private int apply;
 }

@@ -2,18 +2,17 @@ package org.joonzis.controller;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.CountryVO;
-import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
-import org.joonzis.domain.PageDTO;
-import org.joonzis.domain.ReplyVO;
 import org.joonzis.service.GoWithService;
-import org.sonatype.inject.Parameters;
+import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +36,9 @@ public class GoWithController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private GoWithService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private UserService uservice;
 	
 	@GetMapping("/list")
 	public String list(Model model) {
@@ -74,19 +76,39 @@ public class GoWithController {
 		String departure = vo.getDeparture(); 
 		String arrive = vo.getArrive(); 
 		
-		System.out.println(vo.getDeparture());
-		System.out.println(vo.getArrive());
-		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date format1 = null;
 		Date format2 = null;
+		
+		// 나이 구하기
+		/*
+		 * String birth = uservice.getBirth(vo.getUser_id()); Calendar now =
+		 * Calendar.getInstance(); Integer currentYear = now.get(Calendar.YEAR);
+		 * SimpleDateFormat format = new SimpleDateFormat("yyyy"); String bYear =
+		 * format.format(birth); Integer birthYear = Integer.parseInt(bYear);
+		 * 
+		 * int age = (currentYear - birthYear + 1);
+		 */
+		String birth = uservice.getBirth(vo.getUser_id());
+		LocalDate now = LocalDate.now();
+		LocalDate parseBirthDate = LocalDate.parse(birth, DateTimeFormatter.ofPattern("yyyyMMdd"));
+		
+		int age2 = now.minusYears(parseBirthDate.getYear()).getYear();
+		if (parseBirthDate.plusYears(age2).isAfter(now)) { 
+			age2 = age2 -1;
+		}
+		String age1 = age2 + "";
+		int age = Integer.parseInt(age1.substring(0,1));
+		
+		System.out.println(age);
+		
+		// 여행 기간 구하기
 		long diffSec = 0;
 		long period = 0;
 		// simpleDateFormat은 try catch문을 사용해야한다.
 		try {
 			format1 = dateFormat.parse(departure);
 			format2 = dateFormat.parse(arrive);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,6 +130,7 @@ public class GoWithController {
 		gvo.setP_cnt(vo.getP_cnt());
 		gvo.setPeople(vo.getPeople());
 		gvo.setPeriod(period+1);
+		gvo.setAge(age);
 		
 		service.insert(gvo);
 		System.out.println(gvo);
@@ -124,7 +147,6 @@ public class GoWithController {
 	return new ResponseEntity<>(service.get(wno),HttpStatus.OK);
 	}
 	
-	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("wno") long wno, RedirectAttributes rttr) {
 		log.info("remove : " + wno);
@@ -133,26 +155,6 @@ public class GoWithController {
 		}
 		return "redirect:/goWith/list";
 	}
-	
-	
-	@GetMapping("/modify")
-	public String modify(@RequestParam("wno") long wno, Model model) {
-		log.info("modify");
-		model.addAttribute("vo", service.get(wno));
-		return "goWith/modify";
-	}
-
-	@PostMapping("/modify")
-	public String modify(GoWithFlagVO vo, RedirectAttributes rttr) {
-		log.info("modify : " + vo);
-		
-		if (service.modify(vo)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		log.info(vo.getWno());
-		return "redirect:/goWith/list";
-	}
-	
 	
 	
 }

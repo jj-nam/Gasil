@@ -9,4 +9,5 @@ public interface UserService {
 	public void join(UserVO uvo);
 	public UserAuthVO login(UserAuthVO vo);
 	public void addAuth(String user_id);
+	public String getBirth(String user_id);
 }

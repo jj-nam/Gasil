@@ -15,5 +15,4 @@ public interface GoWithService {
 	public List<CountryVO> getCity(String country);
 	public GoWithFlagVO get(long wno);
 	public boolean remove(long wno);
-	public boolean modify(GoWithFlagVO vo);
 }	

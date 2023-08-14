@@ -68,34 +68,52 @@
 			<input class="calendar" name="arrive" autocomplete="off" placeholder="날짜 선택" readonly="readonly">
 		</div>	<!-- /날짜 선택 -->
 		<div>	<!-- 스타일 -->
-			<span>여행 스타일</span>
+			<div>여행 스타일</div>
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox1" value="activity">
-			  <label class="form-check-label" for="inlineCheckbox1">액티비티매니아</label>
+			  <div>
+				  <label class="form-check-label" for="inlineCheckbox1"><img alt="activity" src="../resources/images/activity.png"></label>
+			  </div>
+			  <div style="text-align: center">액티비티</div>
 			</div>
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox2" value="food">
-			  <label class="form-check-label" for="inlineCheckbox2">맛집탐방러</label>
+			  <div>
+				  <label class="form-check-label" for="inlineCheckbox2"><img alt="food" src="../resources/images/food.jpg"></label>
+			  </div>
+			  <div style="text-align: center">맛집</div>
 			</div>
+			
 			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox3" value="party">
-			  <label class="form-check-label" for="inlineCheckbox3">파티피플</label>
+			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox3" value="museum">
+			  <div>
+				  <label class="form-check-label" for="inlineCheckbox3"><img alt="museum" src="../resources/images/museum.jpg"></label>
+			  </div>
+			  <div style="text-align: center">문화</div>
 			</div>
+			
 			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox4" value="nation">
-			  <label class="form-check-label" for="inlineCheckbox4">자연인</label>
+			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox4" value="nation">
+			  <div>
+				  <label class="form-check-label" for="inlineCheckbox4"><img alt="nation" src="../resources/images/nation.jpg"></label>
+			  </div>
+			  <div style="text-align: center">자연</div>
 			</div>
+			
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox5" value="shopping">
-			  <label class="form-check-label" for="inlineCheckbox5">쇼퍼홀릭</label>
+			  <div>
+				  <label class="form-check-label" for="inlineCheckbox5"><img alt="shopping" src="../resources/images/shopping.jpg"></label>
+			  </div>
+			  <div style="text-align: center">쇼핑</div>
 			</div>
+			
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox6" value="photo">
-			  <label class="form-check-label" for="inlineCheckbox6">인스타그래머</label>
-			</div>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox7" value="museum">
-			  <label class="form-check-label" for="inlineCheckbox7">뇌섹남녀</label>
+			  <div>
+				  <label class="form-check-label" for="inlineCheckbox6"><img alt="photo" src="../resources/images/photo.jpg"></label>
+			  </div>
+			  <div style="text-align: center">사진</div>
 			</div>
 		</div>	<!-- /스타일 -->
 		<div class="form-group" style="margin-bottom: 10px">
@@ -123,6 +141,8 @@
 <script type="text/javascript" src="../resources/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(function(){
+	
+	
 	
 	// range Slider
 	 var slider = document.getElementById("myRange");
