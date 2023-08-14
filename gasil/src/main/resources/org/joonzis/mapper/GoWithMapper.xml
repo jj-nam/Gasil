@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getList" resultType="org.joonzis.domain.GoWithFlagVO">
 		<![CDATA[
 			select * from
-				tbl_goWith  natural join tbl_country 
+				(tbl_goWith natural join tbl_country) natural join tbl_user 
 			order by 
 				wno desc
 		]]>
@@ -45,4 +45,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{period}
 		)
 	</insert>
+	
+	<select id="get" parameterType="long" resultType="org.joonzis.domain.GoWithFlagVO">
+		select * from (tbl_goWith natural join tbl_country) natural join tbl_user where wno = #{wno}
+	</select>
+	
+	<delete id="remove" parameterType="long">
+		delete from tbl_goWith where wno = #{wno}
+	</delete>
+	
+	<update id="modify" parameterType="long">
+		update tbl_goWith 
+		set 
+			departure = #{departure},
+			arrive = #{arrive},
+			wtitle = #{wtitle},
+			content = #{content},
+			style = #{style},
+			period = #{period},
+			people = #{people}
+		WHERE 
+			wno = #{wno}
+	</update>
 </mapper>

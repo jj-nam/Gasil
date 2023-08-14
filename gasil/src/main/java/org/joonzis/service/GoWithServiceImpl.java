@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
+import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
 import org.joonzis.mapper.GoWithMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class GoWithServiceImpl implements GoWithService{
 	private GoWithMapper mapper;
 	
 	@Override
-	public List<GoWithVO> getList() {
+	public List<GoWithFlagVO> getList() {
 		log.info("getList...");
 		return mapper.getList();
 	}
@@ -45,5 +46,16 @@ public class GoWithServiceImpl implements GoWithService{
 	public List<CountryVO> getCity(String country) {
 		return mapper.getCity(country);
 	}
-	
+	@Override
+	public GoWithFlagVO get(long wno) {
+		return mapper.get(wno);
+	}
+	@Override
+	public boolean remove(long wno) {
+		return mapper.remove(wno);
+	}
+	@Override
+	public boolean modify(GoWithFlagVO vo) {
+		return mapper.modify(vo);
+	}
 }

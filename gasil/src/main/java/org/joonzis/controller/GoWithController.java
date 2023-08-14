@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
+import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
 import org.joonzis.domain.PageDTO;
 import org.joonzis.domain.ReplyVO;
@@ -45,8 +47,7 @@ public class GoWithController {
 	}
 	
 	@GetMapping("/insert")
-	public String register(Criteria cri, Model model) {
-		model.addAttribute("cri", cri);
+	public String register(Model model) {
 		return "goWith/insert";
 	}
 
@@ -109,8 +110,46 @@ public class GoWithController {
 		gvo.setPeriod(period+1);
 		
 		service.insert(gvo);
+		System.out.println(gvo);
 		
 		rttr.addFlashAttribute("result", "ok");
+		return "redirect:/goWith/list";
+	}
+	
+	@GetMapping(value = "/{wno}", produces = {MediaType.APPLICATION_XML_VALUE,
+											MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<GoWithFlagVO> get(@PathVariable("wno") long wno){
+	log.info("get..." + wno);
+	
+	return new ResponseEntity<>(service.get(wno),HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/remove")
+	public String remove(@RequestParam("wno") long wno, RedirectAttributes rttr) {
+		log.info("remove : " + wno);
+		if (service.remove(wno)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/goWith/list";
+	}
+	
+	
+	@GetMapping("/modify")
+	public String modify(@RequestParam("wno") long wno, Model model) {
+		log.info("modify");
+		model.addAttribute("vo", service.get(wno));
+		return "goWith/modify";
+	}
+
+	@PostMapping("/modify")
+	public String modify(GoWithFlagVO vo, RedirectAttributes rttr) {
+		log.info("modify : " + vo);
+		
+		if (service.modify(vo)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		log.info(vo.getWno());
 		return "redirect:/goWith/list";
 	}
 	

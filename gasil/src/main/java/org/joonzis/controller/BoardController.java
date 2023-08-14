@@ -85,7 +85,7 @@ public class BoardController {
 		rttr.addFlashAttribute("result", "ok");
 		return "redirect:/board/list"; // jsp가 아닌 url을 태울려면 redirect 사용
 	}
-
+	
 	@GetMapping("/get")
 	public String get(@RequestParam("bno") long bno, Model model, Criteria cri, HttpServletRequest req,
 			HttpServletResponse res) {

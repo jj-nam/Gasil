@@ -24,48 +24,15 @@
 </div>
 <div class="row">	<!-- 전체 -->
 	<div class="content">	<!-- 테두리 -->
-	<form action="/goWith/insert" method="post">
-
-		<div class="cccSel" style="border:1px solid lightgrey; border-radius:10px;">	<!-- 대륙 국가 도시 -->
-			<span class="continentSel">	<!-- 대륙 -->
-				<span style="border-right: 1px solid lightgrey; text-align: center; margin: 20px;">
-					<input type="button" id="eAsia" value="아시아">	
-					<br>		
-					<input type="button" id="esAsia" value="동남아시아">	
-					<br>		
-					<a id="wsAsia">중동</a>				
-					<br>		
-					<a id="europe">유럽</a>					
-					<br>		
-					<a id="america">아메리카</a>					
-					<br>		
-					<a id="oceania">오세아니아</a>					
-					<br>		
-					<a id="africa">아프리카</a>				
-				</span>
-				<span>	<!-- 국가 도시 -->
-					<span class="countries" style="megint-left: 100px">	<!-- 국가 -->
-						
-						
-						
-						
-						
-						
-						
-						
-						
-					</span> 
-				</span>
-			</span>
-		</div>	<!-- /대륙국가도시 -->
+	<form action="/goWith/modify" method="post">
 		<div>	<!-- 모집인원 -->
 			<span>모집인원</span>
 			<span><input type="range" name="p_cnt" class="form-range" value="1" min="1" max="10" step="1" id="myRange" style="width:80%"><span id="value"></span>명 </span>
 		</div>	<!-- /모집인원 -->
 		<div>	<!-- 날짜 선택 -->
 			<span>날짜 선택</span>
-			<input class="calendar" name="departure" autocomplete="off" placeholder="날짜 선택" readonly="readonly">
-			<input class="calendar" name="arrive" autocomplete="off" placeholder="날짜 선택" readonly="readonly">
+			<input class="calendar" name="departure" autocomplete="off" placeholder="날짜 선택" value="${vo.departure }" readonly="readonly">
+			<input class="calendar" name="arrive" autocomplete="off" placeholder="날짜 선택" value="${vo.arrive }" readonly="readonly">
 		</div>	<!-- /날짜 선택 -->
 		<div>	<!-- 스타일 -->
 			<span>여행 스타일</span>
@@ -99,17 +66,15 @@
 			</div>
 		</div>	<!-- /스타일 -->
 		<div class="form-group" style="margin-bottom: 10px">
-			<input class="form-control" name="wtitle" placeholder="제목을 입력하세요">
+			<input class="form-control" name="wtitle" placeholder="제목을 입력하세요" value="${vo.wtitle }">
 		</div>
 		<div class="form-group" style="margin-bottom: 10px">
-			<textarea class="form-control" id="ckeditor" rows="20" name="content"></textarea>
+			<textarea class="form-control" id="ckeditor" rows="20" name="content">${vo.content }</textarea>
 		</div>
 		<div class="form-group">
-			<input type="hidden" class="form-control" name="user_id" value="${user.user_id }">
+			<input type="hidden" class="form-control" name="user_id" value="${user.user_id}">
 			<button style="float:right; margin-bottom: 5px; margin-left:5px;" type="reset" data-oper="list" class="btn btn-warning">취소</button>
-			<button style="float:right; margin-bottom: 5px;" type="submit" data-oper="register" class="btn btn-primary">등록</button>
-			<input type="hidden" name="pageNum" value="${cri.pageNum }">
-			<input type="hidden" name="amount" value="${cri.amount }">
+			<button style="float:right; margin-bottom: 5px;" type="submit" data-oper="modify" class="btn btn-primary">수정</button>
 		</div>
 		</form>
 	</div>	<!-- /content -->
@@ -153,10 +118,7 @@ $(function(){
 		
 		var operation = $(this).data("oper");
 		
-		if(operation === 'register'){
-			formObj.attr('action','/goWith/insert');
-			
-		}else if(operation === 'list'){
+		if(operation === 'list'){
 			formObj.attr('action','/goWith/list');
 			formObj.attr('method','get');
 			
@@ -190,72 +152,6 @@ var config = {
 }
 	
 	
-	// 대륙 선택
-	var str ='';
-	var country = $(".countries");
-	var eAsia = $("#eAsia");
-	var esAsia = $("#esAsia");
-	
-	// 동아시아
-	eAsia.on("click", function(){
-		var continent = eAsia.val();
-		$.ajax({
-			type : 'GET',
-			url : '/goWith/getCountry/' + continent,
-			dataType: 'json',
-			success : function(result){
-				var str ='';
-				for(var i = 0; i<result.length; i++){
-					str += '<span>' + result[i].country + '</span>&nbsp;&nbsp;&nbsp;';
-					str += '<span class="select" id="country' + result[i].country + '">';
-					str += getCity(result[i].country);
-					str += '</span>';
-					str += '<br>';
-				}
-				country.html(str);
-			},
-		})
-	});
-	
-	// 동남아시아
-	esAsia.on("click", function(){
-		var continent = esAsia.val();
-		$.ajax({
-			type : 'GET',
-			url : '/goWith/getCountry/' + continent,
-			dataType: 'json',
-			success : function(result){
-				var str ='';
-				for(var i = 0; i<result.length; i++){
-					str += '<span>' + result[i].country + '</span>&nbsp;&nbsp;&nbsp;';
-					str += '<span id="country' + result[i].country + '">';
-					str += getCity(result[i].country);
-					str += '</span>';
-					str += '<br>';
-				}
-				country.html(str);
-			},
-		})
-	});
-	
-	// 국가별 도시
-	function getCity(country){
-		$.ajax({
-			type : 'GET',
-			url : '/goWith/getCity/' + country,
-			dataType: 'json',
-			success : function(result){
-				str = '';
-				for(var i= 0; i<result.length; i++ ){
-					str += '<input type="radio" name="city" id="city' + result[i].city + '" value="'+result[i].city+'">';
-					str += result[i].city;
-					str += '&nbsp;&nbsp;</label>';
-				}
-				$('#country'+country).html(str);
-				
-			}
-		})
-	}
 	
 	
 	

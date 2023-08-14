@@ -44,73 +44,64 @@
 					<div class="panel panel-default">
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-								<c:forEach var="with" items="${list}">
-							<div class="col" style="display:inline-block; width:24%; margin:10px 0px;">
-								<div class="card" style="width: 17rem;">
-								  <div class="card-body">
-								  	<div>
-										<table>
-											<tr>
-												<td rowspan="2">이미지</td>
-												<td>${with.user_id}</td>
-												<td>여행기간</td>
-											</tr>
-											<tr>
-												<td>나이</td>
-												<td>${with.period}일 ${with.departure} ~ ${with.arrive}</td>
-											</tr>
-										</table>		  	
-								  	</div>
-								  	<hr>
-								  	
-								  	<div>
+							<c:forEach var="withs" items="${list}">
+								<div class="col" style="display:inline-block; width:24%; margin:10px 0px;">
+									<div class="card" style="width: 17rem;" onclick="getWno(${withs.wno})">
+									  <div class="card-body">
 									  	<div>
-										  	<p> ${with.flag}   ${with.city }</p>
+											<table>
+												<tr>
+													<td rowspan="2">이미지</td>
+													<td>${withs.user_nick}</td>
+													<td>여행기간</td>
+												</tr>
+												<tr>
+													<td>나이</td>
+													<td>${withs.period}일 ${withs.departure} ~ ${withs.arrive}</td>
+												</tr>
+											</table>		  	
 									  	</div>
+									  	<hr>
+									  	
 									  	<div>
-										    <h5 class="card-title">${with.wtitle }</h5>
-									  	</div>
-									  	<div>
-										    <p class="card-text">${with.style }</p>
-									  	</div>
-									  	<div>
-									  		<button>${with.people } / ${with.p_cnt }</button>
-									  	</div>
-								  	</div>
-								  	
-								  </div>
-								</div>
+										  	<div>
+											  	<p> ${withs.flag}   ${withs.city }</p>
+										  	</div>
+										  	<div>
+											    <h5 class="card-title">${withs.wtitle }</h5>
+										  	</div>
+										  	<div>
+											    <p class="card-text">${withs.style }</p>
+										  	</div>
+										  	<div>
+										  		<span>${withs.people } / ${withs.p_cnt }</span>
+										  	</div>
+										  </div>
+									  </div>
+									</div>
 								</div>
 							</c:forEach>
-							<%-- <!-- 페이징 -->
-				            <div class="pull-right">
-				               <ul class="pagination">
-				               	<c:choose>
-				               		<c:when test="${pageMaker.prev }">
-					                     <li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">&lt;</a></li>
-				               		</c:when>
-									<c:otherwise>
-					                     <li class="paginate_button previous">&lt;</li>
-									</c:otherwise>			                  
-				               	</c:choose>
-				                  <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-				                     <li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : '' }"><a href="${num }">${num }</a></li>
-				                  </c:forEach>
-				                  <c:choose>
-				               		<c:when test="${pageMaker.next }">
-					                     <li class="paginate_button previous"><a href="${pageMaker.endPage+1 }">&gt;</a></li>
-				               		</c:when>
-									<c:otherwise>
-					                     <li class="paginate_button previous">&gt;</li>
-									</c:otherwise>			                  
-				               	</c:choose>
-				               </ul>
-				            </div>
-							<!-- 페이징 끝 -->
- 							<form action="/goWith/list" method="get" id="actionForm">
+							
+							
+							<div class="modal fade" id = "MyModal" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden = "true">
+							   <div class = "modal-dialog">
+							      <div class = "modal-content">
+							         <div class = "modal-body">
+							         
+							         
+							         
+							            
+							          
+							            
+							            
+							         </div>
+							      </div>
+							   </div>
+							</div>
+							<form action="/board/list" method="get" id="actionForm">
 								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-							</form> --%>
+							</form>
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -129,6 +120,7 @@
 <!-- /.row -->
 <script type="text/javascript">
 	history.replaceState({}, null, location.pathname);
+	var actionForm = $("#actionForm");
 	// 게시글 등록 버튼
 	$(function(){
 		$('#regBtn').click(function(){
@@ -137,25 +129,97 @@
 		});
 	});
 	
-	var result = '<c:out value="${result}"/>';
+	var modal = $(".modal");
+	function getWno(wno){
+		var modalPlace = $(".modal-body");
+		var loginUser = '${user.user_id}';
+		var str = "";
+		$.ajax({
+			type : 'get',
+			url : '/goWith/' + wno + '.json',
+			data : JSON.stringify(wno),
+			success : function(result){
+				str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
+					str += '<div>' + result.flag + '  ' + result.city + '</div>';	//국기, 도시명
+						str += '<div>';	// 닉네임, 기간 테이블
+							str += '<table>';
+								str += '<tr>';
+									str += '<td rowspan="2">이미지</td>';
+									str += '<td style="width:40%">' + result.user_nick + '</td>';
+									str += '<td style="width:40%">여행기간</td>';
+								str += '</tr>';
+								str += '<tr>';
+									str += '<td>나이</td>';
+									str += '<td>'+ result.period+ '일 ' + result.departure + '~' + result.arrive + '</td>';
+								str += '</tr>';
+							str += '</table>';
+						str +='</div>';
+						str += '<hr>';
+						str += '<h4>' + result.wtitle + '</h4>';	// 제목
+						str += '<hr>';
+						str += '<div>' + result.content+ '</div>';	// 내용
+						str += '<hr>';
+						str += '<div>'
+							str += '<div>모집 인원</div>';
+							str += '<div>' + result.p_cnt + '</div>';
+						str += '</div>'
+						str += '<hr>';
+						str += '<div>여행 스타일</div>';	// 여행스타일 문구
+						str += '<div>' + result.style + '</div>';	// 여행스타일 사진
+						str += '<div style="float:right">';
+						str += '<br>';
+						if(loginUser != ""){
+							if(result.user_id == loginUser){
+						            str += '<button data-oper="modify" class = "btn btn-primary">수정</button>';
+						            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
+						            str += '<button id = "showRegisterBtn" class = "btn btn-primary">신청자 보기</button>';
+								}else{
+						            str += '<button id = "modalRegisterBtn" class = "btn btn-primary">신청</button>';
+								}
+							}else{
+					            str += '<button id = "modalLoginBtn" class = "btn btn-primary">신청</button>';
+							}
+					            str += '<button id = "modalCloseBtn" class = "btn btn-default">닫기</button>';
+			         	str += '</div>';
+			         	str += '<form action="/goWith/modify" method="get" id="operForm">';
+							str += '<input type="hidden" name="wno" id="wno' + result.wno + '" value="' + result.wno + '">';
+						str += '</form>';
+					str += '</div>';					
+			
+				modalPlace.html(str);
+				
+				
+			var modalCloseBtn = $("#modalCloseBtn");		// 닫기 버튼
+			var modalLoginBtn = $("#modalLoginBtn");		// 비회원 신청 버튼
+			var operForm = $("#operForm");
+			
+			// 댓글 취소 버튼 클릭 이벤트 
+			modalCloseBtn.on('click', function(){
+				modal.modal('hide');
+			})
+			modalLoginBtn.on('click', function(){
+				alert("회원만 신청 할 수 있습니다.")
+			})
+			
+			$("button[data-oper='modify']").on('click',function(){
+				operForm.submit();
+			});
+			$("button[data-oper='remove']").on('click',function(){
+				if(confirm("삭제하시겠습니까?")){
+					operForm.attr('method', 'post');
+					operForm.attr('action', '/goWith/remove');
+					operForm.submit();
+				}else{
+					return;
+				}
+				
+			});
+			
+			
+			}
+		})
+		modal.modal('show');
 	
-	if(result != ''){
-		checkResult(result);
 	}
-	
-	function checkResult(result){
-		if(result ==='' || history.state){ // 뒤로가기 방지
-			return;
-		}
-		if(result === 'ok'){	// 삽입
-			alert("게시글이 등록 되었습니다.")
-			return;
-		}
-		if(result === 'success'){	// 수정 or 삭제
-			alert("수정 / 삭제 되었습니다.")
-			return;
-		}
-	}
-	
 </script>
 <%@ include file="../include/footer.jsp" %>

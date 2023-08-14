@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Log4j
 @RestController
 @RequestMapping("/heart/*")
 @RequiredArgsConstructor
