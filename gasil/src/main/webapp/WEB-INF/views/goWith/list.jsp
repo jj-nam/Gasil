@@ -125,21 +125,17 @@
 							   <div class = "modal-dialog">
 							      <div class = "modal-content">
 							         <div class = "modal-body">
-							         
-							         
-							         
 							            
-							          
-							            
-							            
+							         
 							         </div>
 							      </div>
 							   </div>
 							</div>
-							<form action="/board/list" method="get" id="actionForm">
-								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-							</form>
+							
+							
+							
+							
+							
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -162,6 +158,7 @@
 	var actionForm = $("#actionForm");
 	// 게시글 등록 버튼
 	$(function(){
+		
 		$('#regBtn').click(function(){
 			actionForm.attr('action', '/goWith/insert');
 			actionForm.submit();
@@ -229,9 +226,9 @@
 						if(loginUser != ""){
 							if(result.user_id == loginUser){
 						            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
-						            str += '<button id = "showRegisterBtn" class = "btn btn-primary">신청자 보기</button>';
+						            str += '<a href="javascript:showRegisterBtn(' + result.wno +  ');">신청자보기</a>'
 								}else{
-						            str += '<button id = "modalRegisterBtn" class = "btn btn-primary">신청</button>';
+									str += '<a href="javascript:modalRegisterBtn(' + result.wno + ', \'' + result.user_id + '\');">신청</a>'
 								}
 							}else{
 					            str += '<button id = "modalLoginBtn" class = "btn btn-primary">신청</button>';
@@ -241,14 +238,25 @@
 			         	str += '<form action="/goWith/modify" method="get" id="operForm">';
 							str += '<input type="hidden" name="wno" id="wno' + result.wno + '" value="' + result.wno + '">';
 						str += '</form>';
-					str += '</div>';					
-			
+					str += '</div>';
+					str += '<div class="modal fade" id = "showAppList" tabindex = "-1" role = "dialog" aria-labelledby = "showAppListLabel" aria-hidden = "true">';
+					str += '<div class = "modal-dialog">';
+					str += '<div class = "modal-content">';
+					str += '<div class="bodyNList">';
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
 				modalPlace.html(str);
-				
 				
 			var modalCloseBtn = $("#modalCloseBtn");		// 닫기 버튼
 			var modalLoginBtn = $("#modalLoginBtn");		// 비회원 신청 버튼
+			var modalRegisterBtn = $("#modalRegisterBtn");	// 신청 버튼
 			var operForm = $("#operForm");
+			
+			/* // 팝오버
+			var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+			var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl)) */
 			
 			// 댓글 취소 버튼 클릭 이벤트 
 			modalCloseBtn.on('click', function(){
@@ -275,5 +283,52 @@
 		modal.modal('show');
 	
 	}
+	
+	
+	function modalRegisterBtn(wno, user_id){
+		$.ajax({
+			type : 'post',
+			url : "/goWith/appli",
+			dataType:'json',
+			contentType : 'application/json',
+			data : JSON.stringify({
+				'wno' : wno,
+				'user_id' : user_id
+			}),
+			success : function(result){
+				alert(result);
+			}
+		})		
+	}
+	
+	
+	
+	// 신청자 보기 버튼
+	function showRegisterBtn(wno){
+		var bodyNList = $(".bodyNList");
+		var app = '';
+		$.ajax({
+			type : 'get',
+			url : '/goWith/apply/' + wno + '.json',
+			data : JSON.stringify(wno),
+			success : function(result){
+				if(result == null || result.length == 0){
+					bodyNList.html('신청자가 없습니다');
+				}else{
+					for(var i=0; i<result.length; i++){
+						app += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
+						app += '<span>이미지</span>';
+						app += '<span>' + result[i].user_id + '</span>' ;
+						app += '<button>확인</button>';
+						app += '</div>';
+						bodyNList.html(app);
+					}
+				}
+			}	// end success
+		})		// end ajax
+	}
+	
+	
+	
 </script>
 <%@ include file="../include/footer.jsp" %>

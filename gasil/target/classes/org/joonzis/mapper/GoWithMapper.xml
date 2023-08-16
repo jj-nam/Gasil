@@ -56,4 +56,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from tbl_goWith where wno = #{wno}
 	</delete>
 	
+	<select id="getApply" parameterType="long" resultType="org.joonzis.domain.ApplyVO">
+		select * from tbl_apply where wno=#{wno}
+	</select>
+	
+	<select id="checkApply" parameterType="org.joonzis.domain.ApplyVO" resultType="int">
+		select count(*) from tbl_apply where user_id=#{user_id} and wno=#{wno}
+	</select>
+	
+	<insert id="insertApply" parameterType="org.joonzis.domain.ApplyVO">
+		insert into tbl_apply(ano, wno, user_id)
+		values(
+			apply_seq.nextval,
+			#{wno},
+			#{user_id}
+		)		
+	</insert>
+	
+	<delete id="deleteApply" parameterType="org.joonzis.domain.ApplyVO">
+		delete from tbl_apply where wno=#{wno} and user_id=#{user_id}
+	</delete>
 </mapper>

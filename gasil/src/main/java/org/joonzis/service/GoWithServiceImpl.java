@@ -2,6 +2,7 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
@@ -53,5 +54,25 @@ public class GoWithServiceImpl implements GoWithService{
 	@Override
 	public boolean remove(long wno) {
 		return mapper.remove(wno);
+	}
+	@Override
+	public List<ApplyVO> getApply(long wno) {
+		log.info("apply list : " + wno);
+		return mapper.getApply(wno);
+	}
+	@Override
+	public int checkApply(ApplyVO avo) {
+		log.info("check apply : " + avo);
+		return mapper.checkApply(avo);
+	}
+	@Override
+	public int insertApply(ApplyVO avo) {
+		log.info("insert apply : " + avo);
+		return mapper.insertApply(avo);
+	}
+	@Override
+	public int deleteApply(ApplyVO avo) {
+		log.info("delete apply : " + avo);
+		return mapper.deleteApply(avo);
 	}
 }

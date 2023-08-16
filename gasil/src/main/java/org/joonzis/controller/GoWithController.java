@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
@@ -22,8 +23,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
@@ -80,15 +83,6 @@ public class GoWithController {
 		Date format1 = null;
 		Date format2 = null;
 		
-		// 나이 구하기
-		/*
-		 * String birth = uservice.getBirth(vo.getUser_id()); Calendar now =
-		 * Calendar.getInstance(); Integer currentYear = now.get(Calendar.YEAR);
-		 * SimpleDateFormat format = new SimpleDateFormat("yyyy"); String bYear =
-		 * format.format(birth); Integer birthYear = Integer.parseInt(bYear);
-		 * 
-		 * int age = (currentYear - birthYear + 1);
-		 */
 		String birth = uservice.getBirth(vo.getUser_id());
 		LocalDate now = LocalDate.now();
 		LocalDate parseBirthDate = LocalDate.parse(birth, DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -156,5 +150,27 @@ public class GoWithController {
 		return "redirect:/goWith/list";
 	}
 	
+	@GetMapping(value = "apply/{wno}", produces = {MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<ApplyVO>> getApply(@PathVariable("wno") long wno){
+	log.info("getApply..." + wno);
 	
+	return new ResponseEntity<>(service.getApply(wno),HttpStatus.OK);
+	}
+	
+	// 동행 신청
+	@PostMapping("/appli")
+	@ResponseBody
+	public int applygoWith(@RequestBody ApplyVO avo) {
+		System.out.println("apply : " + avo);
+		// 신청을 했으면 result=1, 안했으면 0
+		int result = service.checkApply(avo);
+		System.out.println(result);
+		if(result == 0) {
+			service.insertApply(avo);
+		}else {
+			service.deleteApply(avo);
+		}
+		return result;
+	}
 }
