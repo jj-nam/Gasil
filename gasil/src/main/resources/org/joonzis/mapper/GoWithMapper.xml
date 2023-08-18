@@ -80,4 +80,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findano" resultType="int" parameterType="org.joonzis.domain.ApplyVO">
 		select count(*) from tbl_apply where wno=#{wno} and user_id = #{user_id}
 	</select>
+	
+	<select id="checkConfirm" resultType="int" parameterType="long">
+		SELECT COUNT(*) FROM tbl_apply WHERE wno=#{wno} and confirmation = 1
+	</select>
+	
+	<update id="getConfirm" parameterType="org.joonzis.domain.ApplyVO">
+		update tbl_apply
+		set
+			confirmation = 1
+		where
+			wno=#{wno}
+		and 
+			user_id=#{user_id}
+	</update>
+	
+	<update id="deleteConfirm" parameterType="org.joonzis.domain.ApplyVO">
+		update tbl_apply
+		set
+			confirmation = 0
+		where
+			wno=#{wno}
+		and 
+			user_id=#{user_id}
+	</update>
+	
+	
 </mapper>

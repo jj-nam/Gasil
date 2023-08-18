@@ -79,4 +79,18 @@ public class GoWithServiceImpl implements GoWithService{
 	public int findano(ApplyVO vo) {
 		return mapper.findano(vo);
 	}
+	@Override
+	public int checkConfirm(long ano) {
+		return mapper.checkConfirm(ano);
+	}
+	@Override
+	public int getConfirm(ApplyVO vo) {
+		log.info("confirm");
+		return mapper.getConfirm(vo);
+	}
+	@Override
+	public int deleteConfirm(ApplyVO vo) {
+		log.info("cancel");
+		return mapper.deleteConfirm(vo);
+	}
 }

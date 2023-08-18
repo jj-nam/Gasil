@@ -174,7 +174,6 @@ public class GoWithController {
 	}
 	
 	
-	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("wno") long wno, RedirectAttributes rttr) {
 		log.info("remove : " + wno);
@@ -184,6 +183,7 @@ public class GoWithController {
 		return "redirect:/goWith/list";
 	}
 	
+	// 신청자 리스트
 	@GetMapping(value = "apply/{wno}", produces = {MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<ApplyVO>> getApply(@PathVariable("wno") long wno){
@@ -215,4 +215,36 @@ public class GoWithController {
 		}
 		return result;
 	}
+	
+	
+	@PostMapping("/confirmation")
+	@ResponseBody
+	public int applygoWith(@RequestBody ApplyVO vo) {
+		
+		long wno = vo.getWno();
+		log.info("vo : " + vo);
+		
+		// 신청 수락을 했으면 result=1, 안했으면 0
+		int result = service.checkConfirm(wno);
+		
+		if(result == 0) {
+			service.getConfirm(vo);
+			System.out.println("수락");
+		}else {
+			service.deleteConfirm(vo);
+			System.out.println("취소");
+		}
+		return result;
+	}
+	
+	// 신청 확인 판별
+	@GetMapping(value = "/chkConfirm/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
+												MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Integer> chkConfirm(@PathVariable("wno") long wno) {
+		log.info("get..." + wno);
+		
+		System.out.println("check confirmation : " + service.checkConfirm(wno));
+		return new ResponseEntity<>(service.checkConfirm(wno), HttpStatus.OK);
+	}
+	
 }

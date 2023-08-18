@@ -20,4 +20,8 @@ public interface GoWithService {
 	public int insertApply(ApplyVO vo);
 	public int deleteApply(ApplyVO vo);
 	public int findano(ApplyVO vo);
+	public int checkConfirm(long ano);
+	public int getConfirm(ApplyVO vo);
+	public int deleteConfirm(ApplyVO vo);
+	
 }	

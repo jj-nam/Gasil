@@ -29,6 +29,12 @@
 		height: 50px;
 		width:50px;
 	}
+	hr{
+		margin:5px;
+	}
+	.closeBtn{
+		padding:0px;
+	}
 </style>
 <div class="row">
 	<div class="col-lg-12">
@@ -166,7 +172,6 @@
 		});
 	});
 	
-	/* var clBtn = ${clBtn}; */
 	var modal = $(".modal");
 	function getWno(wno){
 		var modalPlace = $(".modal-body");
@@ -185,90 +190,92 @@
 					data : JSON.stringify(wno),
 					success : function(data){
 						
-					
-				
-				
-				str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
-					str += '<div>' + result.flag + '  ' + result.city + '</div>';	//국기, 도시명
-						str += '<div>';	// 닉네임, 기간 테이블
-							str += '<table>';
-								str += '<tr>';
-									str += '<td rowspan="2">이미지</td>';
-									str += '<td style="width:40%">' + result.user_nick + '</td>';
-									str += '<td style="width:40%">여행기간</td>';
-								str += '</tr>';
-								str += '<tr>';
-								if(result.gender == "남"){
-									str += '<td><img id= "gender" alt="m" src="../resources/images/genderM.png"><span style="color:blue;">' + result.age + '0대</span></td>';
-								}else{
-									str += '<td><img id= "gender" alt="w" src="../resources/images/genderW.png"><span style="color:pink;">' + result.age + '0대</span></td>';
-								}
-									str += '<td>'+ result.period+ '일 ' + result.departure + '~' + result.arrive + '</td>';
-								str += '</tr>';
-							str += '</table>';
-						str +='</div>';
-						str += '<hr>';
-						str += '<h4>' + result.wtitle + '</h4>';	// 제목
-						str += '<hr>';
-						str += '<div>' + result.content+ '</div>';	// 내용
-						str += '<hr>';
-						str += '<div>'
-							str += '<div>모집 인원</div>';
-							str += '<div>' + result.p_cnt + '</div>';
-						str += '</div>'
-						str += '<hr>';
-						str += '<div>여행 스타일</div>';	// 여행스타일 문구
 						
-						var chkStyle = result.style;
-						var styles = (chkStyle||'').split(',');
-						for(var i=0; i<styles.length; i++){
-							if(styles[i] == 'activity'){
-								str += '<span><span class="card-text"><img id= "imageSize" alt="activity" src="../resources/images/activity.png"></span>&nbsp;';
-							}else if(styles[i] == 'food'){
-								str += '<span><span class="card-text"><img id= "imageSize" alt="food" src="../resources/images/food.jpg"></span>&nbsp;';
-							}else if(styles[i] == 'museum'){
-								str += '<span><span class="card-text"><img id= "imageSize" alt="museum" src="../resources/images/museum.jpg"></span>&nbsp;';
-							}else if(styles[i] == 'nation'){
-								str += '<span><span class="card-text"><img id= "imageSize" alt="nation" src="../resources/images/nation.jpg"></span>&nbsp;';
-							}else if(styles[i] == 'shopping'){
-								str += '<span><span class="card-text"><img id= "imageSize" alt="shopping" src="../resources/images/shopping.jpg"></span>&nbsp;';
-							}else if(styles[i] == 'photo'){
-								str += '<span><span class="card-text"><img id= "imageSize" alt="photo" src="../resources/images/photo.jpg"></span>&nbsp;';
-							}
-						}
-						str += '<div style="float:right">';
-						str += '<br>';
-						str += '<br>';
-						str += '<br>';
-						if(loginUser != ""){
-							if(result.user_id == loginUser){
-						            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
-						            str += '<a data-toggle="modal" href="#myModal2" class="btn btn-primary">신청자보기</a>';
-						            /* str += '<a href="javascript:showRegisterBtn(' + result.wno +  ');" data-target="' + modal2 + '">신청자보기</a>'; */
-								}else{
-									if(data==0){
-										str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청</a>';
-									}else{
-										str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청 취소</a>';
+						str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
+							str += '<div>' + result.flag + '  ' + result.city + '</div>';	//국기, 도시명
+								str += '<div>';	// 닉네임, 기간 테이블
+									str += '<table>';
+										str += '<tr>';
+											str += '<td rowspan="2">이미지</td>';
+											str += '<td style="width:40%">' + result.user_nick + '</td>';
+											str += '<td style="width:40%">여행기간</td>';
+										str += '</tr>';
+										str += '<tr>';
+										if(result.gender == "남"){
+											str += '<td><img id= "gender" alt="m" src="../resources/images/genderM.png"><span style="color:blue;">' + result.age + '0대</span></td>';
+										}else{
+											str += '<td><img id= "gender" alt="w" src="../resources/images/genderW.png"><span style="color:pink;">' + result.age + '0대</span></td>';
+										}
+											str += '<td>'+ result.period+ '일 ' + result.departure + '~' + result.arrive + '</td>';
+										str += '</tr>';
+									str += '</table>';
+								str +='</div>';
+								str += '<hr>';
+								str += '<h4>' + result.wtitle + '</h4>';	// 제목
+								str += '<hr>';
+								str += '<div>' + result.content+ '</div>';	// 내용
+								str += '<hr>';
+								str += '<div>'
+									str += '<div>모집 인원</div>';
+									str += '<div>' + result.p_cnt + '</div>';
+								str += '</div>'
+								str += '<hr>';
+								str += '<div>여행 스타일</div>';	// 여행스타일 문구
+								
+								var chkStyle = result.style;
+								var styles = (chkStyle||'').split(',');
+								for(var i=0; i<styles.length; i++){
+									if(styles[i] == 'activity'){
+										str += '<span><span class="card-text"><img id= "imageSize" alt="activity" src="../resources/images/activity.png"></span>&nbsp;';
+									}else if(styles[i] == 'food'){
+										str += '<span><span class="card-text"><img id= "imageSize" alt="food" src="../resources/images/food.jpg"></span>&nbsp;';
+									}else if(styles[i] == 'museum'){
+										str += '<span><span class="card-text"><img id= "imageSize" alt="museum" src="../resources/images/museum.jpg"></span>&nbsp;';
+									}else if(styles[i] == 'nation'){
+										str += '<span><span class="card-text"><img id= "imageSize" alt="nation" src="../resources/images/nation.jpg"></span>&nbsp;';
+									}else if(styles[i] == 'shopping'){
+										str += '<span><span class="card-text"><img id= "imageSize" alt="shopping" src="../resources/images/shopping.jpg"></span>&nbsp;';
+									}else if(styles[i] == 'photo'){
+										str += '<span><span class="card-text"><img id= "imageSize" alt="photo" src="../resources/images/photo.jpg"></span>&nbsp;';
 									}
 								}
-							}else{
-					            str += '<button id = "modalLoginBtn" class = "btn btn-primary">신청</button>';
-							}
-					            str += '<button id = "modalCloseBtn" class = "btn btn-default">닫기</button>';
-			         	str += '</div>';
-			         	str += '<form action="/goWith/modify" method="get" id="operForm">';
-							str += '<input type="hidden" name="wno" id="wno' + result.wno + '" value="' + result.wno + '">';
-						str += '</form>';
-					str += '</div>';
-					str += '<div class="modal fade" id = "showAppList" tabindex = "-1" role = "dialog" aria-labelledby = "showAppListLabel" aria-hidden = "true">';
-					str += '<div class = "modal-dialog">';
-					str += '<div class = "modal-content">';
-					str += '<div class="bodyNList">';
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
+								str += '<div style="float:right">';
+								str += '<br>';
+								str += '<br>';
+								str += '<br>';
+								if(loginUser != ""){
+									if(result.user_id == loginUser){
+								            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
+								            str += '<a href="javascript:showRegisterBtn(' + result.wno +  ');">신청자보기</a>';
+										}else{
+											if(data==0){
+												str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청</a>';
+											}else{
+												str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청 취소</a>';
+											}
+										}
+									}else{
+							            str += '<button id = "modalLoginBtn" class = "btn btn-primary">신청</button>';
+									}
+							            str += '<button id = "modalCloseBtn" class = "btn btn-default">닫기</button>';
+					         	str += '</div>';
+					         	str += '<form action="/goWith/modify" method="get" id="operForm">';
+									str += '<input type="hidden" name="wno" id="wno' + result.wno + '" value="' + result.wno + '">';
+								str += '</form>';
+							str += '</div>';
+							// 신청자 리스트 모달
+							str += '<div class="modal fade" id = "showAppList" tabindex = "-1" role = "dialog" aria-labelledby = "showAppListLabel" aria-hidden = "true">';
+							str += '<div class="modal-dialog modal-dialog-centered" style="margin:auto; position:relative; left:100px;">';
+							str += '<div class = "modal-content" style="width:60%; background-color: lightgrey; border:1px solid grey; border-radius:10px; padding:10px;">';
+							str += '<div class="bodyNList">';
+							str += '</div>';
+							str += '</div>';
+							str += '</div>';
+							str += '</div>';
+					
+					
+					
+					
 				modalPlace.html(str);
 				
 			var modalCloseBtn = $("#modalCloseBtn");		// 닫기 버튼
@@ -331,36 +338,93 @@
 	}
 	
 	
+	
 	// 신청자 보기 버튼
 	function showRegisterBtn(wno){
-		var myModal2 = $("#myModal2");
-		var bodyList = $(".modal-bodyList");
+		var bodyList = $(".bodyNList");
+		var showAppList = $("#showAppList");
+		
 		var app = '';
-		alert(wno);
 		$.ajax({
 			type : 'get',
 			url : '/goWith/apply/' + wno + '.json',
 			data : JSON.stringify(wno),
 			success : function(result){
-				if(result == null || result.length == 0){
-						app += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
-						app += '<span>신청자가 없습니다</span>' ;
-						app += '</div>';
-						bodyList.html(app);
-				}else{
-					for(var i=0; i<result.length; i++){
-						app += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
-						app += '<span>이미지</span>';
-						app += '<span>' + result[i].user_id + '</span>' ;
-						app += '<button>확인</button>';
-						app += '</div>';
-					}
-					bodyList.html(app);
-				}
+				
+				$.ajax({
+					type : 'get',
+					url : '/goWith/chkConfirm/' + wno + '.json',
+					data : JSON.stringify(wno),
+					success : function(data){
+				
+				
+						if(result == null || result.length == 0){
+								app += '<div>';
+								app += '<p>신청자가 없습니다</p>';
+								app += '</div>';
+								app += '<hr>';
+								app += '<button id = "closeBtn" class = "btn btn-default">닫기</button>';
+								bodyList.html(app);
+						}else{
+							for(var i=0; i < result.length; i++){
+								app += '<div>';
+								app += '<span class="col-4">이미지&nbsp;</span>';
+								app += '<span class="col-4">' + result[i].user_id + '</span>';
+								if(data==1){
+									app += "<a id='confirmation' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'><span id='text'>취소</span></a>";
+								}else{
+									app += "<a id='confirmation' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>><span id='text'>수락</span></a>";
+								}
+								app += '<hr>';
+								app += '</div>';
+							}
+							app += '<button id = "closeBtn" class = "btn btn-default">닫기</button>';
+							bodyList.html(app);
+						}
+						showAppList.modal('show');
+						
+						
+						var closeBtn = $("#closeBtn");				// 닫기 버튼
+						closeBtn.on('click', function(){
+							showAppList.modal('hide');
+						})
+						
+						
+				
+				
+					}	// end inner success
+				})	// end inner ajax
 			}	// end success
 		})		// end ajax
+		
+		
+		
 	}
 	
+	function confirmation(wno, user_id){
+		var changeConfirm = $("#confirmation")
+		var con = '';
+		$.ajax({
+			type : 'post',
+			url : '/goWith/confirmation',
+			dataType:'json',
+			contentType : 'application/json',
+			data : JSON.stringify({
+				'wno':wno,
+				'user_id':user_id
+			}),
+			success : function(re){					
+				if(re==1){
+					alert("취소 되었습니다.");
+					con += '<span>수락</span>'
+				}else{
+					alert("수락 하셨습니다");
+					con += '<span>취소</span>'
+				}
+				changeConfirm.html(con);
+			}
+		})	// end ajax
+	}	// end confirm
 	
 	
 </script>

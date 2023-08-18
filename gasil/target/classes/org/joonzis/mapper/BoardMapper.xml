@@ -35,16 +35,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="read" parameterType="long" resultType="org.joonzis.domain.BoardVO" >
-		select bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, user_nick, reg_date from tbl_board where bno = #{bno}
+		SELECT bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, user_nick, reg_date FROM tbl_board WHERE bno = #{bno}
 	</select>
 	
 	<delete id="delete" parameterType="long">
-		delete from tbl_board where bno = #{bno}
+		DELETE FROM tbl_board WHERE bno = #{bno}
 	</delete>
 	
 	<update id="update" parameterType="org.joonzis.domain.BoardVO">
-		update tbl_board 
-		set 
+		UPDATE tbl_board 
+		SET 
 			cate_id = #{cate_id},
 			title = #{title}, 
 			bcontent = #{bcontent}

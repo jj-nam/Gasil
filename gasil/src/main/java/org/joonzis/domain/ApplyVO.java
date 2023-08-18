@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApplyVO {
-	private long ano, wno;
+	private long ano, wno, confirmation;
 	private String user_id;
 }
