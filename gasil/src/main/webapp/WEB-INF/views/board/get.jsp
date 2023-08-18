@@ -235,7 +235,6 @@ a{
         
        	dec>=0 ? likeCnt.innerHTML = dec : likeCnt.innerHTML = ${vo.blike}; 
         
-        
     }
     // 좋아요 안누름 -> 빈하트 노츌
     if(like == 0){

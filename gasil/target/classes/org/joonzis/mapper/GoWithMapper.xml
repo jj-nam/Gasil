@@ -76,4 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteApply" parameterType="org.joonzis.domain.ApplyVO">
 		delete from tbl_apply where wno=#{wno} and user_id=#{user_id}
 	</delete>
+	
+	<select id="findano" resultType="int" parameterType="org.joonzis.domain.ApplyVO">
+		select count(*) from tbl_apply where wno=#{wno} and user_id = #{user_id}
+	</select>
 </mapper>

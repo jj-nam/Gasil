@@ -41,6 +41,7 @@
 		<button id="date_fileter" style="text-align: left" class="btn btn-xs pull-right btn-primary">조회 기간(필터 예정)</button>
 	<c:if test="${not empty user}">
 		<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
+		<form action="/goWith/list" method="get" id="actionForm"></form>
 	</c:if>
 		<div class="content-area" style="margin-top: 10px;">
 		
@@ -165,6 +166,7 @@
 		});
 	});
 	
+	/* var clBtn = ${clBtn}; */
 	var modal = $(".modal");
 	function getWno(wno){
 		var modalPlace = $(".modal-body");
@@ -175,6 +177,17 @@
 			url : '/goWith/' + wno + '.json',
 			data : JSON.stringify(wno),
 			success : function(result){
+				
+				
+				$.ajax({
+					type : 'get',
+					url : '/goWith/appYN/' + wno + '.json',
+					data : JSON.stringify(wno),
+					success : function(data){
+						
+					
+				
+				
 				str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
 					str += '<div>' + result.flag + '  ' + result.city + '</div>';	//국기, 도시명
 						str += '<div>';	// 닉네임, 기간 테이블
@@ -185,7 +198,11 @@
 									str += '<td style="width:40%">여행기간</td>';
 								str += '</tr>';
 								str += '<tr>';
-									str += '<td>'+ result.user_birth +'</td>';
+								if(result.gender == "남"){
+									str += '<td><img id= "gender" alt="m" src="../resources/images/genderM.png"><span style="color:blue;">' + result.age + '0대</span></td>';
+								}else{
+									str += '<td><img id= "gender" alt="w" src="../resources/images/genderW.png"><span style="color:pink;">' + result.age + '0대</span></td>';
+								}
 									str += '<td>'+ result.period+ '일 ' + result.departure + '~' + result.arrive + '</td>';
 								str += '</tr>';
 							str += '</table>';
@@ -203,7 +220,7 @@
 						str += '<div>여행 스타일</div>';	// 여행스타일 문구
 						
 						var chkStyle = result.style;
-						var styles = chkStyle.split(',');
+						var styles = (chkStyle||'').split(',');
 						for(var i=0; i<styles.length; i++){
 							if(styles[i] == 'activity'){
 								str += '<span><span class="card-text"><img id= "imageSize" alt="activity" src="../resources/images/activity.png"></span>&nbsp;';
@@ -226,9 +243,14 @@
 						if(loginUser != ""){
 							if(result.user_id == loginUser){
 						            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
-						            str += '<a href="javascript:showRegisterBtn(' + result.wno +  ');">신청자보기</a>'
+						            str += '<a data-toggle="modal" href="#myModal2" class="btn btn-primary">신청자보기</a>';
+						            /* str += '<a href="javascript:showRegisterBtn(' + result.wno +  ');" data-target="' + modal2 + '">신청자보기</a>'; */
 								}else{
-									str += '<a href="javascript:modalRegisterBtn(' + result.wno + ', \'' + result.user_id + '\');">신청</a>'
+									if(data==0){
+										str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청</a>';
+									}else{
+										str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청 취소</a>';
+									}
 								}
 							}else{
 					            str += '<button id = "modalLoginBtn" class = "btn btn-primary">신청</button>';
@@ -254,9 +276,6 @@
 			var modalRegisterBtn = $("#modalRegisterBtn");	// 신청 버튼
 			var operForm = $("#operForm");
 			
-			/* // 팝오버
-			var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-			var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl)) */
 			
 			// 댓글 취소 버튼 클릭 이벤트 
 			modalCloseBtn.on('click', function(){
@@ -277,43 +296,57 @@
 				
 			});
 			
-			
-			}
-		})
+					}	// end inner ajax success
+				})		// ens inner ajax
+			}	// end ajax success
+		})	// end ajax
 		modal.modal('show');
 	
 	}
 	
-	
-	function modalRegisterBtn(wno, user_id){
+	// 동행 신청 버튼
+	function modalRegisterBtn(wno){
+		var modalBtn = $("#modalRegisterBtn");
+		var mrb = '';
 		$.ajax({
 			type : 'post',
 			url : "/goWith/appli",
 			dataType:'json',
 			contentType : 'application/json',
 			data : JSON.stringify({
-				'wno' : wno,
-				'user_id' : user_id
+				'wno' : wno
 			}),
 			success : function(result){
-				alert(result);
+				if(result==1){
+					mrb += '<a href="javascript:modalRegisterBtn(' + result.wno + ');">신청</a>'
+					alert("취소 되었습니다.");
+				}else{
+					mrb += '<a href="javascript:modalRegisterBtn(' + result.wno + ');">신청 취소</a>'
+					alert("신청 되었습니다");
+				}
+				modalBtn.innerHTML = mrb;
+				modal.modal('hide');
 			}
 		})		
 	}
 	
 	
-	
 	// 신청자 보기 버튼
 	function showRegisterBtn(wno){
-		var bodyNList = $(".bodyNList");
+		var myModal2 = $("#myModal2");
+		var bodyList = $(".modal-bodyList");
 		var app = '';
+		alert(wno);
 		$.ajax({
 			type : 'get',
 			url : '/goWith/apply/' + wno + '.json',
 			data : JSON.stringify(wno),
 			success : function(result){
 				if(result == null || result.length == 0){
-					bodyNList.html('신청자가 없습니다');
+						app += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
+						app += '<span>신청자가 없습니다</span>' ;
+						app += '</div>';
+						bodyList.html(app);
 				}else{
 					for(var i=0; i<result.length; i++){
 						app += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
@@ -321,8 +354,8 @@
 						app += '<span>' + result[i].user_id + '</span>' ;
 						app += '<button>확인</button>';
 						app += '</div>';
-						bodyNList.html(app);
 					}
+					bodyList.html(app);
 				}
 			}	// end success
 		})		// end ajax

@@ -16,8 +16,8 @@ public interface GoWithService {
 	public GoWithFlagVO get(long wno);
 	public boolean remove(long wno);
 	public List<ApplyVO> getApply(long wno);
-	public int checkApply(ApplyVO avo);
-	public int insertApply(ApplyVO avo);
-	public int deleteApply(ApplyVO avo);
-	
+	public int checkApply(ApplyVO vo);
+	public int insertApply(ApplyVO vo);
+	public int deleteApply(ApplyVO vo);
+	public int findano(ApplyVO vo);
 }	

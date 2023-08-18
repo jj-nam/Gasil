@@ -61,18 +61,22 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.getApply(wno);
 	}
 	@Override
-	public int checkApply(ApplyVO avo) {
-		log.info("check apply : " + avo);
-		return mapper.checkApply(avo);
+	public int checkApply(ApplyVO vo) {
+		log.info("check apply : " + vo);
+		return mapper.checkApply(vo);
 	}
 	@Override
-	public int insertApply(ApplyVO avo) {
-		log.info("insert apply : " + avo);
-		return mapper.insertApply(avo);
+	public int insertApply(ApplyVO vo) {
+		log.info("insert apply : " + vo);
+		return mapper.insertApply(vo);
 	}
 	@Override
-	public int deleteApply(ApplyVO avo) {
-		log.info("delete apply : " + avo);
-		return mapper.deleteApply(avo);
+	public int deleteApply(ApplyVO vo) {
+		log.info("delete apply : " + vo);
+		return mapper.deleteApply(vo);
+	}
+	@Override
+	public int findano(ApplyVO vo) {
+		return mapper.findano(vo);
 	}
 }

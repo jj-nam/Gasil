@@ -6,12 +6,19 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
+import org.joonzis.domain.UserAuthVO;
 import org.joonzis.service.GoWithService;
 import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
@@ -133,13 +141,39 @@ public class GoWithController {
 		return "redirect:/goWith/list";
 	}
 	
-	@GetMapping(value = "/{wno}", produces = {MediaType.APPLICATION_XML_VALUE,
-											MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<GoWithFlagVO> get(@PathVariable("wno") long wno){
-	log.info("get..." + wno);
-	
-	return new ResponseEntity<>(service.get(wno),HttpStatus.OK);
+	// 모달
+	@GetMapping(value = "/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
+												MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GoWithFlagVO> get(@PathVariable("wno") long wno) {
+		log.info("get..." + wno);
+
+		return new ResponseEntity<>(service.get(wno), HttpStatus.OK);
 	}
+	 	 	
+	
+	// 신청 판별
+	@GetMapping(value = "/appYN/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
+												MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Integer> getYN(@PathVariable("wno") long wno, HttpServletRequest req) {
+		log.info("get..." + wno);
+
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		
+		if (user == null) {
+			user = new UserAuthVO();
+			user.setUser_id("noName");
+		}
+		
+		ApplyVO vo = new ApplyVO();
+		vo.setWno(wno);
+		vo.setUser_id(user.getUser_id());
+		System.out.println(vo);
+		System.out.println("get application : " + service.findano(vo));
+		return new ResponseEntity<>(service.findano(vo), HttpStatus.OK);
+	}
+	
+	
 	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("wno") long wno, RedirectAttributes rttr) {
@@ -161,15 +195,23 @@ public class GoWithController {
 	// 동행 신청
 	@PostMapping("/appli")
 	@ResponseBody
-	public int applygoWith(@RequestBody ApplyVO avo) {
-		System.out.println("apply : " + avo);
+	public int applygoWith(@RequestBody ApplyVO avo,  HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+
+		ApplyVO vo = new ApplyVO();
+		vo.setWno(avo.getWno());
+		vo.setUser_id(user.getUser_id());
+		
+		System.out.println("apply : " + vo);
 		// 신청을 했으면 result=1, 안했으면 0
-		int result = service.checkApply(avo);
+		int result = service.checkApply(vo);
 		System.out.println(result);
+		
 		if(result == 0) {
-			service.insertApply(avo);
+			service.insertApply(vo);
 		}else {
-			service.deleteApply(avo);
+			service.deleteApply(vo);
 		}
 		return result;
 	}
