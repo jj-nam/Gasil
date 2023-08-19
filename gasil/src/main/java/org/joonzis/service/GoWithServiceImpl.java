@@ -80,8 +80,8 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.findano(vo);
 	}
 	@Override
-	public int checkConfirm(long ano) {
-		return mapper.checkConfirm(ano);
+	public int checkConfirm(ApplyVO vo) {
+		return mapper.checkConfirm(vo);
 	}
 	@Override
 	public int getConfirm(ApplyVO vo) {
@@ -92,5 +92,13 @@ public class GoWithServiceImpl implements GoWithService{
 	public int deleteConfirm(ApplyVO vo) {
 		log.info("cancel");
 		return mapper.deleteConfirm(vo);
+	}
+	@Override
+	public int getP_cnt(long wno) {
+		return mapper.getP_cnt(wno);
+	}
+	@Override
+	public int getOver(long wno) {
+		return mapper.getOver(wno);
 	}
 }

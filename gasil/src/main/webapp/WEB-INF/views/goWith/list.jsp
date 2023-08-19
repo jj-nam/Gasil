@@ -351,13 +351,6 @@
 			data : JSON.stringify(wno),
 			success : function(result){
 				
-				$.ajax({
-					type : 'get',
-					url : '/goWith/chkConfirm/' + wno + '.json',
-					data : JSON.stringify(wno),
-					success : function(data){
-				
-				
 						if(result == null || result.length == 0){
 								app += '<div>';
 								app += '<p>신청자가 없습니다</p>';
@@ -370,11 +363,13 @@
 								app += '<div>';
 								app += '<span class="col-4">이미지&nbsp;</span>';
 								app += '<span class="col-4">' + result[i].user_id + '</span>';
-								if(data==1){
-									app += "<a id='confirmation' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'><span id='text'>취소</span></a>";
+								app += "<div class='confirmation"+ result[i].user_id + "'>";
+								if(result[i].confirmation == 1){
+									app += "<a href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>취소</a>";
 								}else{
-									app += "<a id='confirmation' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>><span id='text'>수락</span></a>";
+									app += "<a href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>수락</a>";
 								}
+								app += "</div>";
 								app += '<hr>';
 								app += '</div>';
 							}
@@ -389,11 +384,6 @@
 							showAppList.modal('hide');
 						})
 						
-						
-				
-				
-					}	// end inner success
-				})	// end inner ajax
 			}	// end success
 		})		// end ajax
 		
@@ -402,7 +392,6 @@
 	}
 	
 	function confirmation(wno, user_id){
-		var changeConfirm = $("#confirmation")
 		var con = '';
 		$.ajax({
 			type : 'post',
@@ -414,14 +403,18 @@
 				'user_id':user_id
 			}),
 			success : function(re){					
-				if(re==1){
-					alert("취소 되었습니다.");
-					con += '<span>수락</span>'
-				}else{
+				if(re==0){
 					alert("수락 하셨습니다");
-					con += '<span>취소</span>'
+					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소</a>";
+				}else if(re==1){
+					alert("취소 되었습니다.");
+					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
 				}
-				changeConfirm.html(con);
+				else if(re==2){
+					alert("더 이상 수락할 수 없습니다.")
+					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+				}
+				$('.confirmation'+user_id).html(con);
 			}
 		})	// end ajax
 	}	// end confirm

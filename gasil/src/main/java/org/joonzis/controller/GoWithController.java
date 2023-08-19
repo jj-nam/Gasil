@@ -150,7 +150,6 @@ public class GoWithController {
 		return new ResponseEntity<>(service.get(wno), HttpStatus.OK);
 	}
 	 	 	
-	
 	// 신청 판별
 	@GetMapping(value = "/appYN/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
 												MediaType.APPLICATION_JSON_VALUE })
@@ -222,29 +221,29 @@ public class GoWithController {
 	public int applygoWith(@RequestBody ApplyVO vo) {
 		
 		long wno = vo.getWno();
-		log.info("vo : " + vo);
-		
+		// 모집 인원 수
+		int p_cntNum = service.getP_cnt(vo.getWno());
+		// 신청 수락한 수
+		int overCnt = service.getOver(vo.getWno());
 		// 신청 수락을 했으면 result=1, 안했으면 0
-		int result = service.checkConfirm(wno);
+		int result = service.checkConfirm(vo);
+		System.out.println("p_cntNum : " + p_cntNum);
+		System.out.println("overCnt : " + overCnt);
 		
 		if(result == 0) {
-			service.getConfirm(vo);
-			System.out.println("수락");
-		}else {
+			if(p_cntNum > overCnt) {
+				service.getConfirm(vo);
+				System.out.println("수락");
+			}else{
+				result = 2;
+			}
+		}else if(result == 1){
 			service.deleteConfirm(vo);
 			System.out.println("취소");
 		}
+		System.out.println(result);
 		return result;
 	}
 	
-	// 신청 확인 판별
-	@GetMapping(value = "/chkConfirm/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
-												MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Integer> chkConfirm(@PathVariable("wno") long wno) {
-		log.info("get..." + wno);
-		
-		System.out.println("check confirmation : " + service.checkConfirm(wno));
-		return new ResponseEntity<>(service.checkConfirm(wno), HttpStatus.OK);
-	}
 	
 }
