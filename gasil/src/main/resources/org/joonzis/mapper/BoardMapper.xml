@@ -18,6 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
+	<select id="getMyList" resultType="org.joonzis.domain.BoardVO" parameterType="String">
+		select 
+			bno, title, reg_date, r_cnt, bview, user_nick
+		from 
+			tbl_board 
+ 		where 
+    		writer =#{writer} order by bno desc
+	</select>
+	
 	<insert id="insert" parameterType="org.joonzis.domain.BoardVO">
 		insert into tbl_board(bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, user_nick, reg_date)
 		values(
@@ -68,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMax" resultType="long">
 		select max(bno) from tbl_board
 	</select>
+	
 	<select id="movePage" parameterType="long" resultType="org.joonzis.domain.BoardVO">
 		select * from(SELECT 
 				BNO,

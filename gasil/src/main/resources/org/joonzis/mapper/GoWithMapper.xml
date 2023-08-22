@@ -13,6 +13,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
+	<!-- <select id="getProposalList" resultType="org.joonzis.domain.GoWithFlagApplyVO" parameterType="String">
+		<![CDATA[
+		select 
+    		c.flag, a.wno, ano, g.user_id, u.user_nick, g.wtitle, u.gender, g.city, g.departure, g.arrive, g.reg_date, g.age, a.confirmation 
+		from 
+		    tbl_goWith g, tbl_country c, tbl_user u, tbl_apply a 
+		where 
+		    g.city = c.city 
+		    and 
+		    u.user_id = g.user_id 
+		    and 
+		    u.user_id = a.user_id 
+		    and 
+		    a.user_id=#{user_id}
+		    and 
+		    a.confirmation>= 0
+		    and 
+		    ano>0
+			]]>
+	</select> -->
+	
 	<select id="getTotalcount" resultType="int">
 		<![CDATA[
 		select count(*) from tbl_goWith where wno > 0 
@@ -28,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="org.joonzis.domain.GoWithVO">
-		insert into tbl_goWith(wno, user_id, wtitle, content, style, city, departure, arrive, r_cnt, p_cnt, people, reg_date, period, age)
+		insert into tbl_goWith(wno, user_id, wtitle, content, style, city, departure, arrive, p_cnt, people, reg_date, period, age)
 		values(
 			gowith_seq.nextval,
 			#{user_id},
@@ -38,7 +59,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{city},
 			#{departure},
 			#{arrive},
-			0,
 			#{p_cnt}, 
 			#{people},
 			sysdate,

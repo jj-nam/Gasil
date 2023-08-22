@@ -28,6 +28,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
+	public List<BoardVO> getMyList(String writer) {
+		log.info("getMyList...");
+		return mapper.getMyList(writer);
+	}
+	
+	@Override
 	public void register(BoardVO vo) {
 		log.info("getResister...");
 		mapper.insert(vo);

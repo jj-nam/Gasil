@@ -6,9 +6,15 @@ import javax.servlet.http.HttpSession;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.domain.UserVO;
 import org.joonzis.mapper.UserMapper;
+import org.joonzis.service.BoardService;
+import org.joonzis.service.GoWithService;
+import org.joonzis.service.HeartService;
+import org.joonzis.service.ReplyService;
 import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +32,18 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private BoardService bservice;
+	
+	@Autowired
+	private ReplyService rservice;
+	
+	@Autowired
+	private HeartService hservice;
+	
+	@Autowired
+	private GoWithService gservice;
 	
 	/*
 	 * @Setter(onMethod_ = @Autowired) private PasswordEncoder pwencoder;
@@ -49,7 +67,7 @@ public class UserController {
 		}
 	
 	// 회원가입
-	@PostMapping("user/joinUser")
+	@PostMapping("/user/joinUser")
 	public String join(UserVO vo, RedirectAttributes rttr) {
 		
 		log.info("joinUser : " + vo);
@@ -86,6 +104,58 @@ public class UserController {
 	        
 	    return "redirect:/home"; 
     }
+	
+	// 작성한 글
+	@GetMapping("/myInfo/list")
+	public String list(Model model, HttpServletRequest req) {
+		log.info("list...");
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		
+		String writer = user.getUser_id();
+		
+		model.addAttribute("list", bservice.getMyList(writer));
+		return "myInfo/w_board";
+	}
+	
+	// 작성한 댓글
+	@GetMapping("/myInfo/replyList")
+	public String replyList(Model model, HttpServletRequest req) {
+		log.info("replyList...");
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		
+		String writer = user.getUser_nick();
+		
+		model.addAttribute("list", rservice.getMyReplyList(writer));
+		return "myInfo/w_reply";
+	}
+	
+	// 좋아요한 글
+	@GetMapping("/myInfo/likes")
+	public String likeList(Model model, HttpServletRequest req) {
+		log.info("likeList...");
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		
+		String writer = user.getUser_id();
+		log.info(writer);
+		model.addAttribute("list", hservice.getLikeList(writer));
+		return "myInfo/likes";
+	}
+	
+	/*
+	 * // 신청한 글
+	 * 
+	 * @GetMapping("/myInfo/proposal") public String proposalList(Model model,
+	 * HttpServletRequest req) { log.info("proposalList..."); HttpSession session =
+	 * req.getSession(); UserAuthVO user = (UserAuthVO)
+	 * session.getAttribute("user");
+	 * 
+	 * String writer = user.getUser_id(); log.info(writer);
+	 * model.addAttribute("list", gservice.getProposalList(writer)); return
+	 * "myInfo/proposal"; }
+	 */
 	
 	// input으로 받은 닉네임으로
 	// 닉네임 수정할 때 해당 이전 닉네임을 가지고 있는 

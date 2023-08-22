@@ -9,6 +9,10 @@ import org.joonzis.domain.Criteria;
 public interface BoardMapper {
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	
+	public List<BoardVO> getMyList(String writer);
+	
+	public List<BoardVO> getLikeList(String writer);
+	
 	public void insert(BoardVO vo);
 
 	public BoardVO read(long bno);

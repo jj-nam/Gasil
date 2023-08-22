@@ -2,6 +2,8 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.BoardReplyVO;
+import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.ReplyVO;
 import org.joonzis.mapper.BoardMapper;
 import org.joonzis.mapper.ReplyMapper;
@@ -29,6 +31,12 @@ public class ReplyServiceImpl implements ReplyService{
 	public ReplyVO get(long rno) {
 		log.info("getGet..." + rno);
 		return rmapper.read(rno);
+	}
+	
+	@Override
+	public List<BoardReplyVO> getMyReplyList(String writer) {
+		log.info("getMyReplyList...");
+		return rmapper.getMyReplyList(writer);
 	}
 	
 	@Transactional

@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoWithFlagVO {
+public class GoWithFlagApplyVO {
 	private String flag;
-	private long wno, period, confirmation, ano;
-	private String user_id, user_nick, wtitle, gender, content, style, city, country, continent, departure, arrive;
+	private long wno, ano;
+	private String user_id, user_nick, wtitle, gender, city, departure, arrive;
 	private Date reg_date;
-	private int p_cnt, people, age;
+	private int age;
 }

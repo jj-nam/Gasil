@@ -33,30 +33,6 @@ public class PageController {
 		return "myInfo/personal_info";
 	}
 	
-	@RequestMapping("myInfo/w_board")
-	public String w_board() {
-		log.info("w_board");
-		return "myInfo/w_board";
-	}
-	
-	@RequestMapping("myInfo/w_reply")
-	public String w_reply() {
-		log.info("w_reply");
-		return "myInfo/w_reply";
-	}
-	
-	@RequestMapping("myInfo/likes")
-	public String likes() {
-		log.info("likes");
-		return "myInfo/likes";
-	}
-	
-	@RequestMapping("myInfo/proposal")
-	public String proposal() {
-		log.info("proposal");
-		return "myInfo/proposal";
-	}
-	
 	@RequestMapping("terms/gaein")
 	public String gaein() {
 		log.info("gaein");
@@ -82,7 +58,5 @@ public class PageController {
 		log.info("gasilcc");
 		return "terms/gasilcc";
 	}
-	
-	
 	
 }

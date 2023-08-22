@@ -8,6 +8,7 @@ import org.joonzis.domain.HeartVO;
 
 public interface BoardService {
 	public List<BoardVO> getList(Criteria cri);
+	public List<BoardVO> getMyList(String writer);
 	public void register(BoardVO vo);
 	public BoardVO get(long bno);
 	public boolean remove(long bno);

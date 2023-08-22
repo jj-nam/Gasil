@@ -6,9 +6,12 @@ import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
+import org.joonzis.domain.GoWithFlagApplyVO;
 
 public interface GoWithService {
 	public List<GoWithFlagVO> getList();
+
+	/* public List<GoWithFlagApplyVO> getProposalList(String writer); */
 	public int getTotal();
 	public int insert(GoWithVO vo);
 	public List<CountryVO> getCountry(String continent);

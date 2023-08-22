@@ -7,6 +7,7 @@ import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
+import org.joonzis.domain.GoWithFlagApplyVO;
 import org.joonzis.mapper.GoWithMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,13 @@ public class GoWithServiceImpl implements GoWithService{
 		log.info("getList...");
 		return mapper.getList();
 	}
+	
+	/*
+	 * @Override public List<GoWithFlagApplyVO> getProposalList(String writer) {
+	 * log.info("getproposalList..."); return mapper.getProposalList(writer); }
+	 */
+	
+	
 	@Override
 	public int getTotal() {
 		log.info("total...");

@@ -1,5 +1,8 @@
 package org.joonzis.service;
 
+import java.util.List;
+
+import org.joonzis.domain.HeartBoardVO;
 import org.joonzis.domain.HeartVO;
 import org.joonzis.mapper.HeartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,12 @@ public class HeartServiceImpl implements HeartService{
 
 	@Autowired
 	private HeartMapper mapper;
+	
+	@Override
+	public List<HeartBoardVO> getLikeList(String writer) {
+		log.info("get writer : " + writer);
+		return mapper.getLikeList(writer);
+	}
 	
 	@Override
 	public int insert(HeartVO vo) {

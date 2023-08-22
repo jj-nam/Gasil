@@ -50,7 +50,7 @@ li{
 									<tr>
 										<td style="text-align: center">
 											<a class="move" href="${board.bno }">
-											<c:out value="${board.cate_id}"></c:out>
+												<c:out value="${board.cate_id}"></c:out>
 											</a>
 										</td>
 										<td>
@@ -63,12 +63,12 @@ li{
 										</td>
 										<td style="text-align: center">
 											<a class="move" href="${board.bno }">
-											<fmt:formatDate value="${board.reg_date}" pattern="yyyy-MM-dd"/>
+												<fmt:formatDate value="${board.reg_date}" pattern="yyyy-MM-dd"/>
 											</a>
 										</td>
 										<td style="text-align: center">
 											<a class="move" href="${board.bno }">
-											<c:out value="${board.bview}" />
+												<c:out value="${board.bview}" />
 											</a>
 										</td>
 									</tr>

@@ -110,7 +110,7 @@ public class BoardController {
 		model.addAttribute("cri", cri);
 		return "board/get";
 	}
-
+	
 	private void viewCountUp(long bno, HttpServletRequest req, HttpServletResponse res) {
 		// 클라이언트로 요청이 들어온다.
 		// 요청에 Cookie가 없고 글을 조회한다면 [게시글 no]의 값을 추가하여 Cookie 생성 (기간은 하루로 설정)

@@ -47,8 +47,8 @@
 		<button id="date_fileter" style="text-align: left" class="btn btn-xs pull-right btn-primary">조회 기간(필터 예정)</button>
 	<c:if test="${not empty user}">
 		<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
-		<form action="/goWith/list" method="get" id="actionForm"></form>
 	</c:if>
+		<form action="/goWith/list" method="get" id="actionForm"></form>
 		<div class="content-area" style="margin-top: 10px;">
 		
 			<div class="row">

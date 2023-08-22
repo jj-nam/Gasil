@@ -4,6 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.joonzis.mapper.HeartMapper">
+	<select id="getLikeList" resultType="org.joonzis.domain.HeartBoardVO" parameterType="String">
+		select bno, bview, r_cnt, user_nick, title, reg_date, hno 
+		from tbl_heart natural join tbl_board where user_id=#{writer} order by hno desc
+	</select>
+	
 	<insert id="insert" parameterType="org.joonzis.domain.HeartVO">
 		insert into tbl_heart(hno, bno, user_id)
 		values(
@@ -32,20 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkLike" resultType="int" parameterType="org.joonzis.domain.HeartVO">
 		select count(*) from tbl_heart where bno=#{bno} and user_id=#{user_id}
 	</select>
-<!-- 
-	<insert id="likeUp" parameterType="org.joonzis.domain.HeartVO">
-		insert into tbl_heart(hno, bno, user_id, likeOrNo)
-		values(
-			heart_seq.nextval,
-			#{bno},
-			#{user_id},
-			1
-		) 
-	</insert>
-	<delete id="likeDown" parameterType="org.joonzis.domain.HeartVO">
-		DELETE FROM tbl_heart
-		WHERE bno = #{bno} AND user_id = #{user_id}	
-	</delete>
--->
+
 
 </mapper>

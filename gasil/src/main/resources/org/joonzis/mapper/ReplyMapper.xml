@@ -8,6 +8,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from tbl_reply where bno=#{bno} order by rno, deep, rgp asc
 	</select>
 	
+	<select id="getMyReplyList" resultType="org.joonzis.domain.BoardReplyVO" parameterType="String">
+		select 
+			rno, bno, title, content, reply_date, r_cnt
+		from 
+			tbl_reply natural join tbl_board
+ 		where 
+    		writer =#{writer} order by rno desc
+	</select>
+	
 	<!-- 댓글 insert -->
 	<insert id="insert" parameterType="org.joonzis.domain.ReplyVO">
 		insert into tbl_reply(no, bno, rno, rgp, deep, writer, content)
