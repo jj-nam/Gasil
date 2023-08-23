@@ -1,8 +1,13 @@
 package org.joonzis.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.BoardVO;
+import org.joonzis.domain.GoWithFlagVO;
+import org.joonzis.domain.ReplyVO;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.domain.UserVO;
 import org.joonzis.mapper.UserMapper;
@@ -12,9 +17,13 @@ import org.joonzis.service.HeartService;
 import org.joonzis.service.ReplyService;
 import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,19 +113,39 @@ public class UserController {
 	        
 	    return "redirect:/home"; 
     }
+
 	
 	// 작성한 글
-	@GetMapping("/myInfo/list")
-	public String list(Model model, HttpServletRequest req) {
-		log.info("list...");
+	@GetMapping(value = "/myInfo/list",	produces = {MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<BoardVO>> getList(HttpServletRequest req){
+		log.info("boardList...");
+		
 		HttpSession session = req.getSession();
 		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
 		
 		String writer = user.getUser_id();
-		
-		model.addAttribute("list", bservice.getMyList(writer));
-		return "myInfo/w_board";
+		log.info(writer);
+		log.info(bservice.getMyList(writer));
+		return new ResponseEntity<>(bservice.getMyList(writer),HttpStatus.OK);
 	}
+	
+	// 작성한 동행글
+	@GetMapping(value = "/myInfo/goWith",	produces = {MediaType.APPLICATION_XML_VALUE,
+													MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<GoWithFlagVO>> getGoWithList(HttpServletRequest req){
+		log.info("goWithList...");
+		
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		
+		String writer = user.getUser_id();
+		log.info(writer);
+		log.info(gservice.getGoWithList(writer));
+		
+		return new ResponseEntity<>(gservice.getGoWithList(writer),HttpStatus.OK);
+	}
+	
 	
 	// 작성한 댓글
 	@GetMapping("/myInfo/replyList")
@@ -144,19 +173,20 @@ public class UserController {
 		return "myInfo/likes";
 	}
 	
-	/*
-	 * // 신청한 글
-	 * 
-	 * @GetMapping("/myInfo/proposal") public String proposalList(Model model,
-	 * HttpServletRequest req) { log.info("proposalList..."); HttpSession session =
-	 * req.getSession(); UserAuthVO user = (UserAuthVO)
-	 * session.getAttribute("user");
-	 * 
-	 * String writer = user.getUser_id(); log.info(writer);
-	 * model.addAttribute("list", gservice.getProposalList(writer)); return
-	 * "myInfo/proposal"; }
-	 */
 	
+	// 신청한 글
+	@GetMapping("/myInfo/proposal")
+	public String proposalList(Model model, HttpServletRequest req) {
+		log.info("proposalList...");
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+
+		String writer = user.getUser_id();
+		log.info(writer);
+		model.addAttribute("list", gservice.getProposalList(writer));
+		return "myInfo/proposal";
+	}
+
 	// input으로 받은 닉네임으로
 	// 닉네임 수정할 때 해당 이전 닉네임을 가지고 있는 
 	// 게시물, 댓글, 대댓글 등 모든 것에 대한 닉네임을 먼저 수정

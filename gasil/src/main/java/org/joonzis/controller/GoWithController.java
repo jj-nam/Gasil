@@ -27,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -176,10 +177,19 @@ public class GoWithController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("wno") long wno, RedirectAttributes rttr) {
 		log.info("remove : " + wno);
-		if (service.remove(wno)) {
+		if (service.remove(wno)==1) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/goWith/list";
+	}
+	
+	// 마이페이지 동행 게시물 삭제
+	@DeleteMapping(value = "/remove/{wno}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> remove(@PathVariable("wno") long wno){
+		log.info("remove..." + wno);
+		return service.remove(wno) == 1 ?
+				new ResponseEntity<>("success", HttpStatus.OK) : 
+					new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	// 신청자 리스트

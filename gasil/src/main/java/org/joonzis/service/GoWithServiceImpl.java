@@ -27,11 +27,16 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.getList();
 	}
 	
-	/*
-	 * @Override public List<GoWithFlagApplyVO> getProposalList(String writer) {
-	 * log.info("getproposalList..."); return mapper.getProposalList(writer); }
-	 */
+	@Override
+	public List<GoWithFlagApplyVO> getProposalList(String writer) {
+		log.info("getproposalList...");
+		return mapper.getProposalList(writer);
+	}
 	
+	@Override
+	public List<GoWithFlagVO> getGoWithList(String writer) {
+		return mapper.getGoWithList(writer);
+	}
 	
 	@Override
 	public int getTotal() {
@@ -60,7 +65,7 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.get(wno);
 	}
 	@Override
-	public boolean remove(long wno) {
+	public int remove(long wno) {
 		return mapper.remove(wno);
 	}
 	@Override

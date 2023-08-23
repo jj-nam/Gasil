@@ -275,7 +275,6 @@
 					
 					
 					
-					
 				modalPlace.html(str);
 				
 			var modalCloseBtn = $("#modalCloseBtn");		// 닫기 버튼
@@ -284,7 +283,6 @@
 			var operForm = $("#operForm");
 			
 			
-			// 댓글 취소 버튼 클릭 이벤트 
 			modalCloseBtn.on('click', function(){
 				modal.modal('hide');
 			})

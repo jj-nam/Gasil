@@ -14,5 +14,5 @@ public class GoWithFlagApplyVO {
 	private long wno, ano;
 	private String user_id, user_nick, wtitle, gender, city, departure, arrive;
 	private Date reg_date;
-	private int age;
+	private int age, confirmation;
 }

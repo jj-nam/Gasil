@@ -10,14 +10,14 @@ import org.joonzis.domain.GoWithFlagApplyVO;
 
 public interface GoWithService {
 	public List<GoWithFlagVO> getList();
-
-	/* public List<GoWithFlagApplyVO> getProposalList(String writer); */
+	public List<GoWithFlagApplyVO> getProposalList(String writer);
+	public List<GoWithFlagVO> getGoWithList(String writer);
 	public int getTotal();
 	public int insert(GoWithVO vo);
 	public List<CountryVO> getCountry(String continent);
 	public List<CountryVO> getCity(String country);
 	public GoWithFlagVO get(long wno);
-	public boolean remove(long wno);
+	public int remove(long wno);
 	public List<ApplyVO> getApply(long wno);
 	public int checkApply(ApplyVO vo);
 	public int insertApply(ApplyVO vo);
