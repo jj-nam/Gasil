@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
+import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
 import org.joonzis.domain.GoWithFlagApplyVO;
 
 public interface GoWithService {
-	public List<GoWithFlagVO> getList();
+	public List<GoWithFlagVO> getList(Criteria cri);
 	public List<GoWithFlagApplyVO> getProposalList(String writer);
 	public List<GoWithFlagVO> getGoWithList(String writer);
 	public int getTotal();

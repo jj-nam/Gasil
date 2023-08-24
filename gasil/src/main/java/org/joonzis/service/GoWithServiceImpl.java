@@ -22,9 +22,9 @@ public class GoWithServiceImpl implements GoWithService{
 	private GoWithMapper mapper;
 	
 	@Override
-	public List<GoWithFlagVO> getList() {
+	public List<GoWithFlagVO> getList(Criteria cri) {
 		log.info("getList...");
-		return mapper.getList();
+		return mapper.getList(cri);
 	}
 	
 	@Override

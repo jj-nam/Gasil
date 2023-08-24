@@ -96,6 +96,7 @@
 </style>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+	// 약관 동의 체크 박스
 	function collapse(element) {
 	    var before = document.getElementsByClassName("active")[0]               // 기존에 활성화된 버튼
 	    if (before && document.getElementsByClassName("active")[0] != element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
@@ -118,7 +119,7 @@
 	var chk3 = false;
 	var chk4 = false;
 	var chk5 = false;
-	var chk6 = true;
+	var chk6 = false;
 		
 	var activePostion = $(".activeBtn");
 	    $("#pilsu").change(function(){
@@ -386,12 +387,12 @@
 					<td colspan="2">
 						<select class="form-select form-select-sm" aria-label=".form-select-sm example" style="border:none; width:95%;">
 							<option selected disabled style="display:none">통신사를 선택하세요</option>
-							<option value="skt">SKT</option>
-							<option value="kt">KT</option>
-							<option value="lg">LG U+</option>
-							<option value="sktAl">SKT알뜰폰</option>
-							<option value="ktAl">KT알뜰폰</option>
-							<option value="lgAl">LG U+알뜰폰</option>
+							<option value="SKT">SKT</option>
+							<option value="KT">KT</option>
+							<option value="LG U+">LG U+</option>
+							<option value="SKT알뜰폰">SKT알뜰폰</option>
+							<option value="KT알뜰폰">KT알뜰폰</option>
+							<option value="LG U+알뜰폰">LG U+알뜰폰</option>
 						</select>
 					</td>
 				</tr>

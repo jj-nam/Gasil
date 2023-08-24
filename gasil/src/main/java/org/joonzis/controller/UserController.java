@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.BoardVO;
+import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.ReplyVO;
 import org.joonzis.domain.UserAuthVO;
@@ -113,9 +114,55 @@ public class UserController {
 	        
 	    return "redirect:/home"; 
     }
+	// 개인 정보 페이지
+	@RequestMapping("myInfo/personal_info")
+	public String personal_info(Model model, HttpServletRequest req) {
+		log.info("personal_info");
+		
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
 
+		String writer = user.getUser_id();
+		log.info(writer);
+		
+		model.addAttribute("user", service.getPersonInfo(writer));
+		
+		return "myInfo/personal_info";
+	}
 	
-	// 작성한 글
+	@GetMapping("myInfo/update_info")
+	public String modify(Model model, HttpServletRequest req) {
+		log.info("modify");
+		
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+
+		String writer = user.getUser_id();
+		log.info(writer);
+		
+		model.addAttribute("user", service.getPersonInfo(writer));
+		return "myInfo/update_info";
+	}
+	
+	@PostMapping("myInfo/update_info")
+	public String modify(UserAuthVO vo, RedirectAttributes rttr) {
+		log.info("modify : " + vo);
+		
+		if (service.modify(vo)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		
+		return "redirect:/myInfo/personal_info";
+	}
+	
+	// 작성한 글 페이지
+	@RequestMapping("myInfo/w_board")
+	public String personal_infoList() {
+		log.info("personal_infoList");
+		return "myInfo/w_board";
+	}
+	
+	// 작성한 글 리스트
 	@GetMapping(value = "/myInfo/list",	produces = {MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<BoardVO>> getList(HttpServletRequest req){

@@ -53,7 +53,7 @@
 	<hr>
 	<div class ="body-menu">
 		<div class="left-menu">
-			<div class="personal_info"><a href="personal_info">개인 정보</a></div>
+			<div class="personal_info"><a href="/myInfo/personal_info">개인 정보</a></div>
 			<div class="w_board"><a href="/myInfo/w_board">작성 글</a></div>
 			<div class="w_reply"><a href="/myInfo/replyList">작성 댓글</a></div>
 			<div class="likes"><a href="/myInfo/likes">좋아요한 글</a></div>

@@ -6,24 +6,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="org.joonzis.mapper.GoWithMapper">
 	<select id="getList" resultType="org.joonzis.domain.GoWithFlagVO">
 		<![CDATA[
-			select * from
-				(tbl_goWith natural join tbl_country) natural join tbl_user 
-			order by 
-				wno desc
+			select flag, wno, period, user_id, user_nick, wtitle, gender, content, style, city, country, continent, departure, arrive, reg_date, p_cnt, people, age from
+				( select rownum as rn, flag, wno, period, user_id, user_nick, wtitle, gender, content, style, city, country, continent, departure, arrive, reg_date, p_cnt, people, age 
+			from ((tbl_goWith natural join tbl_country) natural join tbl_user) 
+			where
+				rownum <= #{pageNum} * #{amount} order by wno desc)
+			where
+				rn > (#{pageNum} -1) * #{amount}
+				
 		]]>
 	</select>
 	
 	<select id="getProposalList" resultType="org.joonzis.domain.GoWithFlagApplyVO" parameterType="String">
-		select 
-    		c.flag, g.wno, a.ano, u.user_id, u.user_nick, g.wtitle, u.gender, g.city, g.departure, g.arrive, g.reg_date, g.age, a.confirmation 
-		from 
-		    tbl_goWith g, tbl_country c, tbl_user u, (select * from tbl_apply where user_id=#{user_id}) a 
-		where 
+		select c.flag, g.wno, a.ano, u.user_id, u.user_nick, g.wtitle, u.gender, g.city, g.departure, g.arrive, g.reg_date, g.age, a.confirmation 
+        from tbl_goWith g, tbl_country c, tbl_user u, (select * from tbl_apply where user_id=#{user_id}) a 
+        where
             g.user_id = u.user_id
             and
             g.city = c.city
             and
             a.wno = g.wno
+        order by wno desc
 	</select>
 	
 	<select id="getGoWithList" resultType="org.joonzis.domain.GoWithFlagVO" parameterType="String">
@@ -127,6 +130,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getOver" parameterType="long" resultType="int">
 		select count(*) from tbl_apply where wno=#{wno} and confirmation=1
 	</select>
-	
 	
 </mapper>

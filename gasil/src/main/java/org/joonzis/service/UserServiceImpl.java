@@ -41,6 +41,10 @@ public class UserServiceImpl implements UserService {
         System.out.println(e.getCode());
       }
 	}
+	@Override
+	public UserAuthVO getPersonInfo(String writer) {
+		return mapper.getPersonInfo(writer);
+	}
 	// 회원가입
 	@Override
 	public void join(UserVO uvo) {
@@ -63,4 +67,8 @@ public class UserServiceImpl implements UserService {
 		return mapper.getBirth(user_id);
 	}
 	
+	@Override
+	public boolean modify(UserAuthVO vo) {
+		return mapper.modify(vo);
+	}
 }

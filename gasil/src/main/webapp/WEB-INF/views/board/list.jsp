@@ -78,25 +78,21 @@ li{
 						<!-- 페이징 -->
 			            <div class="pull-right">
 			               <ul class="pagination">
-			               	<c:choose>
-			               		<c:when test="${pageMaker.prev }">
-				                     <li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">&lt;</a></li>
-			               		</c:when>
-								<c:otherwise>
-				                     <li class="paginate_button previous">&lt;</li>
-								</c:otherwise>			                  
-			               	</c:choose>
+			                  <c:if test="${pageMaker.prev }">
+			                     <li class="paginate_button previous">
+			                        <a href="${pageMaker.startPage-1 }">&lt;</a>
+			                     </li>
+			                  </c:if>
 			                  <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-			                     <li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : '' }"><a href="${num }">${num }</a></li>
+			                     <li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : '' }">   
+			                        <a href="${num }">${num }</a>
+			                     </li>
 			                  </c:forEach>
-			                  <c:choose>
-			               		<c:when test="${pageMaker.next }">
-				                     <li class="paginate_button previous"><a href="${pageMaker.endPage+1 }">&gt;</a></li>
-			               		</c:when>
-								<c:otherwise>
-				                     <li class="paginate_button previous">&gt;</li>
-								</c:otherwise>			                  
-			               	</c:choose>
+			                  <c:if test="${pageMaker.next }">
+			                     <li class="paginate_button">
+			                        <a href="${pageMaker.endPage+1 }">&gt;</a>
+			                     </li>
+			                  </c:if>
 			               </ul>
 			            </div>
 						<!-- 페이징 끝 -->

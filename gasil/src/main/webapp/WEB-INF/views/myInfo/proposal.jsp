@@ -70,12 +70,14 @@
 	   </div>
 	</div>
 	
+	
 			</div>
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
+history.replaceState({}, null, location.pathname);
 
 var modal = $(".modal");
 function getWno(wno){

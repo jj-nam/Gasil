@@ -8,8 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from tbl_user where user_id = #{user_id}
 	</select>
 	
+	<select id="getPersonInfo" resultType="org.joonzis.domain.UserAuthVO" parameterType="String">
+		select * from tbl_user natural join tbl_auth where user_id = #{writer}
+	</select>
+	
 	<insert id="insert" parameterType="org.joonzis.domain.UserVO">
-		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, user_nick, user_phone, joindate) 
+		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, user_nick, user_phone, joindate, agency) 
 		values(
 				#{user_id},
 				#{user_pw},
@@ -19,7 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{gender},
 				#{user_id},
 				#{user_phone},
-				sysdate
+				sysdate,
+				#{agency}
 			)
 	</insert>
 	
@@ -41,34 +46,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBirth" parameterType="String" resultType="String">
 		select user_birth from tbl_user where user_id =#{user_id}
 	</select>
-<!-- 	<resultMap type="org.joonzis.domain.UserVO" id="userMap">
-		VO의 필드명과 column의 컬럼명 다를 경우 맞춰준다
-		<id property="user_id" column="user_id"/>
-		<result property="user_id" column="user_id"/>
-		<result property="user_pw" column="user_pw"/>
-		<result property="user_email" column="user_email"/>
-		<result property="user_name" column="user_name"/>
-		<result property="user_birth" column="user_birth"/>
-		<result property="user_phone" column="user_phone"/>
-		<result property="gender" column="gender"/>
-		<result property="user_nick" column="user_nick"/>
-		<result property="user_pic" column="user_pic"/>
-		<result property="joindate" column="joindate"/>
-		<collection property="authList" resultMap="authMap"></collection> 아래 resultMap의 id값을 resultMap에 넣어 불러온다
-	</resultMap>
 	
-	<resultMap type="org.joonzis.domain.AuthVO" id="authMap">
-		<result property="user_id" column="user_id"/>
-		<result property="grade" column="grade"/>
-		<result property="auth" column="auth"/>
-	</resultMap>
-
-	<select id="read" resultMap="userMap">
-		SELECT 
-			user_id, user_pw, user_email, user_name, user_birth,user_phone, gender, user_nick, user_pic, grade, auth
-		FROM 
-			tbl_user NATURAL JOIN tbl_auth 
-		WHERE 
-			user_id=#{user_id}
-	</select> -->
+	<update id="modify" parameterType="org.joonzis.domain.UserAuthVO">
+		update tbl_user
+		set
+			user_pic = #{user_pic},
+			user_pw = #{user_pw},
+			user_email = #{user_email},
+			user_nick = #{user_nick},
+			agency = #{agency},
+			user_phone = #{user_phone}
+		where
+			user_id = #{user_id}
+	</update>
 </mapper>

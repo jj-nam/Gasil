@@ -16,8 +16,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections.map.HashedMap;
 import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
+import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
+import org.joonzis.domain.PageDTO;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.service.GoWithService;
 import org.joonzis.service.UserService;
@@ -53,10 +55,12 @@ public class GoWithController {
 	private UserService uservice;
 	
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, Criteria cri) {
 		log.info("list...");
 		
-		model.addAttribute("list", service.getList());
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
+		
 		return "goWith/list";
 	}
 	

@@ -27,18 +27,6 @@ public class PageController {
 		return "user/loginPage";
 	}
 	
-	@RequestMapping("myInfo/w_board")
-	public String personal_infoList() {
-		log.info("personal_infoList");
-		return "myInfo/w_board";
-	}
-	
-	@RequestMapping("myInfo/personal_info")
-	public String personal_info() {
-		log.info("personal_info");
-		return "myInfo/personal_info";
-	}
-	
 	@RequestMapping("terms/gaein")
 	public String gaein() {
 		log.info("gaein");

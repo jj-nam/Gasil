@@ -60,28 +60,28 @@
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<c:forEach var="withs" items="${list}">
-								<div class="col" style="display:inline-block; width:24%; margin:10px 0px;">
-									<div class="card" style="width: 17rem;" onclick="getWno(${withs.wno})">
+								<div class="col" style="display:inline-block; width:19%; margin:10px 0px;">
+									<div class="card" style="width: 15rem;" onclick="getWno(${withs.wno})">
 									  <div class="card-body">
 									  	<div>
 											<table>
 												<tr>
-													<td rowspan="2">이미지</td>
-													<td colspan="2">${withs.user_nick}</td>
-													<td>여행기간</td>
+													<td colspan="2">여행기간</td>
+													<td>${withs.period}일 ${withs.departure} ~ ${withs.arrive}</td>
 												</tr>
 												<tr>
-													<c:choose>
-														<c:when test="${withs.gender =='남'}">
-															<td><img id= "gender" alt="m" src="../resources/images/genderM.png"></td>
-															<td style="color:blue;">${withs.age }0대</td>
-														</c:when>
-														<c:otherwise>
-															<td><img id= "gender" alt="w" src="../resources/images/genderW.png"></td>
-															<td style="color:pink">${withs.age }0대</td>
-														</c:otherwise>
-													</c:choose>
-													<td>${withs.period}일 ${withs.departure} ~ ${withs.arrive}</td>
+													<td>이미지</td>
+													<td>${withs.user_nick}</td>
+													<td>
+														<c:choose>
+															<c:when test="${withs.gender =='남'}">
+																<img id= "gender" alt="m" src="../resources/images/genderM.png"><span style="color:blue;">${withs.age }0대</span>
+															</c:when>
+															<c:otherwise>
+																<img id= "gender" alt="w" src="../resources/images/genderW.png"><span style="color:pink;">${withs.age }0대</span>
+															</c:otherwise>
+														</c:choose>
+													</td>
 												</tr>
 											</table>		  	
 									  	</div>
@@ -142,8 +142,31 @@
 							   </div>
 							</div>
 							
-							
-							
+							<!-- 페이징 -->
+				            <div class="pull-right">
+				               <ul class="pagination">
+				                  <c:if test="${pageMaker.prev }">
+				                     <li class="paginate_button previous">
+				                        <a href="${pageMaker.startPage-1 }">&lt;</a>
+				                     </li>
+				                  </c:if>
+				                  <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+				                     <li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : '' }">   
+				                        <a href="${num }">${num }</a>
+				                     </li>
+				                  </c:forEach>
+				                  <c:if test="${pageMaker.next }">
+				                     <li class="paginate_button">
+				                        <a href="${pageMaker.endPage+1 }">&gt;</a>
+				                     </li>
+				                  </c:if>
+				               </ul>
+				            </div>
+							<!-- 페이징 끝 -->
+							<form action="/goWith/list" method="get" id="actionForm">
+								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+							</form>
 							
 							
 						</div>
@@ -421,6 +444,16 @@
 		})	// end ajax
 	}	// end confirm
 	
+	//-------------- 페이징 버튼 이벤트 처리 ---------------
+	$(".paginate_button a").on('click', function(e) {
+		e.preventDefault();
+		
+		actionForm.attr('action', '/goWith/list');
+		actionForm.find("input[name='wno']").remove();
+		actionForm.find("input[name='amount']").remove();
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();
+	});
 	
 </script>
 <%@ include file="../include/footer.jsp" %>

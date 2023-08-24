@@ -6,8 +6,10 @@ import org.joonzis.domain.UserVO;
 
 public interface UserService {
 	public void certifiedPhoneNumber(String userPhoneNumber, String randomNumber);
+	public UserAuthVO getPersonInfo(String writer);
 	public void join(UserVO uvo);
 	public UserAuthVO login(UserAuthVO vo);
 	public void addAuth(String user_id);
 	public String getBirth(String user_id);
+	public boolean modify(UserAuthVO vo);
 }
