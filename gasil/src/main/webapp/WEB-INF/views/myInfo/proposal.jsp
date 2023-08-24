@@ -6,6 +6,9 @@
 	.proposal{
 		background-color: yellow;
 	}
+	.flagImg{
+		width:30px;
+	}
 </style>
 
 
@@ -26,8 +29,8 @@
 						</tr>
 						<tr>
 							<td onclick="getWno(${prop.wno})">
-								<span>&nbsp;${prop.flag }</span>
-								<span>${prop.city }</span>
+								<span>&nbsp;<img class="flagImg" alt="${prop.flag} flag" src="../resources/images/flags/${prop.flag}.png"></span>
+								<span>&nbsp;${prop.city }</span>
 								<c:choose>
 									<c:when test="${prop.gender =='남'}">
 										<span>&nbsp;<img id= "gender" alt="m" src="../resources/images/genderM.png"></span>
@@ -95,7 +98,7 @@ function getWno(wno){
 					
 					
 					str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
-						str += '<div>' + result.flag + '  ' + result.city + '</div>';	//국기, 도시명
+						str += '<div><img class="flagImg" alt="' + result.flag + 'flag" src="../resources/images/flags/' + result.flag + '.png">&nbsp;' + result.city + '</div>';	//국기, 도시명
 							str += '<div>';	// 닉네임, 기간 테이블
 								str += '<table>';
 									str += '<tr>';

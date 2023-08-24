@@ -6,6 +6,9 @@
 	.w_board{
 		background-color: yellow;
 	}
+	.flagImg{
+		width:30px;
+	}
 </style>
 	<div class="listContainer" style="padding:10px;">
 	<input type="button" name="boardList" value="커뮤니티" onclick="community()">
@@ -108,7 +111,7 @@
 						
 						
 						str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
-							str += '<div>' + result.flag + '  ' + result.city + '</div>';	//국기, 도시명
+							str += '<div><img class="flagImg" alt="' + result.flag + 'flag" src="../resources/images/flags/' + result.flag + '.png">&nbsp;' + result.city + '</div>';	//국기, 도시명
 								str += '<div>';	// 닉네임, 기간 테이블
 									str += '<table>';
 										str += '<tr>';
@@ -328,7 +331,7 @@
 							str += '</tr>';
 							str += '<tr>';
 							str += '<td onclick="getWno(' + result[i].wno + ')">';
-							str += '<span>&nbsp;' + result[i].flag + '</span>';
+							str += '<span>&nbsp;<img class="flagImg" alt="' + result[i].flag + 'flag" src="../resources/images/flags/' + result[i].flag + '.png">&nbsp;</span>';
 							str += '<span>' + result[i].city + '</span>';
 							if(result[i].gender == '남'){
 								str += '<span>&nbsp;<img id= "gender" alt="m" src="../resources/images/genderM.png"></span>';
