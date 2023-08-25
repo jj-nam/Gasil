@@ -54,7 +54,7 @@
 				<table>
 					<tr>
 						<td rowspan="2">
-							<img class="userProfile" alt="profile" src="../resources/images/${vo.user_pic }">
+							<img class="userProfile" alt="profile" src="../resources/images/profile/${vo.user_pic }">
 						</td>
 						<td>&nbsp;&nbsp;</td>
 						<td>${vo.user_nick}</td>
@@ -71,7 +71,7 @@
 				</div>
 				<br><br><br>
 				<div>
-					<span><img class="userProfile" alt="profile" src="../resources/images/${vo.user_pic }"></span>
+					<span><img class="userProfile" alt="profile" src="../resources/images/profile/${vo.user_pic }"></span>
 					<span>${vo.user_nick} 님의 게시글 더보기 &gt;</span>
 				</div>
 				<div>
@@ -416,7 +416,7 @@
 								str += '<td>';
 								str += '<table>';
 								str += '<tr>';
-								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/' + result[i].user_pic + '"></td>';
+								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/profile' + result[i].user_pic + '"></td>';
 								str += '<td>&nbsp;</td>';
 								str += '<td style="font-weight:bold;">' + result[i].writer;
 								if(result[i].writer == writer){
@@ -453,7 +453,7 @@
 								str += '<td>';
 								str += '<table>';
 								str += '<tr>';
-								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/' + result[i].user_pic + '"></td>';
+								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/profile' + result[i].user_pic + '"></td>';
 								str += '<td>&nbsp;</td>';
 								str += '<td style="font-weight:bold;">' + result[i].writer;
 								if(result[i].writer == writer){

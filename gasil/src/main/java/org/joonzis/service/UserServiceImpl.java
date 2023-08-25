@@ -73,4 +73,10 @@ public class UserServiceImpl implements UserService {
 		
 		return mapper.modify(vo);
 	}
+	@Override
+	public void updateImage(UserVO vo){
+		mapper.updateImage(vo);
+	}
+	
+	
 }

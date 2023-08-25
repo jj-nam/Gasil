@@ -27,7 +27,7 @@
 	</bean>
 	
 	<mybatis-spring:scan base-package="org.joonzis.mapper"/>
-	<context:component-scan base-package="org.joonzis.service"></context:component-scan>
+	<context:component-scan base-package="org.joonzis.service"/>
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
       <property name="dataSource" ref="dataSource" />   

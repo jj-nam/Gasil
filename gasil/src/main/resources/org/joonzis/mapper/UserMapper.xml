@@ -49,7 +49,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="modify" parameterType="org.joonzis.domain.UserAuthVO">
 		update tbl_user
 		set
-			user_pic = #{user_pic},
 			user_pw = #{user_pw},
 			user_email = #{user_email},
 			user_nick = #{user_nick},
@@ -57,5 +56,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where
 			user_id = #{user_id}
 	</update>
-	
+	<update id="updateImage" parameterType="org.joonzis.domain.UserVO">
+		update tbl_user 
+		set
+			user_pic = #{user_pic}
+		where 
+			user_id = #{user_id}
+	</update>
 </mapper>

@@ -1,6 +1,9 @@
 package org.joonzis.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -113,6 +116,8 @@ public class UserController {
 	        
 	    return "redirect:/home"; 
     }
+	
+	
 	// 개인 정보 페이지
 	@RequestMapping("myInfo/personal_info")
 	public String personal_info(Model model, HttpServletRequest req) {
@@ -127,6 +132,62 @@ public class UserController {
 		model.addAttribute("user", service.getPersonInfo(writer));
 		
 		return "myInfo/personal_info";
+	}
+	
+	// 프사 수정 페이지 이동
+	@GetMapping("myInfo/update_profile")
+	public String modifyPic(Model model, HttpServletRequest req) {
+		log.info("modifyPic");
+		
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		
+		String writer = user.getUser_id();
+		log.info(writer);
+		
+		model.addAttribute("user", service.getPersonInfo(writer));
+		return "myInfo/update_profile";
+	}
+	
+	@PostMapping("//myInfo/update_profile")
+	public String upload(@RequestParam("user_pic") MultipartFile file , HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		String user_id = user.getUser_id();
+		
+		
+		String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+		
+		System.out.println("파일명 : "  + fileRealName);
+		String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+		String uploadFolder = "C:\\Users\\gitah\\git\\Gasil\\gasil\\src\\main\\webapp\\resources\\images\\profile";
+		
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid.toString());
+		String[] uuids = uuid.toString().split("-");
+		
+		String uniqueName = uuids[0];
+		System.out.println("생성된 고유문자열" + uniqueName);
+		System.out.println("확장자명" + fileExtension);
+		
+		String user_pic = uniqueName + fileExtension;
+		File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);
+		try {
+			file.transferTo(saveFile);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		UserVO vo = new UserVO();
+		vo.setUser_pic(user_pic);
+		vo.setUser_id(user_id);
+		
+		System.out.println(user_pic);
+		
+		service.updateImage(vo);
+		
+		return "redirect:/myInfo/personal_info";
 	}
 	
 	// 개인정보 수정 페이지 이동

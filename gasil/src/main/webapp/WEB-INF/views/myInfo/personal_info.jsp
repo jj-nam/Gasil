@@ -50,7 +50,7 @@
 			<table class="user_ipe">
 				<tr>
 					<td class="profileSpace" colspan="2">
-						<img class="profile" alt="${user.user_pic }" src="C:\\dev\\upload\\${user.user_pic }">
+						<a href="/myInfo/update_profile"><img class="profile" alt="${user.user_pic }" src="../resources/images/profile/${user.user_pic }"></a>
 					</td>
 				</tr>
 				<tr>

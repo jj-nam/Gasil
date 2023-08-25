@@ -176,6 +176,11 @@
 		    <artifactId>jackson-dataformat-xml</artifactId>
 		    <version>2.12.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>javax.annotation</groupId>
+		    <artifactId>javax.annotation-api</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
 		<!-- 구글에서 만든 json을 쉽게 쓸 수 있게 만든 API -->
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
@@ -207,9 +212,9 @@
 		    <version>1.4</version>
 		</dependency>
 		<dependency>
-		  <groupId>commons-io</groupId>
-		  <artifactId>commons-io</artifactId>
-		  <version>1.4</version>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.4</version>
 		</dependency>
 		<!-- 아파치에서 만든 스트링 비교를 쉽게 해줄수 있는 APi -->
 		<dependency>
@@ -217,7 +222,6 @@
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.4</version>
 		</dependency>
-		
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-web</artifactId>

@@ -12,4 +12,5 @@ public interface UserService {
 	public void addAuth(String user_id);
 	public String getBirth(String user_id);
 	public boolean modify(UserAuthVO vo);
+	public void updateImage(UserVO vo);	
 }

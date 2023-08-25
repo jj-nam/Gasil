@@ -33,12 +33,6 @@
                  <div class="form-group">
                      <input class="form-control" style="width: 170px; padding:0px" placeholder="비밀번호" name="user_pw" type="password">
                  </div>
-                 <!-- <div class="checkbox">
-                     <label>
-                         <input name="remember-me" type="checkbox">자동 로그인
-                     </label>
-                 </div> -->
-                 <!-- Change this to a button or input when using this as a form -->
 		         <div>
 			         <button type="submit" style="width: 170px; padding:0px" class="btn btn-lg btn-success btn-block">로그인</button>
 		         </div>
@@ -48,17 +42,16 @@
 		         	<span><a href="/user/joinPage">회원가입</a></span>
 		         </div>
 		         
-		         <!-- <button onclick="goToHome();" class="btn btn-lg btn-success btn-block">Home</button> -->
+		         <button onclick="goToHome();" class="btn btn-lg btn-success btn-block">Home</button>
                  <input type="hidden" name="${_csrf.parameterName}" value="${_csfr.token }">
              </fieldset>
          </form>
          <br>
    </div>
-   <script type="text/javascript">
-	   function goToHome(){
-			location.href='/home';
-		}
-   </script>
-   
+<script type="text/javascript">
+	function goToHome(){
+		location.href='/home';
+	}
+ </script>
 </body>
 </html>
