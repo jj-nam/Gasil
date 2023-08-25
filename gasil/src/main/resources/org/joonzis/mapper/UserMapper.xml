@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="org.joonzis.domain.UserVO">
-		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, user_nick, user_phone, joindate, agency) 
+		insert into tbl_user (user_id, user_pw, user_email, user_name, user_birth, gender, user_nick, user_phone, joindate) 
 		values(
 				#{user_id},
 				#{user_pw},
@@ -24,7 +24,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{user_id},
 				#{user_phone},
 				sysdate,
-				#{agency}
 			)
 	</insert>
 	
@@ -54,9 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			user_pw = #{user_pw},
 			user_email = #{user_email},
 			user_nick = #{user_nick},
-			agency = #{agency},
 			user_phone = #{user_phone}
 		where
 			user_id = #{user_id}
 	</update>
+	
 </mapper>

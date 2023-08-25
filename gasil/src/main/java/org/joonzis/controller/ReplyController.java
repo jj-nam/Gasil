@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joonzis.domain.ReplyUserVO;
 import org.joonzis.domain.ReplyVO;
 import org.joonzis.service.ReplyService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ import lombok.extern.log4j.Log4j;
 public class ReplyController {
 	
 	private ReplyService service;
-	
+	// 댓글 추가
 	@PostMapping(value = "/new", consumes = "application/json; charset=utf-8", 
 								produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> create(@RequestBody ReplyVO rvo){
@@ -60,23 +61,14 @@ public class ReplyController {
 	@GetMapping(value = "/pages/{bno}/{page}",
 			produces = {MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") long bno,
+	public ResponseEntity<List<ReplyUserVO>> getList(@PathVariable("bno") long bno,
 												@PathVariable("page") int page){
 		log.info("getReList...");
 		
 		return new ResponseEntity<>(service.getList(bno),HttpStatus.OK);
 	}
 	
-	// 3. 조회
-	@GetMapping(value = "/{rno}", produces = {MediaType.APPLICATION_XML_VALUE,
-											MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<ReplyVO> get(@PathVariable("rno") long rno){
-		log.info("get..." + rno);
-		
-		return new ResponseEntity<>(service.get(rno),HttpStatus.OK);
-	}
-	
-	// 4. 삭제
+	// 3. 삭제
 	@DeleteMapping(value = "/{no}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> remove(@PathVariable("no") long no){
 		log.info("remove..." + no);

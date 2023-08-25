@@ -6,9 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.BoardVO;
-import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
-import org.joonzis.domain.ReplyVO;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.domain.UserVO;
 import org.joonzis.mapper.UserMapper;
@@ -24,12 +22,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -86,6 +84,7 @@ public class UserController {
 		service.addAuth(vo.getUser_id());
 		log.info("create auth");
 		rttr.addFlashAttribute("result", "ok");
+		
 		return "user/loginPage";
 	}
 	
@@ -130,6 +129,7 @@ public class UserController {
 		return "myInfo/personal_info";
 	}
 	
+	// 개인정보 수정 페이지 이동
 	@GetMapping("myInfo/update_info")
 	public String modify(Model model, HttpServletRequest req) {
 		log.info("modify");
@@ -144,6 +144,7 @@ public class UserController {
 		return "myInfo/update_info";
 	}
 	
+	// 개인정보 수정
 	@PostMapping("myInfo/update_info")
 	public String modify(UserAuthVO vo, RedirectAttributes rttr) {
 		log.info("modify : " + vo);

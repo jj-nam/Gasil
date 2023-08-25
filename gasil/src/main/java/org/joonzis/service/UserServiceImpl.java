@@ -69,6 +69,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean modify(UserAuthVO vo) {
+		log.info("getModify...");
+		
 		return mapper.modify(vo);
 	}
 }

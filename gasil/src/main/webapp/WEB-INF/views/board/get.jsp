@@ -3,10 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
 <style type="text/css">
-a{
-	text-decoration-line: none;
-	color: inherit;
-}
+	a{
+		text-decoration-line: none;
+		color: inherit;
+	}
+	.userProfile{
+		width:30px;
+	}
 </style>
 <div class="row">
 	<!-- /.col-lg-12 -->
@@ -50,7 +53,9 @@ a{
 				<div class="form-group">
 				<table>
 					<tr>
-						<td rowspan="2" style="border: 1px solid black">이미지</td>
+						<td rowspan="2">
+							<img class="userProfile" alt="profile" src="../resources/images/${vo.user_pic }">
+						</td>
 						<td>&nbsp;&nbsp;</td>
 						<td>${vo.user_nick}</td>
 					</tr>
@@ -66,7 +71,7 @@ a{
 				</div>
 				<br><br><br>
 				<div>
-					<span style="border: 1px solid black">이미지</span>
+					<span><img class="userProfile" alt="profile" src="../resources/images/${vo.user_pic }"></span>
 					<span>${vo.user_nick} 님의 게시글 더보기 &gt;</span>
 				</div>
 				<div>
@@ -411,7 +416,7 @@ a{
 								str += '<td>';
 								str += '<table>';
 								str += '<tr>';
-								str += '<td rowspan="3" style="border:1px solid black">이미지</td>';
+								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/' + result[i].user_pic + '"></td>';
 								str += '<td>&nbsp;</td>';
 								str += '<td style="font-weight:bold;">' + result[i].writer;
 								if(result[i].writer == writer){
@@ -448,7 +453,7 @@ a{
 								str += '<td>';
 								str += '<table>';
 								str += '<tr>';
-								str += '<td rowspan="3" style="border:1px solid black">이미지</td>';
+								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/' + result[i].user_pic + '"></td>';
 								str += '<td>&nbsp;</td>';
 								str += '<td style="font-weight:bold;">' + result[i].writer;
 								if(result[i].writer == writer){

@@ -381,22 +381,6 @@
 						<input type="text" id="user_birth" name="user_birth" placeholder="생년월일 8자리"><div><font id="birth_feedback" size="2"></font></div>
 					</td>
 				<tr>
-					<td style="text-align: center;">
-						<img alt="antenna" src="/resources/images/antenna.png" style="width:16px; height:16px;">
-					</td>
-					<td colspan="2">
-						<select class="form-select form-select-sm" aria-label=".form-select-sm example" style="border:none; width:95%;">
-							<option selected disabled style="display:none">통신사를 선택하세요</option>
-							<option value="SKT">SKT</option>
-							<option value="KT">KT</option>
-							<option value="LG U+">LG U+</option>
-							<option value="SKT알뜰폰">SKT알뜰폰</option>
-							<option value="KT알뜰폰">KT알뜰폰</option>
-							<option value="LG U+알뜰폰">LG U+알뜰폰</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
 					<td class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
 						<path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
 						<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>

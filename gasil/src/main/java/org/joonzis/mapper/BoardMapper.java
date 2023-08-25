@@ -3,6 +3,7 @@ package org.joonzis.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.joonzis.domain.BoardUserVO;
 import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.Criteria;
 
@@ -15,7 +16,7 @@ public interface BoardMapper {
 	
 	public void insert(BoardVO vo);
 
-	public BoardVO read(long bno);
+	public BoardUserVO read(long bno);
 
 	public boolean delete(long bno);
 
@@ -27,7 +28,7 @@ public interface BoardMapper {
 	
 	public long selectMax();
 	
-	public BoardVO movePage(long bno);
+	public BoardUserVO movePage(long bno);
 	
 	public int upView(long bno);
 	

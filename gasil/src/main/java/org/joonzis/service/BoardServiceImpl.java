@@ -2,6 +2,7 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.BoardUserVO;
 import org.joonzis.domain.BoardVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.HeartVO;
@@ -41,7 +42,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
-	public BoardVO get(long bno) {
+	public BoardUserVO get(long bno) {
 		log.info("getGet...");
 		return mapper.read(bno);
 	}
@@ -69,7 +70,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public BoardVO movePage(long bno){
+	public BoardUserVO movePage(long bno){
 		return mapper.movePage(bno);
 	}
 	

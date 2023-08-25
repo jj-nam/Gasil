@@ -43,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<select id="read" parameterType="long" resultType="org.joonzis.domain.BoardVO" >
-		SELECT bno, cate_id, blike, bview, r_cnt, title, bcontent, writer, user_nick, reg_date FROM tbl_board WHERE bno = #{bno}
+	<select id="read" parameterType="long" resultType="org.joonzis.domain.BoardUserVO" >
+		SELECT * FROM tbl_board natural join tbl_user WHERE bno = #{bno}
 	</select>
 	
 	<delete id="delete" parameterType="long">
@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(bno) from tbl_board
 	</select>
 	
-	<select id="movePage" parameterType="long" resultType="org.joonzis.domain.BoardVO">
+	<select id="movePage" parameterType="long" resultType="org.joonzis.domain.BoardUserVO">
 		select * from(SELECT 
 				BNO,
 		         LEAD(BNO,1,9999) OVER(ORDER BY BNO) AS next,

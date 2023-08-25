@@ -30,7 +30,7 @@
 	         <file-size-threshold>20971520</file-size-threshold>
 	      </multipart-config>
 	</servlet>
-		
+	
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>

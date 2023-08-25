@@ -89,24 +89,7 @@ var replyService = (function(){
 		});
 	}
 	
-	function get(rno, callback, error){
-		
-		$.ajax({
-			type : 'get',
-			url : '/replies/' + rno + '.json',
-			data : JSON.stringify(rno),
-			success : function(result,status,xhr){
-				if(callback){
-					callback(result);
-				}
-			},
-			error : function(xhr, status, er){
-				if(error){
-					error(er);
-				}
-			}
-		});
-	}
+
 	
 	function remove(rno, callback, error){
 		

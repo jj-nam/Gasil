@@ -4,17 +4,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.joonzis.mapper.ReplyMapper">
-	<select id="getList" resultType="org.joonzis.domain.ReplyVO" parameterType="long">
-		select * from tbl_reply where bno=#{bno} order by rno, deep, rgp asc
+	<select id="getList" resultType="org.joonzis.domain.ReplyUserVO" parameterType="long">
+		select 
+			* 
+		from 
+			tbl_reply left join tbl_user 
+		on 
+			tbl_reply.writer = tbl_user.user_nick 
+		where 
+			bno=#{bno} 
+		order by 
+			rno, deep, rgp asc
 	</select>
 	
 	<select id="getMyReplyList" resultType="org.joonzis.domain.BoardReplyVO" parameterType="String">
 		select 
-			rno, bno, title, content, reply_date, r_cnt
+			*
 		from 
-			tbl_reply natural join tbl_board
+			tbl_reply r left join tbl_board b
+		on 
+			r.bno = b.bno
  		where 
-    		writer =#{writer} order by rno desc
+    		r.writer =#{writer} order by rno desc
 	</select>
 	
 	<!-- 댓글 insert -->

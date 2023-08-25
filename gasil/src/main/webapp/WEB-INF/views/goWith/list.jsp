@@ -5,6 +5,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style type="text/css">
+	.userProfile{
+		width:30px;
+	}
 	a{
 		text-decoration-line: none;
 		color: inherit;
@@ -70,7 +73,9 @@
 													<td>${withs.period}일 ${withs.departure} ~ ${withs.arrive}</td>
 												</tr>
 												<tr>
-													<td>이미지</td>
+													<td>
+														<img class="userProfile" alt="profile" src="../resources/images/${withs.user_pic }">
+													</td>
 													<td>${withs.user_nick}</td>
 													<td>
 														<c:choose>
@@ -223,7 +228,7 @@
 								str += '<div>';	// 닉네임, 기간 테이블
 									str += '<table>';
 										str += '<tr>';
-											str += '<td rowspan="2">이미지</td>';
+											str += '<td rowspan="2"><img class="userProfile" alt="profile" src="../resources/images/' + result.user_pic + '"></td>';
 											str += '<td style="width:40%">' + result.user_nick + '</td>';
 											str += '<td style="width:40%">여행기간</td>';
 										str += '</tr>';
@@ -386,7 +391,7 @@
 						}else{
 							for(var i=0; i < result.length; i++){
 								app += '<div>';
-								app += '<span class="col-4">이미지&nbsp;</span>';
+								app += '<span class="col-4"><img class="userProfile" alt="profile" src="../resources/images/' + result[i].user_pic + '">&nbsp;</span>';
 								app += '<span class="col-4">' + result[i].user_id + '</span>';
 								app += "<div class='confirmation"+ result[i].user_id + "'>";
 								if(result[i].confirmation == 1){

@@ -3,6 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="my_info_form.jsp" %>
 <style type="text/css">
+	.profile{
+		width: 100px;
+	}
+	.profileSpace{
+		text-align: center;
+	}
 	.personal_info{
 		background-color: yellow;
 	}
@@ -43,8 +49,8 @@
 		<div class="container_join">
 			<table class="user_ipe">
 				<tr>
-					<td colspan="2">
-						<img alt="user_pic" src="#">
+					<td class="profileSpace" colspan="2">
+						<img class="profile" alt="${user.user_pic }" src="C:\\dev\\upload\\${user.user_pic }">
 					</td>
 				</tr>
 				<tr>
@@ -112,14 +118,6 @@
 					</td>
 					<td>
 						${user.gender }자
-					</td>
-				</tr>
-				<tr>
-					<td>
-						통신사
-					</td>
-					<td>
-						${user.agency }
 					</td>
 				</tr>
 				<tr>

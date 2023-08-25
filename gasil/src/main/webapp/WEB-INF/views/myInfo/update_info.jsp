@@ -37,7 +37,7 @@
 			<h3>개인정보 수정</h3>
 		</div>	<!-- end 개인정보 수정 -->
 		<!-- 아이디, 비밀번호, 이메일 -->
-		<form action="/myInfo/update_info" method="POST" role="form" enctype="multipart/form-data">
+		<form action="/myInfo/update_info" method="POST" role="form">
 		<div class="container_join">
 			<table class="user_ipe">
 				<tr>
@@ -62,7 +62,7 @@
 					<td class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
 						 	<path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/></svg>
 					</td>
-					<td><input type="password" id="user_pw" name="user_pw" placeholder="변경할 비밀번호"><div><font id="pw_feedback" size="2"></font></div></td>
+					<td><input type="password" id="user_pw" name="user_pw" value="${user.user_pw }"placeholder="변경할 비밀번호"><div><font id="pw_feedback" size="2"></font></div></td>
 				</tr>				
 				<tr>
 					<td class="icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -101,22 +101,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: center;">
-						<img alt="antenna" src="/resources/images/antenna.png" style="width:16px; height:16px;">
-					</td>
-					<td colspan="2">
-						<select class="form-select form-select-sm" aria-label=".form-select-sm example" style="border:none; width:95%;">
-							<option selected disabled style="display:none">${user.agency }</option>
-							<option value="SKT">SKT</option>
-							<option value="KT">KT</option>
-							<option value="LG U+">LG U+</option>
-							<option value="SKT알뜰폰">SKT알뜰폰</option>
-							<option value="KT알뜰폰">KT알뜰폰</option>
-							<option value="LG U+알뜰폰">LG U+알뜰폰</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
 					<td class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
 						<path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
 						<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
@@ -135,7 +119,7 @@
 		</form>
 		<div class="activeBtn" style="margin-top: 5px; text-align: center;">
 			<button type="button" id="update">수정</button>
-			<button type="reset">취소</button>
+			<button type="reset" onclick="history.go(-1)">취소</button>
 		</div>
 	</div>	<!-- end 전체 창 사이즈 -->	
 	
@@ -236,8 +220,7 @@
 			var user_pw = $("#user_pw").val();
 			var user_email = $("#user_email").val();
 			var user_phone= $("#user_phone").val();
-			if(user_pw == ""){
-				user_pw = '${user.user_pw}'; 
+			if(user_pw == "${user.user_pw}"){
 				chk2 = true;
 			}
 			if(user_email == '${user.user_email}'){

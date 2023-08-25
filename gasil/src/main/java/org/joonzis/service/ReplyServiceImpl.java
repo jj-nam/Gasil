@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.joonzis.domain.BoardReplyVO;
 import org.joonzis.domain.BoardVO;
+import org.joonzis.domain.ReplyUserVO;
 import org.joonzis.domain.ReplyVO;
 import org.joonzis.mapper.BoardMapper;
 import org.joonzis.mapper.ReplyMapper;
@@ -24,13 +25,8 @@ public class ReplyServiceImpl implements ReplyService{
 	private BoardMapper mapper;
 	
 	@Override
-	public List<ReplyVO> getList(long bno) {
+	public List<ReplyUserVO> getList(long bno) {
 		return rmapper.getList(bno);
-	}
-	@Override
-	public ReplyVO get(long rno) {
-		log.info("getGet..." + rno);
-		return rmapper.read(rno);
 	}
 	
 	@Override
@@ -63,7 +59,7 @@ public class ReplyServiceImpl implements ReplyService{
 	public int remove(long no) {
 		log.info("getRemove..." + no);
 		
-		ReplyVO rvo = get(no);
+		ReplyVO rvo = rmapper.read(no);
 		mapper.updateReplyCnt(rvo.getBno(), -1);
 		log.info(no);
 		

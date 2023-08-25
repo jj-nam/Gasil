@@ -206,6 +206,11 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.4</version>
 		</dependency>
+		<dependency>
+		  <groupId>commons-io</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>1.4</version>
+		</dependency>
 		<!-- 아파치에서 만든 스트링 비교를 쉽게 해줄수 있는 APi -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>

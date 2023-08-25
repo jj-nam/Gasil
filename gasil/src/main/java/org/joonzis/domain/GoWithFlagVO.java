@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class GoWithFlagVO {
 	private String flag;
 	private long wno, period;
-	private String user_id, user_nick, wtitle, gender, content, style, city, country, continent, departure, arrive;
+	private String user_id, user_nick, wtitle, gender, content, style, city, country, continent, departure, arrive, user_pic;
 	private Date reg_date;
 	private int p_cnt, people, age;
 }
