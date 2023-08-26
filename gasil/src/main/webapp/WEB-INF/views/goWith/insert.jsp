@@ -24,7 +24,7 @@
 </div>
 <div class="row">	<!-- 전체 -->
 	<div class="content">	<!-- 테두리 -->
-	<form action="/goWith/insert" method="post">
+	<form action="/goWith/insert" id="goWithForm" method="post">
 
 		<div class="cccSel" style="border:1px solid lightgrey; border-radius:10px;">	<!-- 대륙 국가 도시 -->
 			<span class="continentSel">	<!-- 대륙 -->
@@ -45,8 +45,17 @@
 				</span>
 				<span>	<!-- 국가 도시 -->
 					<span class="countries" style="megint-left: 100px">	<!-- 국가 -->
-						
-						
+						<span>중국</span>&nbsp;&nbsp;&nbsp;
+						<span class="select" id="country중국">
+							<input type="radio" name="city" id="city북경" value="북경">북경&nbsp;&nbsp;
+						</span>
+						<br>
+						<span>일본</span>&nbsp;&nbsp;&nbsp;
+						<span class="select" id="country일본">
+							<input type="radio" name="city" id="city후쿠오카" value="후쿠오카">후쿠오카&nbsp;&nbsp;
+							<input type="radio" name="city" id="city도쿄" value="도쿄">도쿄&nbsp;&nbsp;
+						</span>
+						<br>
 						
 						
 						
@@ -117,7 +126,7 @@
 			</div>
 		</div>	<!-- /스타일 -->
 		<div class="form-group" style="margin-bottom: 10px">
-			<input class="form-control" name="wtitle" placeholder="제목을 입력하세요">
+			<input class="form-control" id="wtitle" name="wtitle" placeholder="제목을 입력하세요">
 		</div>
 		<div class="form-group" style="margin-bottom: 10px">
 			<textarea class="form-control" id="ckeditor" rows="20" name="content"></textarea>
@@ -141,9 +150,6 @@
 <script type="text/javascript" src="../resources/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(function(){
-	
-	
-	
 	// range Slider
 	 var slider = document.getElementById("myRange");
      var output = document.getElementById("value");
@@ -156,8 +162,8 @@ $(function(){
      }
      
 	// 캘린더
-	$( "input[name='departure']" ).datepicker(config);
-	$( "input[name='arrive']" ).datepicker(config);
+	$("input[name='departure']").datepicker(config);
+	$("input[name='arrive']").datepicker(config);
 	
 	// 에디터
 	CKEDITOR.replace('ckeditor',{
@@ -172,8 +178,40 @@ $(function(){
 		e.preventDefault();
 		
 		var operation = $(this).data("oper");
-		
+		var chk = false;
+		var title = $("#wtitle");
+		var checkbox1 = document.getElementById('inlineCheckbox1');
+		var checkbox2 = document.getElementById('inlineCheckbox2');
+		var checkbox3 = document.getElementById('inlineCheckbox3');
+		var checkbox4 = document.getElementById('inlineCheckbox4');
+		var checkbox5 = document.getElementById('inlineCheckbox5');
+		var checkbox6 = document.getElementById('inlineCheckbox6');
+		var editor = CKEDITOR.replace('content');
+			
 		if(operation === 'register'){
+			// 도시 선택 유효성
+			if($("input[name=city]:radio:checked").length < 1){
+				alert("도시를 선택해주세요.");
+				return;
+			}
+			if($("input[name='departure']").val() == '' || $("input[name='arrive']").val() == ''){
+				alert("날짜를 선택해주세요");
+				return;
+			}
+			if(checkbox1.checked == false && checkbox2.checked == false && checkbox3.checked == false && checkbox4.checked == false && checkbox5.checked == false && checkbox6.checked == false){
+				alert("여행 스타일을 선택해주세요")
+				return;
+			}
+			if(title.val() == ''){
+				alert("제목을 입력해주세요.");
+				title.focus();
+				return;
+			}
+			if(CKEDITOR.instances.ckeditor.getData() == '' || CKEDITOR.instances.ckeditor.getData().length ==0){
+				alert("내용을 입력해주세요.");
+				$("#ckeditor").focus();
+				return;
+			}
 			formObj.attr('action','/goWith/insert');
 			
 		}else if(operation === 'list'){
@@ -216,7 +254,7 @@ var config = {
 	var eAsia = $("#eAsia");
 	var esAsia = $("#esAsia");
 	
-	// 동아시아
+	// 아시아
 	eAsia.on("click", function(){
 		var continent = eAsia.val();
 		$.ajax({

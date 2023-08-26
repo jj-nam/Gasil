@@ -120,8 +120,13 @@ public class GoWithController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		diffSec = (format2.getTime() - format1.getTime()) / 1000;
+		int chkDate=1;
+		if(format2.getTime() - format1.getTime() > 0) {
+			diffSec = (format2.getTime() - format1.getTime()) / 1000;
+		}else {
+			diffSec = (format1.getTime() - format2.getTime()) / 1000;
+			chkDate = 0;
+		}
 		period = diffSec / (24*60*60);
 		
 		System.out.println(period);
@@ -132,8 +137,13 @@ public class GoWithController {
 		gvo.setContent(vo.getContent());
 		gvo.setStyle(vo.getStyle());
 		gvo.setCity(vo.getCity());
-		gvo.setDeparture(vo.getDeparture());
-		gvo.setArrive(vo.getArrive());
+		if(chkDate == 1) {
+			gvo.setDeparture(vo.getDeparture());
+			gvo.setArrive(vo.getArrive());
+		}else {
+			gvo.setDeparture(vo.getArrive());
+			gvo.setArrive(vo.getDeparture());
+		}
 		gvo.setR_cnt(vo.getR_cnt());
 		gvo.setP_cnt(vo.getP_cnt());
 		gvo.setPeople(vo.getPeople());
