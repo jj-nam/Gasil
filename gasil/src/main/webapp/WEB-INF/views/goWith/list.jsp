@@ -62,6 +62,10 @@
 					<div class="panel panel-default">
 						<!-- /.panel-heading -->
 						<div class="panel-body">
+						
+						
+						
+						
 							<c:forEach var="withs" items="${list}">
 								<div class="col" style="display:inline-block; width:19%; margin:10px 0px;">
 									<div class="card" style="width: 15rem;" onclick="getWno(${withs.wno})">
@@ -127,7 +131,8 @@
 											  	</c:forEach>
 										  	</div>
 										  	<div>
-										  		<span>${withs.people } / ${withs.p_cnt }</span>
+										  		<span id="people${withs.wno }">${withs.people }</span>
+										  		<span> / ${withs.p_cnt }</span>
 										  	</div>
 										  </div>
 									  </div>
@@ -174,6 +179,10 @@
 							</form>
 							
 							
+							
+							
+							
+							
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -192,7 +201,6 @@
 <!-- /.row -->
 <script type="text/javascript">
 	history.replaceState({}, null, location.pathname);
-	
 	var actionForm = $("#actionForm");
 	// 게시글 등록 버튼
 	$(function(){
@@ -423,6 +431,7 @@
 	
 	function confirmation(wno, user_id){
 		var con = '';
+		var peo = '';
 		$.ajax({
 			type : 'post',
 			url : '/goWith/confirmation',
@@ -433,19 +442,39 @@
 				'user_id':user_id
 			}),
 			success : function(re){					
+				
+				// 신청자 수 늘리기
+				$.ajax({
+					type : 'get',
+					url : '/goWith/people/' + wno + '.json',
+					data : JSON.stringify(wno),
+					success : function(result){
+					
+				
+				
+				
 				if(re==0){
 					alert("수락 하셨습니다");
-					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소</a>";
+					con = "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소</a>";
+					
+					peo = "<span id='people" + wno + "'>"+ result + "</span>";
+					
+					
 				}else if(re==1){
 					alert("취소 되었습니다.");
-					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					con = "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					peo = "<span id='people" + wno + "'>"+ result + "</span>";
 				}
 				else if(re==2){
 					alert("더 이상 수락할 수 없습니다.")
-					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					con = "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
 				}
 				$('.confirmation'+user_id).html(con);
-			}
+				$('#people'+wno).html(peo);
+				
+					}	// end inner success
+				})	// end inner ajax
+			}	// end success
 		})	// end ajax
 	}	// end confirm
 	

@@ -75,8 +75,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from tbl_goWith where wno = #{wno}
 	</delete>
 	
-	<select id="getApply" parameterType="long" resultType="org.joonzis.domain.ApplyVO">
-		select * from tbl_apply where wno=#{wno}
+	<select id="getApply" parameterType="long" resultType="org.joonzis.domain.UserApplyVO">
+		select * from tbl_apply natural join tbl_user where wno=#{wno}
 	</select>
 	
 	<select id="checkApply" parameterType="org.joonzis.domain.ApplyVO" resultType="int">
@@ -114,6 +114,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			user_id=#{user_id}
 	</update>
 	
+	<update id="incPeople" parameterType="long">
+		update tbl_goWith
+		set
+			people = people + 1
+		where
+			wno = #{wno}
+	</update>
+	
+	<update id="decPeople" parameterType="long">
+		update tbl_goWith
+		set
+			people = people - 1
+		where
+			wno = #{wno}
+	</update>
+	
 	<update id="deleteConfirm" parameterType="org.joonzis.domain.ApplyVO">
 		update tbl_apply
 		set
@@ -129,6 +145,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getOver" parameterType="long" resultType="int">
 		select count(*) from tbl_apply where wno=#{wno} and confirmation=1
+	</select>
+	
+	<select id="getPeople" parameterType="long" resultType="int">
+		select people from tbl_goWith
+		where wno = #{wno}
 	</select>
 	
 </mapper>

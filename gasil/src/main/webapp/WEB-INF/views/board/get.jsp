@@ -197,6 +197,10 @@
 		/* .replace(/\n/g,'<br>') */
 		// 댓글 입력 버튼 클릭 이벤트
 		RegisterBtn.on('click', function(){
+			if(RegisterBtn.val() == ''){
+				alert("댓글을 입력해주세요");
+				return;
+			}
 			replyService.add(
 					{content:inputContent.val().replace(/\n/g,'<br>'), 
 						writer:inputWriter.val(), 
@@ -307,6 +311,10 @@
 	// 대댓글 insert
 	function rere_registerBtn(no, writer, rno){
 		var inputReply = $("#rereply_content");
+		if(inputReply.val() == ''){
+			alert("댓글을 입력해주세요.")
+			return;
+		}
 		replyService.addre(
 				{content:inputReply.val(), 
 					writer:writer, 
@@ -416,7 +424,7 @@
 								str += '<td>';
 								str += '<table>';
 								str += '<tr>';
-								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/profile' + result[i].user_pic + '"></td>';
+								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/profile/' + result[i].user_pic + '"></td>';
 								str += '<td>&nbsp;</td>';
 								str += '<td style="font-weight:bold;">' + result[i].writer;
 								if(result[i].writer == writer){
@@ -453,7 +461,7 @@
 								str += '<td>';
 								str += '<table>';
 								str += '<tr>';
-								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/profile' + result[i].user_pic + '"></td>';
+								str += '<td rowspan="3"><img class="userProfile" alt="profile" src="../resources/images/profile/' + result[i].user_pic + '"></td>';
 								str += '<td>&nbsp;</td>';
 								str += '<td style="font-weight:bold;">' + result[i].writer;
 								if(result[i].writer == writer){

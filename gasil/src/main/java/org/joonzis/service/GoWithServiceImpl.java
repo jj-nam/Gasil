@@ -7,6 +7,7 @@ import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
+import org.joonzis.domain.UserApplyVO;
 import org.joonzis.domain.GoWithFlagApplyVO;
 import org.joonzis.mapper.GoWithMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.remove(wno);
 	}
 	@Override
-	public List<ApplyVO> getApply(long wno) {
+	public List<UserApplyVO> getApply(long wno) {
 		log.info("apply list : " + wno);
 		return mapper.getApply(wno);
 	}
@@ -102,6 +103,14 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.getConfirm(vo);
 	}
 	@Override
+	public int incPeople(long wno) {
+		return mapper.incPeople(wno);
+	}
+	@Override
+	public int decPeople(long wno) {
+		return mapper.decPeople(wno);
+	}
+	@Override
 	public int deleteConfirm(ApplyVO vo) {
 		log.info("cancel");
 		return mapper.deleteConfirm(vo);
@@ -113,5 +122,9 @@ public class GoWithServiceImpl implements GoWithService{
 	@Override
 	public int getOver(long wno) {
 		return mapper.getOver(wno);
+	}
+	@Override
+	public int getPeople(long wno) {
+		return mapper.getPeople(wno);
 	}
 }

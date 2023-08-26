@@ -20,6 +20,7 @@ import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
 import org.joonzis.domain.PageDTO;
+import org.joonzis.domain.UserApplyVO;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.service.GoWithService;
 import org.joonzis.service.UserService;
@@ -154,6 +155,15 @@ public class GoWithController {
 
 		return new ResponseEntity<>(service.get(wno), HttpStatus.OK);
 	}
+	
+	// 신청자 수 변동
+	@GetMapping(value = "/people/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
+													MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Integer> getPeople(@PathVariable("wno") long wno) {
+		log.info("getPeople..." + wno);
+		
+		return new ResponseEntity<>(service.getPeople(wno), HttpStatus.OK);
+	}
 	 	 	
 	// 신청 판별
 	@GetMapping(value = "/appYN/{wno}", produces = { MediaType.APPLICATION_XML_VALUE, 
@@ -199,7 +209,7 @@ public class GoWithController {
 	// 신청자 리스트
 	@GetMapping(value = "apply/{wno}", produces = {MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ApplyVO>> getApply(@PathVariable("wno") long wno){
+	public ResponseEntity<List<UserApplyVO>> getApply(@PathVariable("wno") long wno){
 	log.info("getApply..." + wno);
 	
 	return new ResponseEntity<>(service.getApply(wno),HttpStatus.OK);
@@ -247,12 +257,14 @@ public class GoWithController {
 		if(result == 0) {
 			if(p_cntNum > overCnt) {
 				service.getConfirm(vo);
+				service.incPeople(wno);
 				System.out.println("수락");
 			}else{
 				result = 2;
 			}
 		}else if(result == 1){
 			service.deleteConfirm(vo);
+			service.decPeople(wno);
 			System.out.println("취소");
 		}
 		System.out.println(result);

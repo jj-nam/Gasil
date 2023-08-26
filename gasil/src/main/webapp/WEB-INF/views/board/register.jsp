@@ -20,8 +20,8 @@
 			<div class="panel-body">
 				<form action="/board/register" method="post" role="form">
 					<div class="form-group" style="margin-bottom: 10px">
-						<select name="cate_id">
-							<option value="0">게시판을 선택해주세요</option>
+						<select name="cate_id" id="cate_id">
+							<option value="">게시판을 선택해주세요</option>
 							<option value="자유게시판">자유게시판</option>
 							<option value="QnA">QnA</option>
 						</select>
@@ -31,7 +31,7 @@
 						<input type="hidden" name="amount" value="${cri.amount }">
 					</div>
 					<div class="form-group" style="margin-bottom: 10px">
-						<input class="form-control" name="title" placeholder="제목을 입력하세요">
+						<input class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
 					</div>
 					<div class="form-group" style="margin-bottom: 10px">
 						<textarea class="form-control" id="ckeditor" rows="20" name="bcontent"></textarea>
@@ -65,8 +65,27 @@ $(function(){
 		e.preventDefault();
 		
 		var operation = $(this).data("oper");
+		var cate_id = $("#cate_id");
+		var title = $("#title");
+		var editor = CKEDITOR.replace('bcontent');
 		
 		if(operation === 'register'){
+			if(!cate_id.val()){
+				alert("카테고리를 선택해주세요.");
+				cate_id.focus();
+				return;
+			}
+			if(title.val() == ''){
+				alert("제목을 입력해주세요.");
+				title.focus();
+				return;
+			}
+			if(CKEDITOR.instances.ckeditor.getData() == '' || CKEDITOR.instances.ckeditor.getData().length ==0){
+				alert("내용을 입력해주세요.");
+				$("#ckeditor").focus();
+				return;
+			}
+			
 			formObj.attr('action','/board/register');
 			
 		}else if(operation === 'list'){

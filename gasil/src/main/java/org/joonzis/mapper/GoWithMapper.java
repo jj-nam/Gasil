@@ -7,6 +7,7 @@ import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.GoWithVO;
+import org.joonzis.domain.UserApplyVO;
 import org.joonzis.domain.GoWithFlagApplyVO;
 
 public interface GoWithMapper {
@@ -19,14 +20,17 @@ public interface GoWithMapper {
 	public List<CountryVO> getCity(String city);
 	public GoWithFlagVO get(long wno);
 	public int remove(long wno);
-	public List<ApplyVO> getApply(long wno);
+	public List<UserApplyVO> getApply(long wno);
 	public int checkApply(ApplyVO vo);
 	public int insertApply(ApplyVO vo);
 	public int deleteApply(ApplyVO vo);
 	public int findano(ApplyVO vo);
 	public int checkConfirm(ApplyVO vo);
 	public int getConfirm(ApplyVO vo);
+	public int incPeople(long wno);
+	public int decPeople(long wno);
 	public int deleteConfirm(ApplyVO vo);
 	public int getP_cnt(long wno);
 	public int getOver(long wno);
+	public int getPeople(long wno);
 }
