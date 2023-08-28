@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.MessageMapper">
+	<!-- 메세지 리스트 -->
+	<select id="messageList" parameterType="String" resultType="org.joonzis.domain.MessageVO">
+		select mno, send_nick, recv_nick, content, to_char(send_time, 'yyyy-mm-dd hh:mm:ss') send_time, read_time, room, read_chk, profile from tbl_msg
+		where mno in (select max(mno) from tbl_msg group by room) and (send_nick = #{nick} or recv_nick=#{nick})
+		order by mno desc
+	</select>
+	
+	<insert id="createRoom" parameterType="org.joonzis.domain.MessageVO">
+		insert into tbl_msg (mno, send_nick, recv_nick, content, room, profile, read_chk)
+		values(
+			msg_seq.nextval, 
+			#{send_nick}, 
+			#{recv_nick}, 
+			'대화를 시작해보세요',
+			#{room},
+			#{profile}, 
+			0
+		)
+	</insert>
+	
+	<select id="getUnread" resultType="int" parameterType="org.joonzis.domain.MessageVO">
+		select count(mno) 
+		from tbl_msg 
+		where recv_nick=#{nick} and read_chk=0 and room=#{room}
+	</select>
+	
+	<select id="getOtherProfile" parameterType="org.joonzis.domain.MessageVO" resultType="String">
+		select user_pic from tbl_user
+		<choose>
+			<when test="send_nick == nick">
+				where user_nick = #{recv_nick}
+			</when>
+			<otherwise>
+				where user_nick = #{send_nick}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getMyProfile" parameterType="org.joonzis.domain.MessageVO" resultType="String">
+		select user_pic from tbl_user
+		where 
+			user_nick = #{nick}
+	</select>
+	
+	
+	
+	<select id="roomContentList" parameterType="org.joonzis.domain.MessageVO" resultType="org.joonzis.domain.MessageVO">
+		select m.mno, m.room, m.send_nick, m.recv_nick, m.send_time, m.read_time, m.content, m.read_chk, m.profile
+		from tbl_msg m left outer join tbl_user u
+		on m.send_nick = u.user_nick and m.profile = u.user_pic
+		<choose>
+			<when test="room != null">
+				where room = #{room} order by mno asc
+			</when>
+			<otherwise>
+				where (recv_nick = #{recv_nick} and send_nick = #{nick} or (send_nick = #{recv_nick} and recv_nick = #{nick}))
+			</otherwise>
+		</choose>
+	</select>
+	
+	<update id="readChk" parameterType="org.joonzis.domain.MessageVO">
+		update tbl_msg set read_chk=1
+		<choose>
+			<when test="room != null">
+				where room=#{room} and read_chk=0 and recv_nick=#{nick}
+			</when>
+			<otherwise>
+				where send_nick=#{recv_nick} and read_chk=0 and recv_nick=#{nick}
+			</otherwise>
+		</choose>
+	</update>
+	
+	<insert id="messageSendInlist" parameterType="org.joonzis.domain.MessageVO">
+		insert into tbl_msg (mno, send_nick, recv_nick, content, room, profile, read_chk)
+		values(
+			msg_seq.nextval, 
+			#{send_nick}, 
+			#{recv_nick}, 
+			#{content}, 
+			#{room},
+			#{profile}, 
+			0
+		)
+	</insert>
+</mapper>

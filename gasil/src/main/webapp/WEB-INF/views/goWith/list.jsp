@@ -54,7 +54,7 @@
 	<c:if test="${not empty user}">
 		<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
 	</c:if>
-		<form action="/goWith/list" method="get" id="actionForm"></form>
+		<!-- <form action="/goWith/list" method="get" id="actionForm"></form> -->
 		<div class="content-area" style="margin-top: 10px;">
 		
 			<div class="row">
@@ -176,6 +176,7 @@
 							<form action="/goWith/list" method="get" id="actionForm">
 								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+								<input type="hidden" name="wno" value="${withs.wno }">
 							</form>
 							
 							
@@ -404,8 +405,10 @@
 								app += "<div class='confirmation"+ result[i].user_id + "'>";
 								if(result[i].confirmation == 1){
 									app += "<a href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>취소</a>";
+									app += "<input id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'>";
 								}else{
 									app += "<a href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>수락</a>";
+									app += "<input id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'>";
 								}
 								app += "</div>";
 								app += '<hr>';
@@ -425,9 +428,17 @@
 			}	// end success
 		})		// end ajax
 		
-		
-		
 	}
+	
+	function chat(wno, user_id){
+		var aa = '<input type="hidden" name="wno" value="' + wno + '">';
+		aa += '<input type="hidden" name="user_id" value="' + user_id + '">';
+		actionForm.html(aa);
+		actionForm.attr('action', '/message/createRoom');
+		actionForm.attr('method', 'post');
+		actionForm.submit();
+	}
+	
 	
 	function confirmation(wno, user_id){
 		var con = '';
@@ -452,22 +463,25 @@
 					
 				
 				
-				
 				if(re==0){
 					alert("수락 하셨습니다");
-					con = "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소</a>";
+					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소</a>";
+					con += "<input id='chat"+wno+"_\""+user_id+ "\"' type='button' value='대화하기' onclick='chat(" + wno +  ",\"" + user_id + "\")'>";
 					
 					peo = "<span id='people" + wno + "'>"+ result + "</span>";
 					
 					
 				}else if(re==1){
 					alert("취소 되었습니다.");
-					con = "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					con += "<input id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'>";
+					
 					peo = "<span id='people" + wno + "'>"+ result + "</span>";
 				}
 				else if(re==2){
 					alert("더 이상 수락할 수 없습니다.")
-					con = "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
+					con += "<input id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'>";
 				}
 				$('.confirmation'+user_id).html(con);
 				$('#people'+wno).html(peo);

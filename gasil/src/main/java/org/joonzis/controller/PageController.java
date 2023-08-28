@@ -52,5 +52,4 @@ public class PageController {
 		log.info("gasilcc");
 		return "terms/gasilcc";
 	}
-	
 }

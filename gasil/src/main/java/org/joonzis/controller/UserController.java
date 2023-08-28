@@ -102,7 +102,7 @@ public class UserController {
 		if(login != null) {
 			session.setAttribute("user", login);
 		}
-		return "/home";
+		return "redirect:/home";
 	}
 	
 	@RequestMapping(value="/logoutPage", method=RequestMethod.GET)
