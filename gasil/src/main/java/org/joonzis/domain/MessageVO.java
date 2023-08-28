@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageVO {
-	private long mno;
+	private long mno, wno;
 	private String send_nick, recv_nick, content, other_nick, nick, profile, room;
 	private Date send_time, read_time;
 	private int read_chk, unread;

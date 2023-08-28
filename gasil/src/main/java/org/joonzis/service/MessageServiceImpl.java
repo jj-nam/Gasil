@@ -49,4 +49,8 @@ public class MessageServiceImpl implements MessageService{
 	public int createRoom(MessageVO vo) {
 		return mapper.createRoom(vo);
 	}
+	@Override
+	public int chkRoom(String room) {
+		return mapper.chkRoom(room);
+	}
 }

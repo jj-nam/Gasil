@@ -13,4 +13,5 @@ public interface MessageMapper {
 	public void readChk(MessageVO vo);
 	public int messageSendInlist(MessageVO vo);
 	public int createRoom(MessageVO vo);
+	public int chkRoom(String room);
 }

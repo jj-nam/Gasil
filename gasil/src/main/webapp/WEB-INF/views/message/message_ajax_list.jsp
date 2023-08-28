@@ -11,17 +11,20 @@
 					<img src="../resources/images/profile/${tmp.profile }" alt="${tmp.profile }">
 				</div>
 				<div class="chat_ib">
-					<h5>${tmp.other_nick }<span class="chat_data">${tmp.send_time }</span></h5>
+					<!-- 현재 사용자가 안읽은 메세지 갯수가 0보다 클때 badge를 표시 -->
+					<h5>${tmp.other_nick }
+						<c:if test="${tmp.unread > 0 }">
+							<span class="col-2 unread${tmp.room }">
+								<span class="badge text-bg-danger" style="font-size:small">${tmp.unread }</span>
+							</span>
+						</c:if>
+					</h5>
+					<div class="chat_data" style="width:150px;">${tmp.send_time }</div>
 					<div class="row">
 						<div class="col-10">
 							<p>${tmp.content }</p>
 						</div>
-						<!-- 현재 사용자가 안릭은 메세지 갯수가 0보다 클때 badge를 표시 -->
-						<c:if test="${tmp.unread > 0 }">
-							<div class="col-2 unread${tmp.room }">
-								<span class="badge-bg-danger">${tmp.unread }</span>
-							</div>
-						</c:if>
+						
 					</div>
 				</div>
 			</div>

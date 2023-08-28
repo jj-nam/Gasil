@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <c:forEach var="tmp" items="${cList }">
 	<c:choose>
-		<c:when test="${sessionScope.nick ne tmp.send_nick }">
+		<c:when test="${sessionScope.user.user_nick ne tmp.send_nick }">
 		<!-- 받은 메세지 -->
 		<div class="incoming_msg">
 			<div class="incoming_msg_img">

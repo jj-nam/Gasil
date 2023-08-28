@@ -5,8 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.GoWithFlagVO;
 import org.joonzis.domain.MessageVO;
 import org.joonzis.domain.UserAuthVO;
+import org.joonzis.service.GoWithService;
 import org.joonzis.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,16 +18,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lombok.Setter;
+
 @Controller
 public class MessageController {
 
 	@Autowired
 	private MessageService service;
 	
+	@Setter(onMethod_ = @Autowired)
+	private GoWithService gservice;
+	
+	// 방만들기
 	@PostMapping("/message/createRoom")
 	public String createRoom(@RequestParam("wno") long wno, @RequestParam("user_id") String user_id, 
 						RedirectAttributes rttr, HttpServletRequest req, HttpSession session) {
 		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
+		// wno로 그 게시글의 이름 기간 등 정보 찾기
+		GoWithFlagVO gvo = gservice.get(wno);
+		
+		String first = "[" + gvo.getDeparture() + "~" + gvo.getArrive() + "] " + gvo.getCity() + "\n " + gvo.getWtitle();
 		// 방 주인
 		String nick = user.getUser_nick();
 		MessageVO mvo = new MessageVO();
@@ -41,9 +53,16 @@ public class MessageController {
 		vo.setRecv_nick(user_id);
 		vo.setRoom(no + user_id);
 		vo.setProfile(profile);
+		vo.setContent(first);
+		vo.setWno(wno);
 		
-		
-		service.createRoom(vo);
+		int chk = service.chkRoom(vo.getRoom());
+		if(chk != 0) {
+			
+		}else {
+			service.createRoom(vo);
+			
+		}
 		rttr.addFlashAttribute("result", "ok");
 		
 		return "redirect: /message_list.do";
@@ -71,6 +90,7 @@ public class MessageController {
 			}
 		}
 		System.out.println(list);
+		
 		req.setAttribute("list", list);
 		
 		return "message/message_list";
