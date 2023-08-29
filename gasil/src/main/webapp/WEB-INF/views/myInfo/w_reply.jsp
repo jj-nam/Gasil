@@ -4,7 +4,7 @@
 <%@ include file="my_info_form.jsp" %>
 <style type="text/css">
 	.w_reply{
-		background-color: yellow;
+		background-color: #97df93;
 	}
 </style>
 

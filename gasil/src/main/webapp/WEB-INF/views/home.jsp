@@ -15,18 +15,18 @@
 	<div class="carousel-inner">
 		<div>
 			<div class="carousel-item active" data-bs-interval="2000">
-				<img style="display: block; margin: auto; width: 1300px; height: 700px;"
-					src="https://www.hilokal.com/blog/content/images/2022/10/--------00-2.jpg"
+				<img class="activeImage" style="display: block; margin: auto; width: 1300px; height: 700px;"
+					src="../resources/images/carriage.jpg"
 					class="d-block w-70" alt="...">
 			</div>
 			<div class="carousel-item" data-bs-interval="2000">
 				<img style="display: block; margin: auto; width: 1300px; height: 700px;"
-					src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
+					src="../resources/images/sunset.jpg"
 					class="d-block w-70" alt="...">
 			</div>
 			<div class="carousel-item" data-bs-interval="2000">
 				<img style="display: block; margin: auto; width: 1300px; height: 700px;"
-					src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_2048,w_2048/bd40e5b8-35f3-453d-abd8-54ecaa87305d.jpeg"
+					src="../resources/images/hiking.jpg"
 					class="d-block w-70" alt="...">
 			</div>
 		</div>

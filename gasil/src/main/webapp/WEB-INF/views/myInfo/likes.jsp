@@ -4,7 +4,7 @@
 <%@ include file="my_info_form.jsp" %>
 <style type="text/css">
 	.likes{
-		background-color: yellow;
+		background-color: #97df93;
 	}
 </style>
 	<div class="listContainer" style="padding:10px;">

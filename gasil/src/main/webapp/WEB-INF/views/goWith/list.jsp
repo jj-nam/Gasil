@@ -5,8 +5,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style type="text/css">
+	h3{
+		font-weight: bold;
+		font-family: 'Noto Sans KR', sans-serif;
+		margin-left: 10px;
+	}
 	.userProfile{
 		width:30px;
+		border-radius: 50%;
 	}
 	a{
 		text-decoration-line: none;
@@ -41,53 +47,170 @@
 	.flagImg{
 		width:30px;
 	}
+	.cardList{
+		display:inline-block; 
+		margin:10px 9px;
+	}
+	.card{
+		width: 230px;
+	}
+	.cardPlace{
+		padding:0px;
+	}
+	.panel-body{
+		padding: 15px;
+	}
+	#periodStyle, .modalPeriod{
+		color: #20B2AA;
+		font-weight: bold;
+		font-family: 'Noto Sans KR', sans-serif;
+		font-size: 11px;
+	}
+	.card-title{
+		margin-top: 10px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+	.nickSpace, .modalNick{
+		font-family: 'Noto Sans KR', sans-serif;
+		font-weight: bold;
+		font-size: 12px;
+	}
+	.dear{
+		font-family: 'Noto Sans KR', sans-serif;
+		font-size: 10px;
+	}
+	#cityName, .modalMenu{
+		font-family: 'Noto Sans KR', sans-serif;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	#genderAgeM{
+		color: blue;
+		font-family: 'Noto Sans KR', sans-serif;
+		font-size: 11px;
+	}
+	#genderAgeW{
+		font-family: 'Noto Sans KR', sans-serif;
+		color: #FF5675;
+		font-size: 11px;
+	}
+	.modalTotal{
+		border:1px solid lightgrey; 
+		border-radius:10px; 
+		padding:10px;
+	}
+	.modalNick{
+		width:40%;
+	}
+	.modalContent{
+		font-family: 'Noto Sans KR', sans-serif;
+		font-size: 15px;
+	}
+	.modalCnt{
+		font-family: 'Noto Sans KR', sans-serif;
+		font-size: 20px;
+	}
+	.btnPlace{
+		float:right;
+	}
+	.peoplePlace{
+		margin-top:5px;
+	}
+	#modalCloseBtn, #modalRegisterBtn{
+		font-family: 'Noto Sans KR', sans-serif;
+		float:right; 
+		color : black;
+		margin: 0 5px;
+		border: none;
+		padding: 0;
+	}
+	.removeBtn:hover{
+		color : #FF7878	;
+	}
+	.removeBtn{
+		font-family: 'Noto Sans KR', sans-serif;
+		padding:0;
+		margin: 0 5px;
+		float:right;
+		color: #FF3232;
+		background: none;
+		border:none;
+	}
+	.showAppBtn{
+		font-family: 'Noto Sans KR', sans-serif;
+		padding:0;
+		margin: 0 5px;
+		float:right;
+	}
+	.cancelBtn, .btnBtn{
+		font-family: 'Noto Sans KR', sans-serif;
+		border:none;
+		background: none;
+		margin-right : 10px;
+	}
+	.showAppBtn:hover, .cancelBtn:hover, .btnBtn:hover, #modalCloseBtn:hover, #modalRegisterBtn:hover{
+		color: grey;
+	}
+	#regBtn{
+		font-family: 'Noto Sans KR', sans-serif;
+		background-color: #97df93;
+		border: none;
+		text-align: left
+	}
+	#regBtn:hover{
+		background-color: #96F56E;
+		color: grey;
+	}
+	
 </style>
 <div class="row">
 	<div class="col-lg-12">
 	<div class="top-part">
 	<br>
 	<br>
-	<h3>동행</h3>
-	<input type="text" name="search" placeholder="검색어를 입력하세요">
-		<button id="country_filter" style="text-align: left" class="btn btn-xs pull-right btn-primary">모든 국가(필터 예정)</button>
-		<button id="date_fileter" style="text-align: left" class="btn btn-xs pull-right btn-primary">조회 기간(필터 예정)</button>
 	<c:if test="${not empty user}">
-		<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
+		<button id="regBtn" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
 	</c:if>
+	<h3>동행</h3>
 		<!-- <form action="/goWith/list" method="get" id="actionForm"></form> -->
 		<div class="content-area" style="margin-top: 10px;">
 		
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="cardPlace">
 					<div class="panel panel-default">
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-						
-						
-						
-						
 							<c:forEach var="withs" items="${list}">
-								<div class="col" style="display:inline-block; width:19%; margin:10px 0px;">
-									<div class="card" style="width: 15rem;" onclick="getWno(${withs.wno})">
+								<div class="cardList">
+									<div class="card" onclick="getWno(${withs.wno})">
 									  <div class="card-body">
 									  	<div>
 											<table>
 												<tr>
-													<td colspan="2">여행기간</td>
-													<td>${withs.period}일 ${withs.departure} ~ ${withs.arrive}</td>
+													<td colspan="2" rowspan="2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+													  <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+													  <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+													</svg><span class="nickSpace"> 여행기간</span></td>
+													<td class="dear">${withs.departure} ~ ${withs.arrive} </td>
+												</tr>
+												<tr>
+													<td id="periodStyle">${withs.period}일</td>
 												</tr>
 												<tr>
 													<td>
 														<img class="userProfile" alt="profile" src="../resources/images/profile/${withs.user_pic }">
 													</td>
-													<td>${withs.user_nick}</td>
+													<td class="nickSpace">${withs.user_nick}&nbsp;</td>
 													<td>
 														<c:choose>
 															<c:when test="${withs.gender =='남'}">
-																<img id= "gender" alt="m" src="../resources/images/genderM.png"><span style="color:blue;">${withs.age }0대</span>
+																<img id= "gender" alt="m" src="../resources/images/genderM.png"><span id="genderAgeM">${withs.age }0대</span>
 															</c:when>
 															<c:otherwise>
-																<img id= "gender" alt="w" src="../resources/images/genderW.png"><span style="color:pink;">${withs.age }0대</span>
+																<img id= "gender" alt="w" src="../resources/images/genderW.png"><span id="genderAgeW">${withs.age }0대</span>
 															</c:otherwise>
 														</c:choose>
 													</td>
@@ -98,16 +221,16 @@
 									  	
 									  	<div>
 										  	<div>
-											  	<p><img class="flagImg" alt="${withs.flag} flag" src="../resources/images/flags/${withs.flag}.png"> ${withs.city }</p>
+											  	<img class="flagImg" alt="${withs.flag} flag" src="../resources/images/flags/${withs.flag}.png"><span id="cityName">&nbsp;${withs.city }</span>
 										  	</div>
 										  	<div>
-											    <h5 class="card-title">${withs.wtitle }</h5>
+											    <h6 class="card-title">${withs.wtitle }</h6>
 										  	</div>
 										  	<div>	<!-- style을 ','로 split하여 배열에 담아 출력 -->
 											  	<c:set var="styles" value="${withs.style}"/>
 											  	<c:set var="styleArr" value="${fn:split(styles, ',')}"/>
 											  	
-											  	<c:forEach var="chk" items="${styleArr }">
+											  	<c:forEach var="chk" begin="0" end="2" step="1" items="${styleArr }">
 											  		<c:choose>
 											  			<c:when test="${chk == 'activity'}">
 											  				<span class="card-text"><img id= "imageSize" alt="activity" src="../resources/images/activity.png"></span>
@@ -130,7 +253,7 @@
 											  		</c:choose>
 											  	</c:forEach>
 										  	</div>
-										  	<div>
+										  	<div class="peoplePlace">
 										  		<span id="people${withs.wno }">${withs.people }</span>
 										  		<span> / ${withs.p_cnt }</span>
 										  	</div>
@@ -178,12 +301,6 @@
 								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 								<input type="hidden" name="wno" value="${withs.wno }">
 							</form>
-							
-							
-							
-							
-							
-							
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -231,37 +348,37 @@
 					success : function(data){
 						
 						
-						str += '<div style="border:1px solid lightgrey; border-radius:10px; padding:10px;">';
+						str += '<div class="modalTotal">';
 						
-							str += '<div><img class="flagImg" alt="' + result.flag + 'flag" src="../resources/images/flags/' + result.flag + '.png">&nbsp;' + result.city + '</div>';	//국기, 도시명
+							str += '<div><img class="flagImg" alt="' + result.flag + 'flag" src="../resources/images/flags/' + result.flag + '.png">&nbsp;<span id="cityName">' + result.city + '</span></div>';	//국기, 도시명
 								str += '<div>';	// 닉네임, 기간 테이블
 									str += '<table>';
 										str += '<tr>';
 											str += '<td rowspan="2"><img class="userProfile" alt="profile" src="../resources/images/profile/' + result.user_pic + '"></td>';
-											str += '<td style="width:40%">' + result.user_nick + '</td>';
-											str += '<td style="width:40%">여행기간</td>';
+											str += '<td class="modalNick">' + result.user_nick + '</td>';
+											str += '<td class="modalNick">여행기간</td>';
 										str += '</tr>';
 										str += '<tr>';
 										if(result.gender == "남"){
-											str += '<td><img id= "gender" alt="m" src="../resources/images/genderM.png"><span style="color:blue;">' + result.age + '0대</span></td>';
+											str += '<td><img id= "gender" alt="m" src="../resources/images/genderM.png"><span id="genderAgeM">' + result.age + '0대</span></td>';
 										}else{
-											str += '<td><img id= "gender" alt="w" src="../resources/images/genderW.png"><span style="color:pink;">' + result.age + '0대</span></td>';
+											str += '<td><img id= "gender" alt="w" src="../resources/images/genderW.png"><span id="genderAgeW">' + result.age + '0대</span></td>';
 										}
-											str += '<td>'+ result.period+ '일 ' + result.departure + '~' + result.arrive + '</td>';
+											str += '<td><span class="modalNick"> ' + result.departure + '~' + result.arrive + '&nbsp;&nbsp; </span><span class="modalPeriod">'+ result.period+ '일 </span></td>';
 										str += '</tr>';
 									str += '</table>';
 								str +='</div>';
 								str += '<hr>';
-								str += '<h4>' + result.wtitle + '</h4>';	// 제목
+								str += '<h4 class="card-title">' + result.wtitle + '</h4>';	// 제목
 								str += '<hr>';
-								str += '<div>' + result.content+ '</div>';	// 내용
+								str += '<div class="modalContent">' + result.content+ '</div>';	// 내용
 								str += '<hr>';
 								str += '<div>'
-									str += '<div>모집 인원</div>';
-									str += '<div>' + result.p_cnt + '</div>';
+									str += '<div class="modalMenu">모집 인원</div>';
+									str += '<div class="modalCnt">' + result.p_cnt + '</div>';
 								str += '</div>'
 								str += '<hr>';
-								str += '<div>여행 스타일</div>';	// 여행스타일 문구
+								str += '<div class="modalMenu">여행 스타일</div>';	// 여행스타일 문구
 								
 								var chkStyle = result.style;
 								var styles = (chkStyle||'').split(',');
@@ -280,14 +397,15 @@
 										str += '<span><span class="card-text"><img id= "imageSize" alt="photo" src="../resources/images/photo.jpg"></span>&nbsp;';
 									}
 								}
-								str += '<div style="float:right">';
+								str += '<div class="btnPlace">';
 								str += '<br>';
 								str += '<br>';
 								str += '<br>';
+								str += '<button id = "modalCloseBtn" class = "btn btn-default">닫기</button>';
 								if(loginUser != ""){
 									if(result.user_id == loginUser){
-								            str += '<button data-oper="remove" class = "btn btn-primary">삭제</button>';
-								            str += '<a href="javascript:showRegisterBtn(' + result.wno +  ');">신청자보기</a>';
+								            str += '<button class="removeBtn" data-oper="remove" class = "btn btn-primary">삭제</button>';
+								            str += '<a class="showAppBtn" href="javascript:showRegisterBtn(' + result.wno +  ');">신청자보기</a>';
 										}else{
 											if(data==0){
 												str += '<a id="modalRegisterBtn"  href="javascript:modalRegisterBtn(' + result.wno + ');">신청</a>';
@@ -298,7 +416,7 @@
 									}else{
 							            str += '<button id = "modalLoginBtn" class = "btn btn-primary">신청</button>';
 									}
-							            str += '<button id = "modalCloseBtn" class = "btn btn-default">닫기</button>';
+							            
 					         	str += '</div>';
 					         	str += '<form action="/goWith/modify" method="get" id="operForm">';
 									str += '<input type="hidden" name="wno" id="wno' + result.wno + '" value="' + result.wno + '">';
@@ -364,10 +482,8 @@
 			}),
 			success : function(result){
 				if(result==1){
-					mrb += '<a href="javascript:modalRegisterBtn(' + result.wno + ');">신청</a>'
 					alert("취소 되었습니다.");
 				}else{
-					mrb += '<a href="javascript:modalRegisterBtn(' + result.wno + ');">신청 취소</a>'
 					alert("신청 되었습니다");
 				}
 				modalBtn.innerHTML = mrb;
@@ -401,20 +517,18 @@
 							for(var i=0; i < result.length; i++){
 								app += '<div>';
 								app += '<span class="col-4"><img class="userProfile" alt="profile" src="../resources/images/profile/' + result[i].user_pic + '">&nbsp;</span>';
-								app += '<span class="col-4">' + result[i].user_id + '</span>';
+								app += '<span class="nickSpace">' + result[i].user_id + '</span>';
 								app += "<div class='confirmation"+ result[i].user_id + "'>";
 								if(result[i].confirmation == 1){
-									app += "<a href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>취소</a>";
-									app += "<input id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'>";
+									app += "<a class='cancelBtn' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>취소 <input class='cancelBtn' id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'></a>";
 								}else{
-									app += "<a href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>수락</a>";
-									app += "<input id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'>";
+									app += "<a class='btnBtn' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>수락 <input class='btnBtn' id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'></a>";
 								}
 								app += "</div>";
 								app += '<hr>';
 								app += '</div>';
 							}
-							app += '<button id = "closeBtn" class = "btn btn-default">닫기</button>';
+							app += '<button class="btnBtn" id="closeBtn" class="btn btn-default">닫기</button>';
 							bodyList.html(app);
 						}
 						showAppList.modal('show');
@@ -465,23 +579,20 @@
 				
 				if(re==0){
 					alert("수락 하셨습니다");
-					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소</a>";
-					con += "<input id='chat"+wno+"_\""+user_id+ "\"' type='button' value='대화하기' onclick='chat(" + wno +  ",\"" + user_id + "\")'>";
+					con = "<a class='cancelBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소 <input class='cancelBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' value='대화하기' onclick='chat(" + wno +  ",\"" + user_id + "\")'></a>";
 					
 					peo = "<span id='people" + wno + "'>"+ result + "</span>";
 					
 					
 				}else if(re==1){
 					alert("취소 되었습니다.");
-					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
-					con += "<input id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'>";
+					con = "<a class='btnBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락 <input class='btnBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'></a>";
 					
 					peo = "<span id='people" + wno + "'>"+ result + "</span>";
 				}
 				else if(re==2){
 					alert("더 이상 수락할 수 없습니다.")
-					con += "<a href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락</a>";
-					con += "<input id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'>";
+					con = "<a class='btnBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락 <input class='btnBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'></a>";
 				}
 				$('.confirmation'+user_id).html(con);
 				$('#people'+wno).html(peo);

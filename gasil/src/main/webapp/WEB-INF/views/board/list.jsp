@@ -4,23 +4,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style type="text/css">
-a{
-	text-decoration-line: none;
-	color: inherit;
-	display : block; 
-	width : 100 %; 
-	height : 100 %;
-}
-.pagination{
-	display:block;
-	text-align: center;
-}
-li{
-	display: inline-block;
-}
-#regBtn{
-	float:right;
-}
+	a{
+		text-decoration-line: none;
+		color: inherit;
+		display : block; 
+		width : 100 %; 
+		height : 100 %;
+	}
+	.pagination{
+		display:block;
+		text-align: center;
+	}
+	li{
+		display: inline-block;
+	}
+	#regBtn{
+		float:right;
+		font-family: 'Noto Sans KR', sans-serif;
+			background-color: #97df93;
+			border: none;
+			text-align: left
+	}
+	#regBtn:hover{
+			background-color: #96F56E;
+			color: grey;
+	}
 </style>
 <div class="row">
 	<div class="col-lg-12">
@@ -32,9 +40,6 @@ li{
 				<div class="panel panel-default">
 					<!-- /.panel-heading -->
 					<div class="panel-body">
-					<c:if test="${not empty user}">
-						<button id="regBtn" style="text-align: left" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
-					</c:if>
 						<table class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr style="text-align: center">
@@ -75,6 +80,9 @@ li{
 								</c:forEach>
 							</tbody>
 						</table>
+						<c:if test="${not empty user}">
+							<button id="regBtn" class="btn btn-xs pull-right btn-primary">새 게시글 등록</button>
+						</c:if>
 						<!-- 페이징 -->
 			            <div class="pull-right">
 			               <ul class="pagination">

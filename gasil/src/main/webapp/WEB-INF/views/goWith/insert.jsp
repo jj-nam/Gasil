@@ -10,10 +10,23 @@
 	button[type="reset"]{
 		float:right; 
 		margin-bottom: 0 5px 5px 0; 
+		background-color: #FFB400;
+	}
+	button[type="reset"]:hover{
+		color: grey;
+		background-color: #FFC81E;
 	}
 	button[type="submit"]{
 		float:right; 
-		margin-bottom: 5px;
+		color : black;
+		margin: 0 5px;
+		background-color: #73E1E1;
+		border: none;
+	}
+	button[type="submit"]:hover{
+		color : grey;
+		background-color: #3CFBFF;
+		
 	}
 	input[type="button"]{
 		background: none;
@@ -106,6 +119,12 @@
 		font-weight: bold;
 		margin: 0 35px;
 	}
+	.styleSpace{
+		margin-left: 150px;
+	}
+	img:hover {
+		transform: scale(1.2);
+	}
 </style>
 
 <div class="row">
@@ -151,51 +170,60 @@
 		</div>	<!-- /날짜 선택 -->
 		<div>	<!-- 스타일 -->
 			<div class="styleTitle">여행 스타일</div>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox1" value="activity">
-			  <div>
-				  <label class="form-check-label" for="inlineCheckbox1"><img alt="activity" src="../resources/images/activity.png"></label>
-			  </div>
-			  <div id="checkName">액티비티</div>
-			</div>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox2" value="food">
-			  <div>
-				  <label class="form-check-label" for="inlineCheckbox2"><img alt="food" src="../resources/images/food.jpg"></label>
-			  </div>
-			  <div id="checkName">맛집</div>
-			</div>
 			
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox3" value="museum">
-			  <div>
-				  <label class="form-check-label" for="inlineCheckbox3"><img alt="museum" src="../resources/images/museum.jpg"></label>
-			  </div>
-			  <div id="checkName">문화</div>
-			</div>
 			
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox4" value="nation">
-			  <div>
-				  <label class="form-check-label" for="inlineCheckbox4"><img alt="nation" src="../resources/images/nation.jpg"></label>
-			  </div>
-			  <div id="checkName">자연</div>
-			</div>
+			<div class="styleSpace">
 			
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox5" value="shopping">
-			  <div>
-				  <label class="form-check-label" for="inlineCheckbox5"><img alt="shopping" src="../resources/images/shopping.jpg"></label>
-			  </div>
-			  <div id="checkName">쇼핑</div>
-			</div>
 			
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox6" value="photo">
-			  <div>
-				  <label class="form-check-label" for="inlineCheckbox6"><img alt="photo" src="../resources/images/photo.jpg"></label>
-			  </div>
-			  <div id="checkName">사진</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox1" value="activity">
+					  <div>
+						  <label class="form-check-label" for="inlineCheckbox1"><img alt="activity" src="../resources/images/activity.png"></label>
+					  </div>
+					  <div id="checkName">액티비티</div>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox2" value="food">
+					  <div>
+						  <label class="form-check-label" for="inlineCheckbox2"><img alt="food" src="../resources/images/food.jpg"></label>
+					  </div>
+					  <div id="checkName">맛집</div>
+					</div>
+					
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox3" value="museum">
+					  <div>
+						  <label class="form-check-label" for="inlineCheckbox3"><img alt="museum" src="../resources/images/museum.jpg"></label>
+					  </div>
+					  <div id="checkName">문화</div>
+					</div>
+					
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox4" value="nation">
+					  <div>
+						  <label class="form-check-label" for="inlineCheckbox4"><img alt="nation" src="../resources/images/nation.jpg"></label>
+					  </div>
+					  <div id="checkName">자연</div>
+					</div>
+					
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox5" value="shopping">
+					  <div>
+						  <label class="form-check-label" for="inlineCheckbox5"><img alt="shopping" src="../resources/images/shopping.jpg"></label>
+					  </div>
+					  <div id="checkName">쇼핑</div>
+					</div>
+					
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox"  name="style" id="inlineCheckbox6" value="photo">
+					  <div>
+						  <label class="form-check-label" for="inlineCheckbox6"><img alt="photo" src="../resources/images/photo.jpg"></label>
+					  </div>
+					  <div id="checkName">사진</div>
+					</div>
+					
+				</div>
+					
 			</div>
 		</div>	<!-- /스타일 -->
 		<div class="form-group" style="margin-bottom: 10px">

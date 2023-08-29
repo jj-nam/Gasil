@@ -4,7 +4,7 @@
 <%@ include file="my_info_form.jsp" %>
 <style type="text/css">
 	.proposal{
-		background-color: yellow;
+		background-color: #97df93;
 	}
 	.flagImg{
 		width:30px;

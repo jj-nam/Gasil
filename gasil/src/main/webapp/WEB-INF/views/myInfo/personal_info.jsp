@@ -5,12 +5,13 @@
 <style type="text/css">
 	.profile{
 		width: 100px;
+		border-radius: 50%;
 	}
 	.profileSpace{
 		text-align: center;
 	}
 	.personal_info{
-		background-color: yellow;
+		background-color: #97df93;
 	}
 	td input{
 		width:95%;
@@ -38,6 +39,15 @@
 	h3{
 	text-align: center;
 	}
+	#profilePosition{
+		position: relative;
+		right: 72px;
+		top: 42px;
+		font-size: x-small;
+		background-color: lightgrey;
+		opacity: 0.7;
+		border-radius: 0 0 50% 50%;
+	}
 </style>
 <!-- 전체 창 사이즈 -->
 	<div class="container" style="width: 400px; margin:auto;">
@@ -47,12 +57,10 @@
 		</div>	<!-- end 개인정보 수정 -->
 		<!-- 아이디, 비밀번호, 이메일 -->
 		<div class="container_join">
+			<div class="profileSpace">
+				<a href="/myInfo/update_profile"><img class="profile" alt="${user.user_pic }" src="../resources/images/profile/${user.user_pic }"><span id="profilePosition">사진 변경</span></a>
+			</div>
 			<table class="user_ipe">
-				<tr>
-					<td class="profileSpace" colspan="2">
-						<a href="/myInfo/update_profile"><img class="profile" alt="${user.user_pic }" src="../resources/images/profile/${user.user_pic }"></a>
-					</td>
-				</tr>
 				<tr>
 					<td>
 						아이디
