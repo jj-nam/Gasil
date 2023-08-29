@@ -133,7 +133,6 @@ var replyService = (function(){
 	return{
 		add:add,
 		getList : getList,
-		get : get,
 		remove : remove,
 		removeAll : removeAll,
 		addre : addre

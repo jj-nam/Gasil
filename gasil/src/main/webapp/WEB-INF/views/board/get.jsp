@@ -9,6 +9,7 @@
 	}
 	.userProfile{
 		width:30px;
+		border-radius: 50%;
 	}
 </style>
 <div class="row">
