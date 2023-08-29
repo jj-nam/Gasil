@@ -7,6 +7,18 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <style type="text/css">
+	button[type="reset"]{
+		float:right; 
+		margin-bottom: 0 5px 5px 0; 
+	}
+	button[type="submit"]{
+		float:right; 
+		margin-bottom: 5px;
+	}
+	input[type="button"]{
+		background: none;
+		border:none;
+	}
 	.calendar{
 		width:100px;
 	}
@@ -14,6 +26,85 @@
 		border:1px solid lightgrey;
 		padding: 30px;
 		border-radius: 10px;
+	}
+	.cccSel{
+		border:1px solid lightgrey;
+		border-radius:10px;
+	}
+	.continentSel{
+		float:left;
+		width: 100%;
+		padding:10px;
+	}
+	.continentMenu{
+		border-right: 1px solid lightgrey;
+		text-align: center;
+		float: left;
+		width: 150px;
+	}
+	input[type="button"]{
+		font-weight: bold;
+	}
+	input[type="button"]:hover{
+		background-color: #96FFFF;
+		font-weight: bold;
+	}
+	.countries{
+		float: left;
+		width:82%;
+	}
+	.country, .select{
+		float: left;
+	}
+	.country{
+		margin-left: 20px;
+		width:90px;
+	}
+	.peopleCnt{
+		font-weight: bold;
+		float: left;
+		margin: 0 50px 0 35px;
+		
+	}
+	input[type="radio"]{
+		display:none;
+	}
+	
+	input[type="radio"]+label{
+		text-align: center;
+		width:100px;		
+	}
+	input[type=radio]:checked+label{
+	    color: #13C7A3;
+	    font-weight: bold;
+	    text-shadow: 0px 0px 4px #73E1E1;
+	    blur-radius: 
+	}
+	input[type="checkbox"]{
+		position: relative;
+		left:30px;
+	}
+	#checkName{
+		text-align: center;
+		position: relative;
+		bottom: 24px;
+		background-color: lightgrey;
+		opacity: 0.8;
+		font-weight: bold;
+	}
+	#value{
+		margin-left: 10px;
+	}
+	#myRange{
+		width:70%;
+	}
+	#calendardate{
+		font-weight: bold;
+		margin: 0 57px 0 35px;
+	}
+	.styleTitle{
+		font-weight: bold;
+		margin: 0 35px;
 	}
 </style>
 
@@ -26,71 +117,53 @@
 	<div class="content">	<!-- 테두리 -->
 	<form action="/goWith/insert" id="goWithForm" method="post">
 
-		<div class="cccSel" style="border:1px solid lightgrey; border-radius:10px;">	<!-- 대륙 국가 도시 -->
-			<span class="continentSel">	<!-- 대륙 -->
-				<span style="border-right: 1px solid lightgrey; text-align: center; margin: 20px;">
+		<div class="cccSel">	<!-- 대륙 국가 도시 -->
+			<div class="continentSel">	<!-- 대륙 -->
+				<div class="continentMenu">
 					<input type="button" id="eAsia" value="아시아">	
 					<br>		
 					<input type="button" id="esAsia" value="동남아시아">	
 					<br>		
-					<a id="wsAsia">중동</a>				
+					<input type="button" id="wsAsia" value="중동아시아">	
 					<br>		
-					<a id="europe">유럽</a>					
+					<input type="button" id="europe" value="유럽">	
 					<br>		
-					<a id="america">아메리카</a>					
+					<input type="button" id="america" value="아메리카">	
 					<br>		
-					<a id="oceania">오세아니아</a>					
+					<input type="button" id="oceania" value="오세아니아">	
 					<br>		
-					<a id="africa">아프리카</a>				
-				</span>
-				<span>	<!-- 국가 도시 -->
-					<span class="countries" style="megint-left: 100px">	<!-- 국가 -->
-						<span>중국</span>&nbsp;&nbsp;&nbsp;
-						<span class="select" id="country중국">
-							<input type="radio" name="city" id="city북경" value="북경">북경&nbsp;&nbsp;
-						</span>
-						<br>
-						<span>일본</span>&nbsp;&nbsp;&nbsp;
-						<span class="select" id="country일본">
-							<input type="radio" name="city" id="city후쿠오카" value="후쿠오카">후쿠오카&nbsp;&nbsp;
-							<input type="radio" name="city" id="city도쿄" value="도쿄">도쿄&nbsp;&nbsp;
-						</span>
-						<br>
-						
-						
-						
-						
-						
-						
-						
-					</span> 
-				</span>
-			</span>
-		</div>	<!-- /대륙국가도시 -->
+					<input type="button" id="africa" value="아프리카">	
+				</div>
+				<div class="countries">	<!-- 국가 도시 -->
+					
+					
+					
+			</div>
+		</div>	<!-- /cccSel -->
 		<div>	<!-- 모집인원 -->
-			<span>모집인원</span>
-			<span><input type="range" name="p_cnt" class="form-range" value="1" min="1" max="10" step="1" id="myRange" style="width:80%"><span id="value"></span>명 </span>
+			<div class="peopleCnt">모집인원 <span id="value"></span>명</div>
+			<span><input type="range" name="p_cnt" class="form-range" value="1" min="1" max="10" step="1" id="myRange"></span>
 		</div>	<!-- /모집인원 -->
 		<div>	<!-- 날짜 선택 -->
-			<span>날짜 선택</span>
+			<span id="calendardate">날짜 선택</span>
 			<input class="calendar" name="departure" autocomplete="off" placeholder="날짜 선택" readonly="readonly">
 			<input class="calendar" name="arrive" autocomplete="off" placeholder="날짜 선택" readonly="readonly">
 		</div>	<!-- /날짜 선택 -->
 		<div>	<!-- 스타일 -->
-			<div>여행 스타일</div>
+			<div class="styleTitle">여행 스타일</div>
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox1" value="activity">
 			  <div>
 				  <label class="form-check-label" for="inlineCheckbox1"><img alt="activity" src="../resources/images/activity.png"></label>
 			  </div>
-			  <div style="text-align: center">액티비티</div>
+			  <div id="checkName">액티비티</div>
 			</div>
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox2" value="food">
 			  <div>
 				  <label class="form-check-label" for="inlineCheckbox2"><img alt="food" src="../resources/images/food.jpg"></label>
 			  </div>
-			  <div style="text-align: center">맛집</div>
+			  <div id="checkName">맛집</div>
 			</div>
 			
 			<div class="form-check form-check-inline">
@@ -98,7 +171,7 @@
 			  <div>
 				  <label class="form-check-label" for="inlineCheckbox3"><img alt="museum" src="../resources/images/museum.jpg"></label>
 			  </div>
-			  <div style="text-align: center">문화</div>
+			  <div id="checkName">문화</div>
 			</div>
 			
 			<div class="form-check form-check-inline">
@@ -106,7 +179,7 @@
 			  <div>
 				  <label class="form-check-label" for="inlineCheckbox4"><img alt="nation" src="../resources/images/nation.jpg"></label>
 			  </div>
-			  <div style="text-align: center">자연</div>
+			  <div id="checkName">자연</div>
 			</div>
 			
 			<div class="form-check form-check-inline">
@@ -114,7 +187,7 @@
 			  <div>
 				  <label class="form-check-label" for="inlineCheckbox5"><img alt="shopping" src="../resources/images/shopping.jpg"></label>
 			  </div>
-			  <div style="text-align: center">쇼핑</div>
+			  <div id="checkName">쇼핑</div>
 			</div>
 			
 			<div class="form-check form-check-inline">
@@ -122,7 +195,7 @@
 			  <div>
 				  <label class="form-check-label" for="inlineCheckbox6"><img alt="photo" src="../resources/images/photo.jpg"></label>
 			  </div>
-			  <div style="text-align: center">사진</div>
+			  <div id="checkName">사진</div>
 			</div>
 		</div>	<!-- /스타일 -->
 		<div class="form-group" style="margin-bottom: 10px">
@@ -133,8 +206,8 @@
 		</div>
 		<div class="form-group">
 			<input type="hidden" class="form-control" name="user_id" value="${user.user_id }">
-			<button style="float:right; margin-bottom: 5px; margin-left:5px;" type="reset" data-oper="list" class="btn btn-warning">취소</button>
-			<button style="float:right; margin-bottom: 5px;" type="submit" data-oper="register" class="btn btn-primary">등록</button>
+			<button type="reset" data-oper="list" class="btn btn-warning">취소</button>
+			<button type="submit" data-oper="register" class="btn btn-primary">등록</button>
 			<input type="hidden" name="pageNum" value="${cri.pageNum }">
 			<input type="hidden" name="amount" value="${cri.amount }">
 		</div>
@@ -231,6 +304,44 @@ $(function(){
 		formObj.submit();
 	});
 	
+	var countries = $(".countries");
+	var continent = eAsia.val();
+	$.ajax({
+		type : 'GET',
+		url : '/goWith/getCountry/' + continent,
+		dataType: 'json',
+		success : function(result){
+			var str ='';
+			for(var i = 0; i<result.length; i++){
+				str += '<div>';
+				str += '<div class="country">' + result[i].country + '</div>';
+				str += '<div class="select" id="country' + result[i].country + '">' + getCity(result[i].country) + '</div>';
+				str += '<br>';
+				str += '</div>';
+			}
+			countries.html(str);
+		},
+	});
+	
+	function getCity(country){
+		$.ajax({
+			type : 'GET',
+			url : '/goWith/getCity/' + country,
+			dataType: 'json',
+			success : function(result){
+				str = '';
+				for(var i= 0; i<result.length; i++ ){
+					str += '<input type="radio" name="city" id="city' + result[i].city + '" value="'+result[i].city+'"><label for="city' + result[i].city + '">' + result[i].city + '</label>';
+				}
+				$('#country'+country).html(str);
+				
+			}
+		})
+	}
+	
+	
+	
+	
 })
 // 날짜 포맷
 var config = {
@@ -264,11 +375,11 @@ var config = {
 			success : function(result){
 				var str ='';
 				for(var i = 0; i<result.length; i++){
-					str += '<span>' + result[i].country + '</span>&nbsp;&nbsp;&nbsp;';
-					str += '<span class="select" id="country' + result[i].country + '">';
-					str += getCity(result[i].country);
-					str += '</span>';
+					str += '<div>';
+					str += '<div class="country">' + result[i].country + '</div>';
+					str += '<div class="select" id="country' + result[i].country + '">' + getCity(result[i].country) + '</div>';
 					str += '<br>';
+					str += '</div>';
 				}
 				country.html(str);
 			},
@@ -285,11 +396,11 @@ var config = {
 			success : function(result){
 				var str ='';
 				for(var i = 0; i<result.length; i++){
-					str += '<span>' + result[i].country + '</span>&nbsp;&nbsp;&nbsp;';
-					str += '<span id="country' + result[i].country + '">';
-					str += getCity(result[i].country);
-					str += '</span>';
+					str += '<div>';
+					str += '<div class="country">' + result[i].country + '</div>';
+					str += '<div class="select" id="country' + result[i].country + '">' + getCity(result[i].country) + '</div>';
 					str += '<br>';
+					str += '</div>';
 				}
 				country.html(str);
 			},
@@ -305,9 +416,7 @@ var config = {
 			success : function(result){
 				str = '';
 				for(var i= 0; i<result.length; i++ ){
-					str += '<input type="radio" name="city" id="city' + result[i].city + '" value="'+result[i].city+'">';
-					str += result[i].city;
-					str += '&nbsp;&nbsp;</label>';
+					str += '<input type="radio" name="city" id="city' + result[i].city + '" value="'+result[i].city+'"><label for="city' + result[i].city + '">' + result[i].city + '</label>';
 				}
 				$('#country'+country).html(str);
 				

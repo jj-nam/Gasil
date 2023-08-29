@@ -19,13 +19,12 @@
 							</span>
 						</c:if>
 					</h5>
-					<div class="chat_data" style="width:150px;">${tmp.send_time }</div>
 					<div class="row">
 						<div class="col-10">
 							<p>${tmp.content }</p>
 						</div>
-						
 					</div>
+					<div class="chat_data" style="width:150px;">${tmp.send_time }</div>
 				</div>
 			</div>
 		</div>

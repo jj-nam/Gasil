@@ -36,17 +36,6 @@
 	.top_spac{
 		margin:20px 0 0;
 	}
-	.recent_heading{
-		float:left;
-		width:20%;
-	}
-	.recent_heading h4{
-		color:#5fc80;
-		font-size: 30px;
-		margin:auto;
-		text-align:center;
-		font-family: 'Noto Sans KR', sans-serif;
-	}
 	.chat_ib h5{
 		font-size: 20px;
 		color: #464646;
@@ -186,12 +175,6 @@
 		<div class="inbox_msg">
 		<!-- 메세지 목록 영역 -->
 			<div class="inbox_people">
-				<div class="recent_heading">
-					<h4>메</h4>
-					<h4>세</h4>
-					<h4>지</h4>
-				</div>
-				<!-- 메세지 리스트 -->
 				<div class="inbox_chat">
 				
 				</div>
