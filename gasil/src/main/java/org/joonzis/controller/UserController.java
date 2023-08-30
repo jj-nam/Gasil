@@ -56,9 +56,6 @@ public class UserController {
 	@Autowired
 	private GoWithService gservice;
 	
-	/*
-	 * @Setter(onMethod_ = @Autowired) private PasswordEncoder pwencoder;
-	 */
 	// 아이디 중복 확인
 	@RequestMapping("/idCheck.do")
 	public @ResponseBody int idCheck(String user_id) {
@@ -149,7 +146,7 @@ public class UserController {
 		return "myInfo/update_profile";
 	}
 	
-	@PostMapping("//myInfo/update_profile")
+	@PostMapping("/myInfo/update_profile")
 	public String upload(@RequestParam("user_pic") MultipartFile file , HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
@@ -282,7 +279,6 @@ public class UserController {
 		return "myInfo/likes";
 	}
 	
-	
 	// 신청한 글
 	@GetMapping("/myInfo/proposal")
 	public String proposalList(Model model, HttpServletRequest req) {
@@ -295,9 +291,4 @@ public class UserController {
 		model.addAttribute("list", gservice.getProposalList(writer));
 		return "myInfo/proposal";
 	}
-
-	// input으로 받은 닉네임으로
-	// 닉네임 수정할 때 해당 이전 닉네임을 가지고 있는 
-	// 게시물, 댓글, 대댓글 등 모든 것에 대한 닉네임을 먼저 수정
-	// 그 후 닉네임을 수정
 }

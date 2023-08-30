@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:forEach var="tmp" items="${list }">
 	<div class="chat_list_box${tmp.room } chat_list_box">
 		<div type="button" class="chat_list" room="${tmp.room }" other-nick="${tmp.other_nick }">
@@ -24,7 +24,9 @@
 							<p>${tmp.content }</p>
 						</div>
 					</div>
-					<div class="chat_data" style="width:150px;">${tmp.send_time }</div>
+					<div class="chat_data">
+						<fmt:formatDate value="${tmp.send_time }" pattern="MM-dd HH:mm"/>
+					</div>
 				</div>
 			</div>
 		</div>

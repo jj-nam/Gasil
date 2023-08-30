@@ -91,7 +91,7 @@ function getWno(wno){
 		data : JSON.stringify(wno),
 		success : function(result){
 			
-			
+			// 신청 했는지 여부 체크
 			$.ajax({
 				type : 'get',
 				url : '/goWith/appYN/' + wno + '.json',

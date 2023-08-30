@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:forEach var="tmp" items="${cList }">
 	<c:choose>
 		<c:when test="${sessionScope.user.user_nick ne tmp.send_nick }">
@@ -12,7 +13,9 @@
 			<div class="received_msg">
 				<div class="received_width_msg">
 					<p>${tmp.content }</p>
-					<span class="time_date">${tmp.send_time }</span>
+					<div class="time_date">
+						<fmt:formatDate value="${tmp.send_time }" pattern="MM-dd HH:mm"/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -22,7 +25,9 @@
 		<div class="outgoing_msg">
 			<div class="sent_msg">
 				<p>${tmp.content }</p>
-				<span class="time_date">${tmp.send_time }</span>
+				<div class="time_date">
+					<fmt:formatDate value="${tmp.send_time }" pattern="MM-dd HH:mm"/>
+				</div>
 			</div>
 		</div>
 		</c:otherwise>

@@ -18,15 +18,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getProposalList" resultType="org.joonzis.domain.GoWithFlagApplyVO" parameterType="String">
-		select c.flag, g.wno, a.ano, u.user_id, u.user_nick, g.wtitle, u.gender, g.city, g.departure, g.arrive, g.reg_date, g.age, a.confirmation, u.user_pic 
-        from tbl_goWith g, tbl_country c, tbl_user u, (select * from tbl_apply where user_id=#{user_id}) a 
-        where
+		SELECT 
+			c.flag, g.wno, a.ano, u.user_id, u.user_nick, g.wtitle, u.gender, g.city, g.departure, g.arrive, g.reg_date, g.age, a.confirmation, u.user_pic 
+        FROM 
+        	tbl_goWith g, tbl_country c, tbl_user u, (SELECT * FROM tbl_apply WHERE user_id=#{user_id}) a 
+        WHERE
             g.user_id = u.user_id
-            and
+            AND
             g.city = c.city
-            and
+            AND
             a.wno = g.wno
-        order by wno desc
+        ORDER BY wno DESC
 	</select>
 	
 	<select id="getGoWithList" resultType="org.joonzis.domain.GoWithFlagVO" parameterType="String">

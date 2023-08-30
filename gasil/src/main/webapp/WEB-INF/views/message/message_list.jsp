@@ -166,9 +166,11 @@
 	.msg_history{
 		height: 516px;
 		overflow-y: auto;
-		 
 	}	
-	
+	.chat_data{
+		width:150px;
+		color: #747474;
+	}
 </style>
 <div class="msg-container">
 	<div class="messaging">

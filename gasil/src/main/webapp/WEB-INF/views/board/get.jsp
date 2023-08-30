@@ -198,7 +198,7 @@
 		/* .replace(/\n/g,'<br>') */
 		// 댓글 입력 버튼 클릭 이벤트
 		RegisterBtn.on('click', function(){
-			if(RegisterBtn.val() == ''){
+			if(inputContent.val() == ''){
 				alert("댓글을 입력해주세요");
 				return;
 			}
