@@ -3,6 +3,7 @@ package org.joonzis.controller;
 import org.joonzis.domain.HeartVO;
 import org.joonzis.service.BoardService;
 import org.joonzis.service.HeartService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class HeartController {
 	private final HeartService service;
 	private final BoardService bservice;
 	
-	
+	@Transactional
 	@PostMapping("/like")
 	@ResponseBody
 	public int heartConfirm(@RequestBody HeartVO vo) {

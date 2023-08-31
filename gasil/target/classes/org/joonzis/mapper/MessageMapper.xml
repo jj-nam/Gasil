@@ -59,8 +59,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			user_nick = #{nick}
 	</select>
 	
-	
-	
 	<select id="roomContentList" parameterType="org.joonzis.domain.MessageVO" resultType="org.joonzis.domain.MessageVO">
 		select m.mno, m.room, m.send_nick, m.recv_nick, m.send_time, m.read_time, m.content, m.read_chk, m.profile
 		from tbl_msg m left outer join tbl_user u

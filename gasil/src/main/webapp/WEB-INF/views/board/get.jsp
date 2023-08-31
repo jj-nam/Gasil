@@ -167,7 +167,7 @@
 			}
 			
 		});
-		// 목록화면 이동 버튼 클릭 시 bno 값 없이 이동 --> 기존 내부 input 태그 삭제 후 이동 
+		// 목록 화면 이동 버튼 클릭 시 bno 값 없이 이동 --> 기존 내부 input 태그 삭제 후 이동 
 		$("button[data-oper='list']").on('click',function(){
 			operForm.find("#bno").remove();
 			operForm.find("#pageNum").remove();

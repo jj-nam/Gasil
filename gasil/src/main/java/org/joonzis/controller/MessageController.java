@@ -36,18 +36,17 @@ public class MessageController {
 		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
 		// wno로 그 게시글의 이름 기간 등 정보 찾기
 		GoWithFlagVO gvo = gservice.get(wno);
-		
+		// 방 생성시 문구
 		String first = "[" + gvo.getDeparture() + "~" + gvo.getArrive() + "] " + gvo.getCity() + "\n " + gvo.getWtitle();
+		
 		// 방 주인
 		String nick = user.getUser_nick();
 		MessageVO mvo = new MessageVO();
 		mvo.setRecv_nick(user_id);
 		mvo.setSend_nick(nick);
 		String no = wno+"";
-		System.out.println(mvo);
 		String profile = service.getOtherProfile(mvo);
 		
-		System.out.println(profile);
 		MessageVO vo = new MessageVO();
 		vo.setSend_nick(nick);
 		vo.setRecv_nick(user_id);
@@ -61,7 +60,6 @@ public class MessageController {
 			
 		}else {
 			service.createRoom(vo);
-			
 		}
 		rttr.addFlashAttribute("result", "ok");
 		
@@ -83,8 +81,10 @@ public class MessageController {
 			String profile = service.getOtherProfile(vo);
 			vo.setUnread(unread);
 			vo.setProfile(profile);
+			// 로그인한 유저가 보낸 사람이면 ohter_nick은 받은 사람
 			if(nick.equals(vo.getSend_nick())) {
 				vo.setOther_nick(vo.getRecv_nick());
+			// 로그인한 유저가 받은 사람이면 other_nick은 보낸 사람
 			}else {
 				vo.setOther_nick(vo.getSend_nick());
 			}
@@ -111,8 +111,10 @@ public class MessageController {
 			String profile = service.getOtherProfile(vo);
 			vo.setUnread(unread);
 			vo.setProfile(profile);
+			// 로그인한 유저가 보낸 사람이면 ohter_nick은 받은 사람
 			if(nick.equals(vo.getSend_nick())) {
 				vo.setOther_nick(vo.getRecv_nick());
+			// 로그인한 유저가 받은 사람이면 other_nick은 보낸 사람
 			}else {
 				vo.setOther_nick(vo.getSend_nick());
 			}

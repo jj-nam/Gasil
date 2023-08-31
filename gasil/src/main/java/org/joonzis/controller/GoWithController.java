@@ -185,8 +185,8 @@ public class GoWithController {
 		vo.setWno(wno);
 		vo.setUser_id(user.getUser_id());
 		System.out.println(vo);
-		System.out.println("get application : " + service.findano(vo));
-		return new ResponseEntity<>(service.findano(vo), HttpStatus.OK);
+		System.out.println("get application : " + service.checkApply(vo));
+		return new ResponseEntity<>(service.checkApply(vo), HttpStatus.OK);
 	}
 	
 	
@@ -218,7 +218,6 @@ public class GoWithController {
 	}
 	
 	// 동행 신청
-	@Transactional
 	@PostMapping("/appli")
 	@ResponseBody
 	public int applygoWith(@RequestBody ApplyVO avo,  HttpServletRequest req) {

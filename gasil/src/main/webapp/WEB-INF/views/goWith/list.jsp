@@ -434,31 +434,31 @@
 					
 					
 					
-				modalPlace.html(str);
-				
-			var modalCloseBtn = $("#modalCloseBtn");		// 닫기 버튼
-			var modalLoginBtn = $("#modalLoginBtn");		// 비회원 신청 버튼
-			var modalRegisterBtn = $("#modalRegisterBtn");	// 신청 버튼
-			var operForm = $("#operForm");
-			
-			
-			modalCloseBtn.on('click', function(){
-				modal.modal('hide');
-			})
-			modalLoginBtn.on('click', function(){
-				alert("회원만 신청 할 수 있습니다.")
-			})
-			
-			$("button[data-oper='remove']").on('click',function(){
-				if(confirm("삭제하시겠습니까?")){
-					operForm.attr('method', 'post');
-					operForm.attr('action', '/goWith/remove');
-					operForm.submit();
-				}else{
-					return;
-				}
-				
-			});
+							modalPlace.html(str);
+							
+						var modalCloseBtn = $("#modalCloseBtn");		// 닫기 버튼
+						var modalLoginBtn = $("#modalLoginBtn");		// 비회원 신청 버튼
+						var modalRegisterBtn = $("#modalRegisterBtn");	// 신청 버튼
+						var operForm = $("#operForm");
+						
+						
+						modalCloseBtn.on('click', function(){
+							modal.modal('hide');
+						})
+						modalLoginBtn.on('click', function(){
+							alert("회원만 신청 할 수 있습니다.")
+						})
+						
+						$("button[data-oper='remove']").on('click',function(){
+							if(confirm("삭제하시겠습니까?")){
+								operForm.attr('method', 'post');
+								operForm.attr('action', '/goWith/remove');
+								operForm.submit();
+							}else{
+								return;
+							}
+							
+						});
 			
 					}	// end inner ajax success
 				})		// ens inner ajax
@@ -471,7 +471,6 @@
 	// 동행 신청 버튼
 	function modalRegisterBtn(wno){
 		var modalBtn = $("#modalRegisterBtn");
-		var mrb = '';
 		$.ajax({
 			type : 'post',
 			url : "/goWith/appli",
@@ -486,7 +485,6 @@
 				}else{
 					alert("신청 되었습니다");
 				}
-				modalBtn.innerHTML = mrb;
 				modal.modal('hide');
 			}
 		})		
@@ -506,38 +504,38 @@
 			data : JSON.stringify(wno),
 			success : function(result){
 				
-						if(result == null || result.length == 0){
-								app += '<div>';
-								app += '<p>신청자가 없습니다</p>';
-								app += '</div>';
-								app += '<hr>';
-								app += '<button id = "closeBtn" class = "btn btn-default">닫기</button>';
-								bodyList.html(app);
+				if(result == null || result.length == 0){
+						app += '<div>';
+						app += '<p>신청자가 없습니다</p>';
+						app += '</div>';
+						app += '<hr>';
+						app += '<button id = "closeBtn" class = "btn btn-default">닫기</button>';
+						bodyList.html(app);
+				}else{
+					for(var i=0; i < result.length; i++){
+						app += '<div>';
+						app += '<span class="col-4"><img class="userProfile" alt="profile" src="../resources/images/profile/' + result[i].user_pic + '">&nbsp;</span>';
+						app += '<span class="nickSpace">' + result[i].user_id + '</span>';
+						app += "<div class='confirmation"+ result[i].user_id + "'>";
+						if(result[i].confirmation == 1){
+							app += "<a class='cancelBtn' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>취소 <input class='cancelBtn' id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'></a>";
 						}else{
-							for(var i=0; i < result.length; i++){
-								app += '<div>';
-								app += '<span class="col-4"><img class="userProfile" alt="profile" src="../resources/images/profile/' + result[i].user_pic + '">&nbsp;</span>';
-								app += '<span class="nickSpace">' + result[i].user_id + '</span>';
-								app += "<div class='confirmation"+ result[i].user_id + "'>";
-								if(result[i].confirmation == 1){
-									app += "<a class='cancelBtn' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>취소 <input class='cancelBtn' id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'></a>";
-								}else{
-									app += "<a class='btnBtn' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>수락 <input class='btnBtn' id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'></a>";
-								}
-								app += "</div>";
-								app += '<hr>';
-								app += '</div>';
-							}
-							app += '<button class="btnBtn" id="closeBtn" class="btn btn-default">닫기</button>';
-							bodyList.html(app);
+							app += "<a class='btnBtn' href='javascript:confirmation("+result[i].wno+",\""+result[i].user_id+"\");'>수락 <input class='btnBtn' id='chat"+result[i].wno+"_\""+result[i].user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + result[i].wno + ",\"" + result[i].user_id + "\")'></a>";
 						}
-						showAppList.modal('show');
-						
-						
-						var closeBtn = $("#closeBtn");				// 닫기 버튼
-						closeBtn.on('click', function(){
-							showAppList.modal('hide');
-						})
+						app += "</div>";
+						app += '<hr>';
+						app += '</div>';
+					}
+					app += '<button class="btnBtn" id="closeBtn" class="btn btn-default">닫기</button>';
+					bodyList.html(app);
+				}
+				showAppList.modal('show');
+				
+				
+				var closeBtn = $("#closeBtn");				// 닫기 버튼
+				closeBtn.on('click', function(){
+					showAppList.modal('hide');
+				})
 						
 			}	// end success
 		})		// end ajax
@@ -557,6 +555,7 @@
 	function confirmation(wno, user_id){
 		var con = '';
 		var peo = '';
+		
 		$.ajax({
 			type : 'post',
 			url : '/goWith/confirmation',
@@ -575,25 +574,25 @@
 					data : JSON.stringify(wno),
 					success : function(result){
 					
-				if(re==0){
-					alert("수락 하셨습니다");
-					con = "<a class='cancelBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소 <input class='cancelBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' value='대화하기' onclick='chat(" + wno +  ",\"" + user_id + "\")'></a>";
-					
-					peo = "<span id='people" + wno + "'>"+ result + "</span>";
-					
-					
-				}else if(re==1){
-					alert("취소 되었습니다.");
-					con = "<a class='btnBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락 <input class='btnBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'></a>";
-					
-					peo = "<span id='people" + wno + "'>"+ result + "</span>";
-				}
-				else if(re==2){
-					alert("더 이상 수락할 수 없습니다.")
-					con = "<a class='btnBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락 <input class='btnBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'></a>";
-				}
-				$('.confirmation'+user_id).html(con);
-				$('#people'+wno).html(peo);
+						if(re==0){
+							alert("수락 하셨습니다");
+							con = "<a class='cancelBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소 <input class='cancelBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' value='대화하기' onclick='chat(" + wno +  ",\"" + user_id + "\")'></a>";
+							
+							peo = "<span id='people" + wno + "'>"+ result + "</span>";
+							
+							
+						}else if(re==1){
+							alert("취소 되었습니다.");
+							con = "<a class='btnBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락 <input class='btnBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'></a>";
+							
+							peo = "<span id='people" + wno + "'>"+ result + "</span>";
+						}
+						else if(re==2){
+							alert("더 이상 수락할 수 없습니다.")
+							con = "<a class='btnBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>수락 <input class='btnBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' disabled value='대화하기' onclick='chat(" + wno + ",\"" + user_id + "\")'></a>";
+						}
+						$('.confirmation'+user_id).html(con);
+						$('#people'+wno).html(peo);
 				
 					}	// end inner success
 				})	// end inner ajax

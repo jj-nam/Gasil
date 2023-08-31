@@ -24,7 +24,6 @@ public interface GoWithMapper {
 	public int checkApply(ApplyVO vo);
 	public int insertApply(ApplyVO vo);
 	public int deleteApply(ApplyVO vo);
-	public int findano(ApplyVO vo);
 	public int checkConfirm(ApplyVO vo);
 	public int getConfirm(ApplyVO vo);
 	public int incPeople(long wno);

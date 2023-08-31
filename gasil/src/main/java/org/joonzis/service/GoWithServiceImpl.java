@@ -90,10 +90,6 @@ public class GoWithServiceImpl implements GoWithService{
 		return mapper.deleteApply(vo);
 	}
 	@Override
-	public int findano(ApplyVO vo) {
-		return mapper.findano(vo);
-	}
-	@Override
 	public int checkConfirm(ApplyVO vo) {
 		return mapper.checkConfirm(vo);
 	}

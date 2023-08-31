@@ -26,6 +26,7 @@ import org.joonzis.service.BoardService;
 import org.joonzis.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,9 +84,10 @@ public class BoardController {
 		return "redirect:/board/list"; // jsp가 아닌 url을 태울려면 redirect 사용
 	}
 	
+	@Transactional
 	@GetMapping("/get")
-	public String get(@RequestParam("bno") long bno, Model model, Criteria cri, HttpServletRequest req,
-			HttpServletResponse res) {
+	public String get(@RequestParam("bno") long bno, Model model, Criteria cri, 
+							HttpServletRequest req, HttpServletResponse res) {
 		log.info("/get..." + bno);
 		viewCountUp(bno, req, res);
 
@@ -130,14 +132,14 @@ public class BoardController {
 				mapper.upView(bno);
 				oldCookie.setValue(oldCookie.getValue() + "_[" + bno + "]");
 				oldCookie.setPath("/");
-				oldCookie.setMaxAge(60 * 60 * 24);
+				oldCookie.setMaxAge(60 * 60);
 				res.addCookie(oldCookie);
 			}
 		} else {
 			mapper.upView(bno);
 			Cookie newCookie = new Cookie("boardView", "[" + bno + "]");
 			newCookie.setPath("/");
-			newCookie.setMaxAge(60 * 60 * 24);
+			newCookie.setMaxAge(60 * 60);
 			res.addCookie(newCookie);
 		}
 	}
