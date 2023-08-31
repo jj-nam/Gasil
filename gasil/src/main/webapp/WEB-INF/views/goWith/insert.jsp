@@ -154,9 +154,6 @@
 					<input type="button" id="africa" value="아프리카">	
 				</div>
 				<div class="countries">	<!-- 국가 도시 -->
-					
-					
-					
 			</div>
 		</div>	<!-- /cccSel -->
 		<div>	<!-- 모집인원 -->
@@ -173,8 +170,6 @@
 			
 			
 			<div class="styleSpace">
-			
-			
 					<div class="form-check form-check-inline">
 					  <input class="form-check-input" type="checkbox" name="style" id="inlineCheckbox1" value="activity">
 					  <div>
@@ -350,26 +345,6 @@ $(function(){
 			countries.html(str);
 		},
 	});
-	
-	function getCity(country){
-		$.ajax({
-			type : 'GET',
-			url : '/goWith/getCity/' + country,
-			dataType: 'json',
-			success : function(result){
-				str = '';
-				for(var i= 0; i<result.length; i++ ){
-					str += '<input type="radio" name="city" id="city' + result[i].city + '" value="'+result[i].city+'"><label for="city' + result[i].city + '">' + result[i].city + '</label>';
-				}
-				$('#country'+country).html(str);
-				
-			}
-		})
-	}
-	
-	
-	
-	
 })
 // 날짜 포맷
 var config = {

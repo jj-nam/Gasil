@@ -340,7 +340,7 @@
 			data : JSON.stringify(wno),
 			success : function(result){
 				
-				
+				// 신청 판별
 				$.ajax({
 					type : 'get',
 					url : '/goWith/appYN/' + wno + '.json',
@@ -575,8 +575,6 @@
 					data : JSON.stringify(wno),
 					success : function(result){
 					
-				
-				
 				if(re==0){
 					alert("수락 하셨습니다");
 					con = "<a class='cancelBtn' href='javascript:confirmation("+wno+",\""+user_id+"\");'>취소 <input class='cancelBtn' id='chat"+wno+"_\""+user_id+ "\"' type='button' value='대화하기' onclick='chat(" + wno +  ",\"" + user_id + "\")'></a>";

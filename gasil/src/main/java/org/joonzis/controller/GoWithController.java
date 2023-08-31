@@ -4,16 +4,12 @@ package org.joonzis.controller;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.CountryVO;
 import org.joonzis.domain.Criteria;
@@ -29,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
@@ -96,7 +92,7 @@ public class GoWithController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date format1 = null;
 		Date format2 = null;
-		
+		// 나이 계산
 		String birth = uservice.getBirth(vo.getUser_id());
 		LocalDate now = LocalDate.now();
 		LocalDate parseBirthDate = LocalDate.parse(birth, DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -107,8 +103,6 @@ public class GoWithController {
 		}
 		String age1 = age2 + "";
 		int age = Integer.parseInt(age1.substring(0,1));
-		
-		System.out.println(age);
 		
 		// 여행 기간 구하기
 		long diffSec = 0;
@@ -128,8 +122,6 @@ public class GoWithController {
 			chkDate = 0;
 		}
 		period = diffSec / (24*60*60);
-		
-		System.out.println(period);
 		
 		GoWithVO gvo = new GoWithVO();
 		gvo.setUser_id(vo.getUser_id());
@@ -226,6 +218,7 @@ public class GoWithController {
 	}
 	
 	// 동행 신청
+	@Transactional
 	@PostMapping("/appli")
 	@ResponseBody
 	public int applygoWith(@RequestBody ApplyVO avo,  HttpServletRequest req) {
@@ -249,7 +242,7 @@ public class GoWithController {
 		return result;
 	}
 	
-	
+	@Transactional
 	@PostMapping("/confirmation")
 	@ResponseBody
 	public int applygoWith(@RequestBody ApplyVO vo) {
@@ -261,23 +254,18 @@ public class GoWithController {
 		int overCnt = service.getOver(vo.getWno());
 		// 신청 수락을 했으면 result=1, 안했으면 0
 		int result = service.checkConfirm(vo);
-		System.out.println("p_cntNum : " + p_cntNum);
-		System.out.println("overCnt : " + overCnt);
 		
 		if(result == 0) {
 			if(p_cntNum > overCnt) {
 				service.getConfirm(vo);
 				service.incPeople(wno);
-				System.out.println("수락");
 			}else{
 				result = 2;
 			}
 		}else if(result == 1){
 			service.deleteConfirm(vo);
 			service.decPeople(wno);
-			System.out.println("취소");
 		}
-		System.out.println(result);
 		return result;
 	}
 	

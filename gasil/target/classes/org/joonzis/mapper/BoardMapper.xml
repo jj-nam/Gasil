@@ -82,14 +82,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from(SELECT 
 				BNO,
 		         LEAD(BNO,1,9999) OVER(ORDER BY BNO) AS next,
-		         LAG(BNO,1,9999) OVER(ORDER BY BNO) AS last,
-		         TITLE,
-		         LEAD(TITLE,1,9999) OVER(ORDER BY BNO) AS nexttitle,
-		         LAG(TITLE,1,9999) OVER(ORDER BY BNO) AS lasttitle
-		         
+		         LAG(BNO,1,9999) OVER(ORDER BY BNO) AS last
 				FROM tbl_board
 		        order by BNO DESC) 
-		        WHERE BNO = #{bno}
+		WHERE BNO = #{bno}
 	</select>
 	
 	<update id="upView" parameterType="long">

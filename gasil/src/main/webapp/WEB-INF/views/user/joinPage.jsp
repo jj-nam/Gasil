@@ -144,10 +144,16 @@
 			}
 		});
 	    
+	    var regId = /^[0-9a-z]{8,16}$/;
+	    var regPw = /^[0-9a-zA-Z]{8,16}$/;
+		var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		var regName = /^[가-힣]{2,6}$/;
+		var regBirth = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+		var regPhone = /^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/;
+		
 		// id 중복 체크
 		$('#user_id').keyup(function(){
 			var user_id = $('#user_id').val();
-			var regId = /^[0-9a-z]{8,16}$/;
 			$.ajax({
 				url : "${cpath}/idCheck.do",
 				type : "post",
@@ -180,7 +186,6 @@
 		// 비밀번호 체크
 		$('#user_pw').keyup(function() {
 			var user_pw = $("#user_pw").val();
-			var regPw = /^[0-9a-zA-Z]{8,16}$/;
 	  		// 비밀번호 유효성 검사 
 	  		if (!regPw.exec(user_pw)){
 				$('#pw_feedback').html('비밀번호를 8~16자 대문자+소문자+숫자로 입력하세요.');
@@ -197,7 +202,6 @@
 		
 		$('#user_email').keyup(function() {
 			// 이메일 유효성 검사
-			var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			var email = $('#user_email').val(); // 이메일 주소값 얻어오기
 			if(!regEmail.exec(email)){
 				$('#email_feedback').html("이메일을 다시 입력해주세요.");
@@ -211,12 +215,9 @@
 			}
 		})
 		
-
-		 
 		 // 이름 체크
 		 $('#user_name').keyup(function() {
 				var user_name = $("#user_name").val();
-				var regName = /^[가-힣]{2,6}$/;
 		  		// 비밀번호 유효성 검사 
 		  		if (!regName.exec(user_name)){
 					$('#name_feedback').html('성함을 다시 적어주세요 (한글 2~6자)');
@@ -233,7 +234,6 @@
 		 // 생년월일
 		 $('#user_birth').keyup(function(){
 			var user_birth = $("#user_birth").val();
-			var regBirth = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
 			if(!regBirth.exec(user_birth)){
 				$('#birth_feedback').html('생년월일 8자리를 입력해주세요.');
 				$('#birth_feedback').attr('color','red');
@@ -248,7 +248,6 @@
 		 var code2 = "";
 		 
 		 $("#phoneChk").click(function(){
-			 var regPhone = /^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/;
 			 var user_phone = $("#user_phone").val();
 			 if(!regPhone.exec(user_phone)){
          		alert("휴대폰 번호가 올바르지 않습니다.")
@@ -288,14 +287,11 @@
 				chk6 = false;
 			}
 		})
-		 
-	
 	
 	$("#welcome").click(function(){
 			if(chk1 == false){
 				alert("아이디를 다시 입력해주세요");
 				$("#user_id").focus();
-				
 				return;
 			}
 			if(chk2 == false){

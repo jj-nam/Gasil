@@ -16,20 +16,20 @@
 	<!-- /.col-lg-12 -->
 	<div style="margin-top:5px">
 	<c:choose>
-	<c:when test="${move.next != 9999}">	
-		<button type="button" class="btn btn-warning mr-3 mb-3" style="float:right; margin-bottom: 5px; margin-left:5px;" onclick="location.href='/board/get?bno=${move.next}'"> <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글&gt;</button>
-	</c:when>
-	<c:when test="${move.next == 9999}">
-	<button type="button" style="float:right; margin-bottom: 5px; margin-left:5px;" class="btn btn-warning mr-3 mb-3" disabled>다음글이 없습니다</button>
-	</c:when>
+		<c:when test="${move.next == 9999}">
+			<button type="button" style="float:right; margin-bottom: 5px; margin-left:5px;" class="btn btn-warning mr-3 mb-3" disabled>다음글이 없습니다</button>
+		</c:when>
+		<c:otherwise>
+			<button type="button" class="btn btn-warning mr-3 mb-3" style="float:right; margin-bottom: 5px; margin-left:5px;" onclick="location.href='/board/get?bno=${move.next}'"> <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글&gt;</button>
+		</c:otherwise>
 	</c:choose>
 	<c:choose>
-	<c:when test="${move.last != 9999}">
-		<button type="button" class="btn btn-info mr-3 " style="float:right; margin-bottom: 5px; margin-left:5px;" onclick="location.href='/board/get?bno=${move.last}'"> <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>&lt;이전글</button>
-	</c:when>
 	<c:when test="${move.last == 9999}">
-	<button type="button" style="float:right; margin-bottom: 5px; margin-left:5px;" class="btn btn-info mr-3" disabled>이전글이 없습니다</button>
+		<button type="button" style="float:right; margin-bottom: 5px; margin-left:5px;" class="btn btn-info mr-3" disabled>이전글이 없습니다</button>
 	</c:when>
+		<c:otherwise>
+			<button type="button" class="btn btn-info mr-3 " style="float:right; margin-bottom: 5px; margin-left:5px;" onclick="location.href='/board/get?bno=${move.last}'"> <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>&lt;이전글</button>
+		</c:otherwise>
 	</c:choose>
 	</div>
 </div>
@@ -247,16 +247,13 @@
         heart.innerHTML = unlikeElement;
         
        	dec>=0 ? likeCnt.innerHTML = dec : likeCnt.innerHTML = ${vo.blike}; 
-        
     }
-    // 좋아요 안누름 -> 빈하트 노츌
+    // 좋아요 안누름(count == 0) -> 빈하트 노츌
     if(like == 0){
-        // count == 0
         changeUnlike();
     }
-    // 좋아요 누름 -> 꽉찬 하트 노풀
+    // 좋아요 누름(count != 0) -> 꽉찬 하트 노풀
     else{
-        // count != 0
         changeLike();
     }
 
@@ -287,10 +284,9 @@
     	
     });
 	
-	//대댓글 등록 버튼 클릭 이벤트	
+	//대댓글 : 답글쓰기 버튼 클릭 이벤트	
 	function re_reBtn(no, rno){
 		var rerere = $(".rerere");
-		// 창이 뜨고 입력한 후 등록 버튼을 통해서 insert 시켜야한다.
 		var reply_writer = '${user.user_nick}';		
 		var rere = '';
 		rere += '<div style="border: 1px solid lightgrey; border-radius: 10px; padding: 20px">'

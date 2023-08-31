@@ -2,6 +2,7 @@ package org.joonzis.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import org.joonzis.service.GoWithService;
 import org.joonzis.service.HeartService;
 import org.joonzis.service.ReplyService;
 import org.joonzis.service.UserService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +36,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Log4j
 @Controller
@@ -67,10 +71,27 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "user/phoneCheck", method = RequestMethod.GET)
 	public String sendSMS(@RequestParam("user_phone") String userPhoneNumber) { // 휴대폰 문자보내기
-		int randomNumber1 = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+		int randomNumber1 = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);	//난수 생성
 		String randomNumber = Integer.toString(randomNumber1);
-		service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
-		
+		String api_key = "NCSFAESODWJBGE9Z";
+	    String api_secret = "EMJVUGFZPWQ6TM51BZ6LZUVSW3TTPLKS";
+	    Message coolsms = new Message(api_key, api_secret);
+
+	    // 4 params(to, from, type, text) are mandatory. must be filled
+	    HashMap<String, String> params = new HashMap<>();
+	    params.put("to", userPhoneNumber);    // 수신전화번호
+	    params.put("from", "01046993963");    // 발신전화번호
+	    params.put("type", "SMS");
+	    params.put("text", "[Gasil] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용
+	    params.put("app_version", "test app 1.2"); // application name and version
+
+	    try {
+	        JSONObject obj = coolsms.send(params);
+	        System.out.println(obj.toString());
+	      } catch (CoolsmsException e) {
+	        System.out.println(e.getMessage());
+	        System.out.println(e.getCode());
+	      }
 		return randomNumber;
 		}
 	
@@ -279,7 +300,7 @@ public class UserController {
 		return "myInfo/likes";
 	}
 	
-	// 신청한 글
+	// 신청한 동행 보기
 	@GetMapping("/myInfo/proposal")
 	public String proposalList(Model model, HttpServletRequest req) {
 		log.info("proposalList...");
