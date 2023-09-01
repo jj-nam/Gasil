@@ -15,4 +15,5 @@ public interface MessageMapper {
 	public int createRoom(MessageVO vo);
 	public int chkRoom(String room);
 	public int removeRoom(String room);
+	public MessageVO getRoomInfo(String room);
 }

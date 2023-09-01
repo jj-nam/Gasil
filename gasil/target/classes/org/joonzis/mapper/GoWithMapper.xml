@@ -153,5 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select people from tbl_goWith
 		where wno = #{wno}
 	</select>
-	
+	<delete id="removeProp" parameterType="org.joonzis.domain.ApplyVO">
+		delete from tbl_apply where user_id = #{user_id} and wno = #{wno}
+	</delete>
 </mapper>

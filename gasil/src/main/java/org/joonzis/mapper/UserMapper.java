@@ -15,4 +15,5 @@ public interface UserMapper {
 	public boolean modify(UserAuthVO vo);
 	public int updateImage(UserVO vo);
 	public String getNick(String user_id);
+	public String getId(String recv_nick);
 }

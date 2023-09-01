@@ -22,7 +22,6 @@ public class HeartController {
 	private final HeartService service;
 	private final BoardService bservice;
 	
-	@Transactional
 	@PostMapping("/like")
 	@ResponseBody
 	public int heartConfirm(@RequestBody HeartVO vo) {

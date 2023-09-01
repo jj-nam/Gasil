@@ -32,4 +32,5 @@ public interface GoWithMapper {
 	public int getP_cnt(long wno);
 	public int getOver(long wno);
 	public int getPeople(long wno);
+	public int removeProp(ApplyVO avo);
 }

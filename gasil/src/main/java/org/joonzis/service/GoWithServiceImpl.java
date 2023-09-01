@@ -123,4 +123,8 @@ public class GoWithServiceImpl implements GoWithService{
 	public int getPeople(long wno) {
 		return mapper.getPeople(wno);
 	}
+	@Override
+	public int removeProp(ApplyVO avo) {
+		return mapper.removeProp(avo);
+	}
 }

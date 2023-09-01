@@ -13,5 +13,5 @@ public interface UserService {
 	public boolean modify(UserAuthVO vo);
 	public void updateImage(UserVO vo);
 	public String getNick(String user_id);
-	
+	public String getId(String recv_nick);
 }

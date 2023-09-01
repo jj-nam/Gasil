@@ -101,5 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="removeRoom" parameterType="String">
 		delete tbl_msg where room=#{room}
 	</delete>
-	
+	<select id="getRoomInfo" resultType="org.joonzis.domain.MessageVO" parameterType="String">
+		select * from tbl_msg where room = #{room}	
+	</select>
 </mapper>

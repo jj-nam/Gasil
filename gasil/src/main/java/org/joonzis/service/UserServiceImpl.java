@@ -57,4 +57,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
+	@Override
+	public String getId(String recv_nick) {
+		return mapper.getId(recv_nick);
+	}
 }

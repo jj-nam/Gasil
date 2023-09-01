@@ -241,7 +241,6 @@ public class GoWithController {
 		return result;
 	}
 	
-	@Transactional
 	@PostMapping("/confirmation")
 	@ResponseBody
 	public int applygoWith(@RequestBody ApplyVO vo) {

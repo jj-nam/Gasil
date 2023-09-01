@@ -2,10 +2,14 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.MessageVO;
+import org.joonzis.mapper.GoWithMapper;
 import org.joonzis.mapper.MessageMapper;
+import org.joonzis.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -15,6 +19,10 @@ public class MessageServiceImpl implements MessageService{
 	
 	@Autowired
 	MessageMapper mapper;
+	@Autowired
+	GoWithMapper gmapper;
+	@Autowired
+	UserMapper umapper;
 	
 	@Override
 	public List<MessageVO> messageList(String nick) {
@@ -53,8 +61,23 @@ public class MessageServiceImpl implements MessageService{
 	public int chkRoom(String room) {
 		return mapper.chkRoom(room);
 	}
+	@Transactional
 	@Override
 	public int removeRoom(String room) {
-		return mapper.removeRoom(room);
+		MessageVO vo = getRoomInfo(room);
+		String recv_id = umapper.getId(vo.getRecv_nick());
+		ApplyVO avo = new ApplyVO();
+		avo.setUser_id(recv_id);
+		avo.setWno(vo.getWno());
+		int result = mapper.removeRoom(room);
+		
+		gmapper.removeProp(avo);
+		gmapper.decPeople(avo.getWno());
+		
+		return result; 
+	}
+	@Override
+	public MessageVO getRoomInfo(String room) {
+		return mapper.getRoomInfo(room);
 	}
 }
