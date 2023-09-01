@@ -51,6 +51,10 @@ public class UserServiceImpl implements UserService {
 	public void updateImage(UserVO vo){
 		mapper.updateImage(vo);
 	}
+	@Override
+	public String getNick(String user_id) {
+		return mapper.getNick(user_id);
+	}
 	
 	
 }

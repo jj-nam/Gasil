@@ -14,4 +14,5 @@ public interface UserMapper {
 	public String getBirth(String user_id);
 	public boolean modify(UserAuthVO vo);
 	public int updateImage(UserVO vo);
+	public String getNick(String user_id);
 }

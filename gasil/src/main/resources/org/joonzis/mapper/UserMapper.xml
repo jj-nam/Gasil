@@ -63,4 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where 
 			user_id = #{user_id}
 	</update>
+	<select id="getNick" resultType="String" parameterType="String">
+		select user_nick from tbl_user where user_id = #{user_id}
+	</select>
 </mapper>

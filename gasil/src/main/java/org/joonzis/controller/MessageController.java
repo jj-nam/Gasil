@@ -10,6 +10,7 @@ import org.joonzis.domain.MessageVO;
 import org.joonzis.domain.UserAuthVO;
 import org.joonzis.service.GoWithService;
 import org.joonzis.service.MessageService;
+import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,9 @@ public class MessageController {
 	@Autowired
 	private MessageService service;
 	
+	@Autowired
+	private UserService uservice;
+	
 	@Setter(onMethod_ = @Autowired)
 	private GoWithService gservice;
 	
@@ -38,18 +42,19 @@ public class MessageController {
 		GoWithFlagVO gvo = gservice.get(wno);
 		// 방 생성시 문구
 		String first = "[" + gvo.getDeparture() + "~" + gvo.getArrive() + "] " + gvo.getCity() + "\n " + gvo.getWtitle();
-		
+		// 신청자 닉네임
+		String propoUserNick = uservice.getNick(user_id);		
 		// 방 주인
 		String nick = user.getUser_nick();
 		MessageVO mvo = new MessageVO();
-		mvo.setRecv_nick(user_id);
+		mvo.setRecv_nick(propoUserNick);
 		mvo.setSend_nick(nick);
 		String no = wno+"";
 		String profile = service.getOtherProfile(mvo);
 		
 		MessageVO vo = new MessageVO();
 		vo.setSend_nick(nick);
-		vo.setRecv_nick(user_id);
+		vo.setRecv_nick(propoUserNick);
 		vo.setRoom(no + user_id);
 		vo.setProfile(profile);
 		vo.setContent(first);
@@ -79,6 +84,7 @@ public class MessageController {
 			vo.setNick(nick);
 			int unread = service.getUnread(vo);
 			String profile = service.getOtherProfile(vo);
+			System.out.println(vo.getOther_nick());
 			vo.setUnread(unread);
 			vo.setProfile(profile);
 			// 로그인한 유저가 보낸 사람이면 ohter_nick은 받은 사람
