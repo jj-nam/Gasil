@@ -98,6 +98,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{wno}
 		)
 	</insert>
-	
+	<delete id="removeRoom" parameterType="String">
+		delete tbl_msg where room=#{room}
+	</delete>
 	
 </mapper>

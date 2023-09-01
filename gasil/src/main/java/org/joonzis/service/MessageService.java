@@ -14,4 +14,5 @@ public interface MessageService {
 	public int messageSendInlist(MessageVO vo);
 	public int createRoom(MessageVO vo);
 	public int chkRoom(String room);
+	public int removeRoom(String room);
 }

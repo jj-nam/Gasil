@@ -214,6 +214,7 @@
 					send_msg += "<div class='type_msg'>";
 					send_msg += "<div class='input_msg_write row'>";
 					send_msg += "<div class='col-11'>";
+					send_msg += '<button id="getOut'+room +'">나가기</button>';
 					send_msg += "<input type='text' class='write_msg form-control' placeholder='메세지 입력'/>";
 					send_msg += "</div>";
 					send_msg += "<div class='col-1'>";
@@ -234,10 +235,29 @@
 					
 					// 메세지 내용 불러오기
 					MessageContentList(room);
+					
+					var outBtn = $('#getOut'+room)
+					outBtn.on('click',function(){
+						if(confirm("나가시겠습니까")){
+							$.ajax({
+								type:'delete',
+								url: '/message/delete/' + room,
+								data : JSON.stringify({
+									'room' : room
+								}),
+								success: function(data){
+									MessageList();
+									$('.msg_history').html('');
+									$('.send_message').html('');
+								}
+							})
+						}
+					})
 				});
 			}
 		})
 	};
+	
 	
 	var MessageContentList = function(room){
 		$.ajax({

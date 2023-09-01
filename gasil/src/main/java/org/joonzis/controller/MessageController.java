@@ -2,6 +2,7 @@ package org.joonzis.controller;
 
 import java.util.List;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +13,12 @@ import org.joonzis.service.GoWithService;
 import org.joonzis.service.MessageService;
 import org.joonzis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Controller
 public class MessageController {
 
@@ -136,18 +144,14 @@ public class MessageController {
 		UserAuthVO user = (UserAuthVO) session.getAttribute("user");
 		String nick = user.getUser_nick();
 		
-		System.out.println("room" + room);
-		
 		MessageVO vo = new MessageVO();
 		vo.setRoom(room);
 		vo.setNick(nick);
 		
 		List<MessageVO> cList = service.roomContentList(vo);
 		
-		
 		// 읽음 처리
 		service.readChk(vo);
-		System.out.println(cList);
 		req.setAttribute("cList", cList);
 		
 		return "message/message_content_list";
@@ -162,17 +166,23 @@ public class MessageController {
 		
 		String profile = service.getMyProfile(nick);
 		
-		System.out.println(profile);
-		
 		MessageVO vo = new MessageVO();
 		vo.setRoom(room);
 		vo.setSend_nick(nick);
 		vo.setRecv_nick(other_nick);
 		vo.setContent(content);
 		vo.setProfile(profile);
-		System.out.println("vo : " + vo);
 	
 		int insert = service.messageSendInlist(vo);
 		return insert;
+	}
+	
+	@DeleteMapping(value = "/message/delete/{room}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> removeRoom(@PathVariable("room") String room){
+		log.info("removeAll..." + room);
+		
+		return service.removeRoom(room) > 0 ?
+				new ResponseEntity<>("success", HttpStatus.OK) : 
+					new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
