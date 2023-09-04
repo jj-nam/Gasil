@@ -98,10 +98,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{wno}
 		)
 	</insert>
-	<delete id="removeRoom" parameterType="String">
-		delete tbl_msg where room=#{room}
+	<delete id="removeRoom"  parameterType="String">
+		delete tbl_msg where room in #{room}
 	</delete>
 	<select id="getRoomInfo" resultType="org.joonzis.domain.MessageVO" parameterType="String">
-		select * from tbl_msg where room = #{room}	
+		select recv_nick, wno from tbl_msg where room = #{room} and wno!=0
 	</select>
 </mapper>

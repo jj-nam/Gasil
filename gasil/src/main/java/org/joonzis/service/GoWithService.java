@@ -26,8 +26,10 @@ public interface GoWithService {
 	public int deleteApply(ApplyVO vo);
 	public int checkConfirm(ApplyVO vo);
 	public int getConfirm(ApplyVO vo);
-	public int incPeople(long wno);
-	public int decPeople(long wno);
+
+	/*
+	 * public int incPeople(long wno); public int decPeople(long wno);
+	 */
 	public int deleteConfirm(ApplyVO vo);
 	public int getP_cnt(long wno);
 	public int getOver(long wno);

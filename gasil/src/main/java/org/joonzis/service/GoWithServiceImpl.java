@@ -12,6 +12,7 @@ import org.joonzis.domain.GoWithFlagApplyVO;
 import org.joonzis.mapper.GoWithMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -93,23 +94,20 @@ public class GoWithServiceImpl implements GoWithService{
 	public int checkConfirm(ApplyVO vo) {
 		return mapper.checkConfirm(vo);
 	}
+	@Transactional
 	@Override
 	public int getConfirm(ApplyVO vo) {
-		log.info("confirm");
-		return mapper.getConfirm(vo);
+		int result = mapper.getConfirm(vo);
+		mapper.incPeople(vo.getWno());
+		return result;
 	}
-	@Override
-	public int incPeople(long wno) {
-		return mapper.incPeople(wno);
-	}
-	@Override
-	public int decPeople(long wno) {
-		return mapper.decPeople(wno);
-	}
+
+	@Transactional
 	@Override
 	public int deleteConfirm(ApplyVO vo) {
-		log.info("cancel");
-		return mapper.deleteConfirm(vo);
+		int result = mapper.deleteConfirm(vo); 
+		mapper.decPeople(vo.getWno());
+		return result;
 	}
 	@Override
 	public int getP_cnt(long wno) {

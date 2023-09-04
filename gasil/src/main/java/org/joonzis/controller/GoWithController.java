@@ -256,13 +256,11 @@ public class GoWithController {
 		if(result == 0) {
 			if(p_cntNum > overCnt) {
 				service.getConfirm(vo);
-				service.incPeople(wno);
 			}else{
 				result = 2;
 			}
 		}else if(result == 1){
 			service.deleteConfirm(vo);
-			service.decPeople(wno);
 		}
 		return result;
 	}

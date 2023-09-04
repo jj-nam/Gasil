@@ -119,7 +119,7 @@
 	var chk3 = false;
 	var chk4 = false;
 	var chk5 = false;
-	var chk6 = false;
+	var chk6 = true;
 		
 	var activePostion = $(".activeBtn");
 	    $("#pilsu").change(function(){

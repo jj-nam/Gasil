@@ -64,20 +64,17 @@ public class MessageServiceImpl implements MessageService{
 	@Transactional
 	@Override
 	public int removeRoom(String room) {
-		MessageVO vo = getRoomInfo(room);
+		MessageVO vo = mapper.getRoomInfo(room);
 		String recv_id = umapper.getId(vo.getRecv_nick());
 		ApplyVO avo = new ApplyVO();
 		avo.setUser_id(recv_id);
 		avo.setWno(vo.getWno());
+		
 		int result = mapper.removeRoom(room);
 		
 		gmapper.removeProp(avo);
 		gmapper.decPeople(avo.getWno());
 		
 		return result; 
-	}
-	@Override
-	public MessageVO getRoomInfo(String room) {
-		return mapper.getRoomInfo(room);
 	}
 }
